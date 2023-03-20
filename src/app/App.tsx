@@ -1,4 +1,4 @@
-import React, { Suspense, useContext, useState } from 'react';
+import { Suspense } from 'react';
 import './styles/index.scss'
 import { Link, Route, Routes } from 'react-router-dom';
 import { classNames } from '../shared/lib/classNames/classNames';
@@ -11,7 +11,7 @@ const { theme, toggleTheme } = useTheme();
 
   return (
     <div className={classNames('app', {}, [theme])}>
-      <button onClick={toggleTheme}>Toggle</button>
+      <button onClick={toggleTheme}>Toggle Theme</button>
       <Link to={'/'}>Main</Link>
       <Link to={'/about'}>About site</Link>
       <Suspense fallback={<div>Loading...</div>}>
