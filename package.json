@@ -18,6 +18,12 @@
   },
   "homepage": "https://github.com/s2000promax/fortunes-island#readme",
   "devDependencies": {
+    "@types/node": "^18.15.3",
+    "@types/webpack": "^5.28.0",
+    "html-webpack-plugin": "^5.5.0",
+    "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2",
     "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1"
   },
