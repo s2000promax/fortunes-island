@@ -6,6 +6,7 @@ import { useTheme } from 'app/providers/ThemeProvider';
 import { AboutPage } from '../pages/AboutPage';
 import { MainPage } from '../pages/MainPage';
 import { useTranslation } from 'react-i18next';
+import { Button, VariantButton } from 'shared/uiKit/Button';
 
 const App = (): ReactElement => {
   const { theme, toggleTheme } = useTheme();
@@ -14,15 +15,13 @@ const App = (): ReactElement => {
   return (
     <div className={classNames('app', {}, [theme])}>
       <button onClick={toggleTheme} style={{ display: 'block' }}>{t('Toggle Theme')}</button>
-      <button
-        onClick={() => {
-          void (async () => await i18n.changeLanguage(i18n.language === 'en' ? 'de' : 'en'));
-        }
-      }
+      <Button
+        variant={VariantButton.OUTLINE}
+        onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'de' : 'en')}
         style={{ display: 'block' }}
       >
         {t('Toggle Language')}
-      </button>
+      </Button>
       <div style={{ display: 'block' }}>{t('Links')}</div>
 
       <Link to={'/'} style={{ display: 'block' }}>{t('Main')}</Link>

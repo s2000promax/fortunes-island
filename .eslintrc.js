@@ -63,6 +63,7 @@ module.exports = {
     '@typescript-eslint/comma-dangle': 'off',
     '@typescript-eslint/space-before-function-paren': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
+    'react/display-name': 'off',
     'no-shadow': 'off',
   },
   globals: {
@@ -75,14 +76,13 @@ module.exports = {
       version: 'detect',
     },
   },
-  // overrides: [
-  //   {
-      // files: ['**/src/**/*.{test,stories}.{ts,tsx}', 'global.d.ts'],
-      // rules: {
-        // 'i18next/no-literal-string': 'off',
-        // 'max-len': 'off',
-        // '@typescript-eslint/naming-convention': 'off',
-      // },
-    // },
-  // ],
+  overrides: [
+    {
+      files: ['**/src/**/*.{test,stories}.{ts,tsx}'],
+      rules: {
+        'i18next/no-literal-string': 'off',
+        'max-len': 'off',
+      },
+    },
+  ],
 };
