@@ -1,6 +1,6 @@
-import { BuildOptions } from '../types/config';
+import { type BuildOptions } from '../types/config';
 
-export function buildBabelLoader({ isDev }: BuildOptions) {
+export function buildBabelLoader({ isDev }: BuildOptions): object {
   return {
     test: /\.(js|jsx|ts|tsx)$/,
     exclude: /node_modules/,
@@ -15,7 +15,7 @@ export function buildBabelLoader({ isDev }: BuildOptions) {
             {
               locales: ['en'],
               keyAsDefaultValue: true,
-              outputPath: 'src/shared/config/i18next/extractedTranslations/{{locale}}/{{ns}}.json'
+              outputPath: 'src/shared/config/i18next/extractedTranslations/{{locale}}/{{ns}}.json',
             },
           ],
           isDev && require.resolve('react-refresh/babel'),
