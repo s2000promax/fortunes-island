@@ -2,7 +2,7 @@
   "name": "fortunes-island",
   "version": "1.0.0",
   "description": "Fortune's Island is an online multiplayer game",
-  "main": "index.js",
+  "main": "index.tsx",
   "scripts": {
     "start": "webpack serve --env port=3000",
     "build:dev": "webpack --env mode=development",
@@ -11,6 +11,7 @@
     "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix\n",
     "lint:scss": "npx stylelint \"**/*.scss\"",
     "lint:scss:fix": "npx stylelint \"**/*.scss\" --fix\n",
+    "test:unit": "jest --config ./config/jest/jest.config.ts --env=jsdom",
     "prepare": "husky install"
   },
   "repository": {
