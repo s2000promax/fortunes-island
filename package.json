@@ -8,7 +8,9 @@
     "build:dev": "webpack --env mode=development",
     "build:prod": "webpack --env mode=production",
     "lint:ts": "eslint \"**/*.{ts,tsx}\"",
-    "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix\n"
+    "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix\n",
+    "lint:scss": "npx stylelint \"**/*.scss\"",
+    "lint:scss:fix": "npx stylelint \"**/*.scss\" --fix\n"
   },
   "repository": {
     "type": "git",
