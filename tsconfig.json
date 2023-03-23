@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./build/",
+    "outDir": "./dist/",
     "noImplicitAny": true,
     "module": "ESNext",
     "target": "es5",
@@ -21,6 +21,7 @@
     }
   },
   "include": [
+    "./config/build/buildWebpackConfig.ts",
     "./config/jest/setupTest.ts",
     "./src/**/*.ts",
     "./src/**/*.tsx"
