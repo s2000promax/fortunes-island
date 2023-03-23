@@ -4,10 +4,7 @@ module.exports = {
     es2021: true,
     jest: true,
   },
-  extends: [
-    'plugin:react/recommended',
-    'plugin:i18next/recommended',
-  ],
+  extends: ['plugin:react/recommended', 'plugin:i18next/recommended', 'plugin:storybook/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
@@ -16,26 +13,27 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-    'i18next',
-    'import',
-    'react-hooks',
-  ],
+  plugins: ['react', '@typescript-eslint', 'i18next', 'import', 'react-hooks'],
   rules: {
-    'react/jsx-indent': [2, 2, { indentLogicalExpressions: true }],
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+    'react/jsx-indent': [2, 2, {
+      indentLogicalExpressions: true,
+    }],
+    'react/jsx-filename-extension': [1, {
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    }],
     'comma-dangle': ['error', 'always-multiline'],
-    semi: ['error', 'always', { omitLastInOneLineBlock: true }],
+    semi: ['error', 'always', {
+      omitLastInOneLineBlock: true,
+    }],
     'object-curly-spacing': ['error', 'always'],
-    'i18next/no-literal-string': [
-      'error', {
-        markupOnly: true,
-        ignoreAttribute: ['data-testid', 'to'],
-      },
-    ],
-    'max-len': ['error', { ignoreComments: true, code: 120 }],
+    'i18next/no-literal-string': ['error', {
+      markupOnly: true,
+      ignoreAttribute: ['data-testid', 'to'],
+    }],
+    'max-len': ['error', {
+      ignoreComments: true,
+      code: 120,
+    }],
     '@typescript-eslint/naming-convention': ['error', {
       selector: 'variableLike',
       leadingUnderscore: 'allow',
@@ -60,7 +58,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/function-component-definition': 'off',
     '@typescript-eslint/semi': 'off',
-    '@typescript-eslint/comma-dangle': 'off',
+    // '@typescript-eslint/comma-dangle': 'off',
     '@typescript-eslint/space-before-function-paren': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
     'react/display-name': 'off',
@@ -76,13 +74,11 @@ module.exports = {
       version: 'detect',
     },
   },
-  overrides: [
-    {
-      files: ['**/src/**/*.{test,stories}.{ts,tsx}'],
-      rules: {
-        'i18next/no-literal-string': 'off',
-        'max-len': 'off',
-      },
+  overrides: [{
+    files: ['**/src/**/*.{test,stories}.{ts,tsx}'],
+    rules: {
+      'i18next/no-literal-string': 'off',
+      'max-len': 'off',
     },
-  ],
+  }],
 };
