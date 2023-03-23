@@ -2,6 +2,8 @@ name: linting, testing, building
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ dev ]
 jobs:
   pipeline:
     runs-on: ubuntu-latest
