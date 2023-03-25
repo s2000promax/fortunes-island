@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "123",
+      "role": "ADMIN",
+      "avatar": "https://faces-img.xcdn.link/thumb-lorem-face-3827_thumb.jpg"
+    },
+    {
+      "id": "2",
+      "username": "user",
+      "password": "123",
+      "role": "USER",
+      "avatar": "https://faces-img.xcdn.link/thumb-lorem-face-3827_thumb.jpg"
+    }
+  ],
+  "profile": {
+    "first": "Tomas",
+    "lastname": "Sharp",
+    "age": 19,
+    "currency": "$",
+    "country": "USA",
+    "city": "Miami",
+    "username": "admin",
+    "avatar": "https://faces-img.xcdn.link/thumb-lorem-face-3827_thumb.jpg"
+  }
+}

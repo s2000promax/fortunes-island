@@ -2,9 +2,9 @@ import * as path from 'path';
 
 export default {
   globals: {
-    __IS_DEV__: true,
-    __API__: '',
-    __PROJECT__: 'jest',
+    _IS_DEV_: true,
+    _API_: '',
+    _PROJECT_: 'jest',
   },
   verbose: true,
   clearMocks: true,
