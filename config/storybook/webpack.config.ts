@@ -1,5 +1,5 @@
-import * as webpack from 'webpack';
-import * as path from 'path';
+import webpack from 'webpack';
+import path from 'path';
 import { BuildPaths } from '../build/types/config';
 import { buildCssLoader } from '../build/loaders/buildCssLoader';
 import { buildSVGloader } from '../build/loaders/buildSVGloader';
@@ -28,10 +28,11 @@ export default ({ config }: { config: webpack.Configuration }) => {
   config.module!.rules.push(buildCssLoader(true));
 
   config.plugins!.push(new webpack.DefinePlugin({
-    __IS_DEV__: JSON.stringify(true),
-    __API__: JSON.stringify(''),
-    __PROJECT__: JSON.stringify('storybook'),
+    _IS_DEV_: JSON.stringify(true),
+    _API_: JSON.stringify(''),
+    _PROJECT_: JSON.stringify('storybook'),
   }));
 
   return config;
 };
+

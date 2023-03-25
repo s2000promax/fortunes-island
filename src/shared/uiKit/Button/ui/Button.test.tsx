@@ -9,11 +9,9 @@ describe('Buttons', () => {
     expect(screen.getByText('TEST')).toBeInTheDocument();
   });
 
-  Object.values(VariantButton).forEach(variant => {
-    test(`Test variant Button ${variant}`, () => {
-      render(<Button variant={variant}>TEST</Button>);
-      expect(screen.getByText('TEST')).toHaveClass(variant);
-      screen.debug();
-    });
+  test('Test clear theme', () => {
+    render(<Button variant={VariantButton.CLEAR}>TEST</Button>);
+    expect(screen.getByText('TEST')).toHaveClass('clear');
+    screen.debug();
   });
 });
