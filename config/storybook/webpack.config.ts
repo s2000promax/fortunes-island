@@ -1,5 +1,5 @@
-import webpack from 'webpack';
-import path from 'path';
+import * as webpack from 'webpack';
+import * as path from 'path';
 import { BuildPaths } from '../build/types/config';
 import { buildCssLoader } from '../build/loaders/buildCssLoader';
 import { buildSVGloader } from '../build/loaders/buildSVGloader';
@@ -10,6 +10,8 @@ export default ({ config }: { config: webpack.Configuration }) => {
     html: '',
     entry: '',
     src: path.resolve(__dirname, '..', '..', 'src'),
+    locales: '',
+    buildLocales: '',
   };
 
   config.resolve!.modules!.push(paths.src);
