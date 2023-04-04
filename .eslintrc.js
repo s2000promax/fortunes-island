@@ -63,6 +63,7 @@ module.exports = {
     '@typescript-eslint/strict-boolean-expressions': 'off',
     'react/display-name': 'off',
     'no-shadow': 'off',
+    'react/no-unknown-property': 'off',
   },
   globals: {
     _IS_DEV_: true,
