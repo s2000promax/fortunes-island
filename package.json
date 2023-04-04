@@ -107,12 +107,16 @@
     "npm": "9.5.0"
   },
   "dependencies": {
+    "@babylonjs/core": "^5.53.0",
+    "@babylonjs/gui": "^5.53.0",
     "@reduxjs/toolkit": "^1.9.3",
+    "babylonjs-hook": "^0.1.1",
     "dotenv": "^16.0.3",
     "i18next": "^22.4.12",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.2.0",
     "react": "^18.2.0",
+    "react-babylonjs": "^3.1.15",
     "react-dom": "^18.2.0",
     "react-i18next": "^12.2.0",
     "react-redux": "^8.0.5",
