@@ -15,7 +15,7 @@ const Template: ComponentStory<typeof Chips> = (args) => {
     <Canvas>
       <arcRotateCamera
         name="camera1"
-        target={Vector3.Zero()}
+        target={new Vector3(0, 0, 2)}
         alpha={Math.PI / 2}
         beta={Math.PI / 4}
         radius={8}
