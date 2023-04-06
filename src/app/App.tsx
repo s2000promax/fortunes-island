@@ -38,6 +38,7 @@ const App = (): ReactElement => {
           <div style={{ display: 'block' }}>{t('Links')}</div>
           <Link to={'/'} style={{ display: 'block' }}>{t('Main')}</Link>
           <Link to={'/about'} style={{ display: 'block' }}>{t('About')}</Link>
+          <Link to={'/roulette'} style={{ display: 'block' }}>{t('Roulette')}</Link>
           {inited && <AppRouter />}
         </div>
       </Suspense>

@@ -16,7 +16,7 @@ of chance to win in-game currency and other valuable assets.
 
 - Pirate's Cove: Features classic card games like Poker, Blackjack, and Baccarat.
 - Ancient Temple: Offers various slot machines and themed minigames based on ancient civilizations.
-- Royal Casino: Includes high-stakes games such as Roulette, Craps, and exclusive VIP rooms.
+- Royal Casino: Includes high-stakes games such as RouletteBody, Craps, and exclusive VIP rooms.
 
 3. Treasure Hunts: Players can participate in treasure hunts to discover hidden loot, such as in-game currency, rare
    items, or special abilities that can help them in gambling games. Treasure hunts may involve solving puzzles,

@@ -14,11 +14,14 @@ export default (env: BuildEnv) => {
     buildLocales: path.resolve(__dirname, 'build', 'locales'),
   };
 
-  dotenv.config();
-
   const mode = env.mode || 'development';
+
+  if (mode === 'production') {
+    dotenv.config();
+  }
+
   const PORT = env.port || 3000;
-  const apiUrl = env.apiUrl || 'http://localhost:8000';
+  const apiUrl = process.env.apiUrl || 'http://localhost:8000';
 
   const isDev = mode === 'development';
 
