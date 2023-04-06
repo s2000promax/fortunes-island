@@ -45,12 +45,14 @@ const ChipSizes = [
 interface ChipsProps {
   nominal: ChipsNominals;
   rotation?: Vector3;
+  position?: Vector3;
 }
 
 export const Chips = (props: ChipsProps) => {
   const {
     nominal,
     rotation,
+    position,
   } = props;
   const [mesh, setMesh] = useState<Nullable<Mesh>>(null);
   const scene = useScene();
@@ -70,7 +72,7 @@ export const Chips = (props: ChipsProps) => {
     const color: Color4 = ChipSizes[ChipSizes.findIndex(el => el.nominal === nominal)].color;
 
     const faceUV = [
-      new Vector4(0, 0, 0, 0), // bottom
+      new Vector4((c * 1) / columns, (r * 1) / rows, ((c + 1) * 1) / columns, ((r + 1) * 1) / rows), // bottom
       new Vector4(0, 0, 0, 0), // side
       new Vector4((c * 1) / columns, (r * 1) / rows, ((c + 1) * 1) / columns, ((r + 1) * 1) / rows), // top
     ];
@@ -103,6 +105,7 @@ export const Chips = (props: ChipsProps) => {
           name={nominal}
           fromInstance={mesh}
           rotation={rotation}
+          position={position}
           disposeInstanceOnUnmount
         />
       )}
