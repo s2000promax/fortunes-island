@@ -1,6 +1,7 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { ReactNode, useMemo, useRef, useState } from 'react';
+import '@babylonjs/core/Physics/physicsEngineComponent';
 import {
-  AxesViewer, Mesh, Nullable,
+  AxesViewer, Mesh, Nullable, PhysicsImpostor,
   Scene,
   Vector3,
 } from '@babylonjs/core';
@@ -38,6 +39,13 @@ export const RouletteCell = (props: RouletteProps) => {
 
     const rouletteCell = CreateCellBase(scene, `${number}-cell`, cell) as Mesh;
 
+    rouletteCell.physicsImpostor = new PhysicsImpostor(rouletteCell, PhysicsImpostor.MeshImpostor,
+      {
+        mass: 0,
+        friction: 1,
+      },
+      scene);
+
     setMesh(rouletteCell);
   }, [number, scene]);
 
@@ -50,7 +58,8 @@ export const RouletteCell = (props: RouletteProps) => {
         rotation={rotation}
         position={position}
         disposeInstanceOnUnmount
-      />
+        >
+        </mesh>
         )}
     </>
   );

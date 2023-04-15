@@ -1,37 +1,32 @@
 import React from 'react';
 import { type ComponentMeta, type ComponentStory } from '@storybook/react';
-import '@babylonjs/core/Physics/physicsEngineComponent';
-import { Roulette } from './Roulette';
+import { Ball } from './Ball';
 import { Canvas } from 'widgets/Canvas';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector';
-import { useBeforeRender } from 'react-babylonjs';
+import { Color3 } from '@babylonjs/core';
 
 export default {
-  title: 'features/Roulette',
-  component: Roulette,
-  argTypes: {
-  },
-} as ComponentMeta<typeof Roulette>;
+  title: 'shared/3D/Ball',
+  component: Ball,
+  argTypes: {},
+} as ComponentMeta<typeof Ball>;
 
-const Template: ComponentStory<typeof Roulette> = (args) => {
-
+const Template: ComponentStory<typeof Ball> = (args) => {
   return (
     <Canvas>
       <arcRotateCamera
         name="camera1"
-        target={new Vector3(0, 0, 2)}
+        target={Vector3.Zero()}
         alpha={Math.PI / 2}
         beta={Math.PI / 4}
-        radius={25}
+        radius={8}
       />
       <hemisphericLight
         name="light1"
         intensity={0.7}
         direction={Vector3.Up()}
       />
-      <Roulette
-        {...args}
-      />
+      <Ball />
     </Canvas>
   );
 };

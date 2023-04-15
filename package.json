@@ -52,6 +52,7 @@
     "@svgr/webpack": "^6.5.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "@types/cannon": "^0.1.8",
     "@types/earcut": "^2.1.1",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.3",
@@ -111,7 +112,10 @@
     "@babylonjs/core": "^5.53.0",
     "@babylonjs/gui": "^5.53.0",
     "@reduxjs/toolkit": "^1.9.3",
+    "ammo.js": "github:kripken/ammo.js",
+    "ammojs-typed": "^1.0.6",
     "babylonjs-hook": "^0.1.1",
+    "cannon": "^0.6.2",
     "dotenv": "^16.0.3",
     "earcut": "^2.2.4",
     "i18next": "^22.4.12",
@@ -134,5 +138,9 @@
         "mobile": false
       }
     }
+  },
+  "browser": {
+    "fs": false,
+    "path": false
   }
 }
