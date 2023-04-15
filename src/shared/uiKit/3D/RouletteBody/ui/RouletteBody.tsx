@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import {
   AxesViewer, Color3, HemisphericLight,
   Mesh,
-  MeshBuilder, Nullable,
+  MeshBuilder, Nullable, PhysicsImpostor,
   Scene, StandardMaterial,
   Vector3,
 } from '@babylonjs/core';
@@ -29,7 +29,7 @@ export const RouletteBody = (props: RouletteBodyProps) => {
       const axes = new AxesViewer(scene, 2);
     }
     // const light1 = new HemisphericLight(`${name}-hemiLight-1`, new Vector3(-10, 10, -5), scene);
-     const light2 = new HemisphericLight(`${name}-hemiLight-2`, new Vector3(-10, -10, -5), scene);
+    const light2 = new HemisphericLight(`${name}-hemiLight-2`, new Vector3(-10, -10, -5), scene);
 
     const myShape = [
       new Vector3(11, 0, 0),
@@ -46,7 +46,7 @@ export const RouletteBody = (props: RouletteBodyProps) => {
     const myPath = [];
 
     for (let i = 0; i <= 6.8; i += 0.2) {
-      myPath.push(new Vector3(getX(i, 0.1),0, getY(i, 0.1)));
+      myPath.push(new Vector3(getX(i, 0.1), 0, getY(i, 0.1)));
     }
 
     const body = MeshBuilder.ExtrudeShape(
@@ -61,6 +61,13 @@ export const RouletteBody = (props: RouletteBodyProps) => {
     mainBodyMaterial.diffuseColor = new Color3(0.4, 0.25, 0.03);
     body.material = mainBodyMaterial;
 
+    body.physicsImpostor = new PhysicsImpostor(
+      body,
+      PhysicsImpostor.MeshImpostor,
+      { mass: 0 },
+      scene,
+    );
+
     setMesh(body);
   }, [name, scene]);
 
@@ -68,13 +75,13 @@ export const RouletteBody = (props: RouletteBodyProps) => {
     <>
       {mesh && (
         <mesh
-        name={name}
-        fromInstance={mesh}
-        rotation={rotation}
-        position={position}
-        disposeInstanceOnUnmount
-      />
-        )}
+          name={name}
+          fromInstance={mesh}
+          rotation={rotation}
+          position={position}
+          disposeInstanceOnUnmount
+        />
+      )}
     </>
   );
 };

@@ -16,6 +16,12 @@ export default ({ config }: { config: webpack.Configuration }) => {
 
   config.resolve!.modules!.push(paths.src);
   config.resolve!.extensions!.push('.ts', '.tsx');
+  config.resolve!.fallback = {
+    'fs': false,
+    'path': false,
+  };
+
+
 
   const rules = config.module!.rules as webpack.RuleSetRule[];
   config.module!.rules = rules.map((rule) => {
@@ -34,6 +40,8 @@ export default ({ config }: { config: webpack.Configuration }) => {
     _API_: JSON.stringify(''),
     _PROJECT_: JSON.stringify('storybook'),
   }));
+
+  config.experiments = { topLevelAwait: true };
 
   return config;
 };
