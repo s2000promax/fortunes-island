@@ -11,7 +11,7 @@ import {
 } from '@babylonjs/core';
 import * as earcut from 'earcut';
 import { CellNumber, RouletteCells } from '../../model/CellsTypes';
-import cellsNumberSprite from '../assets/cellsNumberSprite.png';
+import cellsNumberSprite from '../../../../../assets/cellsNumberSprite.png';
 
 export function CreateCellBase(
   scene: Scene,

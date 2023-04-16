@@ -10,7 +10,7 @@ import {
   Vector3,
   Vector4,
 } from '@babylonjs/core';
-import chipsSprite from './assets/chips/chipsSprite.png';
+import chipsSprite from '../../../../assets/chipsSprite.png';
 
 export enum ChipsNominals {
   CHIP_25_CENTS = 'chip_25_cents',

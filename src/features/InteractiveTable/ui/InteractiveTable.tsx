@@ -1,8 +1,9 @@
 import React from 'react';
 import { Table } from 'shared/uiKit/3D/Table';
-import { GUI3DManager, HolographicButton, PlanePanel } from '@babylonjs/gui';
 import { useScene } from 'react-babylonjs';
-import { ArcRotateCamera, Scene, TransformNode, Vector3 } from '@babylonjs/core';
+import { Scene, Vector3 } from '@babylonjs/core';
+import { InteractiveButton } from 'shared/uiKit/3D/InteractiveButton';
+import { InteractiveButtonSize } from 'shared/uiKit/3D/InteractiveButton/model/types';
 
 interface InteractiveTableProps {
   name?: string;
@@ -15,7 +16,48 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
     position,
   } = props;
   const scene = useScene() as Scene;
-  const camera = new ArcRotateCamera(
+
+
+  return (
+    <>
+      <mesh
+        name={name}
+        position={position}
+      >
+        <Table />
+        <InteractiveButton
+          name={'one'}
+          size={InteractiveButtonSize.SIZE1}
+          position={new Vector3(18 - 1.5, 0.61, -8 + 1)}
+        />
+        <InteractiveButton
+          name={'zero'}
+          size={InteractiveButtonSize.SIZE0}
+          position={new Vector3(21 - 1.5, 0.61, -8 + 1)}
+        />
+        <InteractiveButton
+          name={'two_one'}
+          size={InteractiveButtonSize.SIZE21}
+          position={new Vector3(-18-2, 0.61, -8 + 1)}
+        />
+        <InteractiveButton
+          name={'two'}
+          size={InteractiveButtonSize.SIZE2}
+          position={new Vector3(18-3, 0.61, 2 - 1)}
+        />
+        <InteractiveButton
+          name={'four'}
+          size={InteractiveButtonSize.SIZE4}
+          position={new Vector3(18-6, 0.61, 0 - 1)}
+        />
+      </mesh>
+    </>
+  );
+};
+
+
+/*
+const camera = new ArcRotateCamera(
     'cam', -Math.PI / 2, Math.PI / 2, 10, Vector3.Zero());
   const anchor = new TransformNode('', scene);
   anchor.rotation = new Vector3(1.58,0,0);
@@ -47,15 +89,4 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
 
    }
   panel.blockLayout = false;
-
-  return (
-    <>
-      <mesh
-        name={name}
-        position={position}
-      >
-        <Table />
-      </mesh>
-    </>
-  );
-};
+ */

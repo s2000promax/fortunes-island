@@ -38,7 +38,7 @@ export const Roulette = (props: RouletteProps) => {
   let count = 0;
   useBeforeRender((scene) => {
 
-    if (ballRef.current && count < 1) {
+    if (ballRef.current && count < 3) {
       // Delta time smoothes the animation.
       const deltaTimeInMillis = scene.getEngine().getDeltaTime();
       // ballRef.current.rotation.y += (rpm / 30) * Math.PI * 2 * (deltaTimeInMillis / 1000);

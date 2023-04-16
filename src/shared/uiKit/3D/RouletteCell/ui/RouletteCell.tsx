@@ -1,11 +1,11 @@
-import React, { ReactNode, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import '@babylonjs/core/Physics/physicsEngineComponent';
 import {
   AxesViewer, Mesh, Nullable, PhysicsImpostor,
   Scene,
   Vector3,
 } from '@babylonjs/core';
-import { useBeforeRender, useScene } from 'react-babylonjs';
+import { useScene } from 'react-babylonjs';
 import { CreateCellBase } from './utils/Cell';
 import { CellNumber, RouletteCells, RouletteCellsBuilder } from '../model/CellsTypes';
 
