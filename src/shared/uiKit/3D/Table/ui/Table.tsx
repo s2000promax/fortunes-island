@@ -28,8 +28,8 @@ export const Table = (props: TableProps) => {
     if (_IS_DEV_) {
       const axes = new AxesViewer(scene, 2);
     }
-    // const light = new HemisphericLight(`${name}-hemiLight-1`, new Vector3(-20, 20, -20), scene);
-    // light.intensity = 0.2;
+    const light = new HemisphericLight(`${name}-hemiLight-1`, new Vector3(-20, 20, -20), scene);
+    light.intensity = 0.2;
 
     const tableMaterial = new StandardMaterial('tableMaterial', scene);
     tableMaterial.diffuseTexture = new Texture(tableTexture, scene);
