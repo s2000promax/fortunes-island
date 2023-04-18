@@ -1,7 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import * as BABYLON from '@babylonjs/core';
 import * as earcut from 'earcut';
-import { useScene } from 'react-babylonjs';
+import spinButtonTexture from '../../../../assets/spin-button-material.jpg';
+import { useBeforeRender, useScene } from 'react-babylonjs';
+import { Mesh, Nullable } from '@babylonjs/core';
 
 interface SpinButtonProps {
   name?: string;
@@ -17,6 +19,7 @@ export const SpinButton = (props: SpinButtonProps) => {
   } = props;
 
   const [mesh, setMesh] = useState<BABYLON.Nullable<BABYLON.Mesh>>(null);
+  const spinButtonRef = useRef<Nullable<Mesh>>(null);
   const scene = useScene() as BABYLON.Scene;
 
   useMemo(() => {
@@ -26,58 +29,44 @@ export const SpinButton = (props: SpinButtonProps) => {
     const light1 = new BABYLON.HemisphericLight(`${name}-hemiLight-1`, new BABYLON.Vector3(-10, 10, -5), scene);
 
     const spinButtonMaterial = new BABYLON.StandardMaterial(`${name}-material`);
+    spinButtonMaterial.diffuseTexture = new BABYLON.Texture(spinButtonTexture, scene);
 
-    let alpha = Math.PI;
-// Create a mesh for the trail to follow.
-    const cube = BABYLON.MeshBuilder.CreateBox("cube", {}, scene);
-    cube.scaling.y = 2;
-    cube.bakeCurrentTransformIntoVertices();
-    cube.position.x = Math.sin(alpha) * 10;
-    cube.position.z = Math.cos(alpha) * 10;
-    cube.computeWorldMatrix(true);
+    const spinButton = BABYLON.MeshBuilder.CreateCylinder(
+      'spinButton-Cylinder',
+      {
+        diameter: 6,
+        height: 0.2,
+      },
+      scene,
+    );
 
-    const trail = new BABYLON.TrailMesh("new", cube, scene, 0.5, 60, true);
+    spinButton.material = spinButtonMaterial;
 
-    const sourceMat = new BABYLON.StandardMaterial("sourceMat", scene);
-    sourceMat.emissiveColor = sourceMat.diffuseColor = BABYLON.Color3.Red();
-    sourceMat.specularColor = BABYLON.Color3.Black();
-
-    trail.material = sourceMat;
-
-    const observer = scene.onBeforeRenderObservable.add(animate);
-    function animate() {
-      alpha += Math.PI / 120;
-      cube.position.x = Math.sin(alpha) * 10;
-      cube.position.z = Math.cos(alpha) * 10;
-      cube.rotation.x = (Math.PI * alpha) / 2;
-      cube.rotation.y = alpha;
-    }
-
-    cube.actionManager = new BABYLON.ActionManager(scene);
+    spinButton.actionManager = new BABYLON.ActionManager(scene);
 
     const hl = new BABYLON.HighlightLayer('hl1', scene, {
-      isStroke: true,
-      // blurHorizontalSize: 4,
-      // blurVerticalSize: 2,
+      // isStroke: true,
+      blurHorizontalSize: 5,
+      blurVerticalSize: 5,
     });
 
     //ON MOUSE ENTER
-    cube.actionManager.registerAction(
+    spinButton.actionManager.registerAction(
       new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
         function (ev) {
           scene.hoverCursor = 'pointer';
-          hl.addMesh(cube, BABYLON.Color3.White());
+          hl.addMesh(spinButton, BABYLON.Color3.White());
         }));
 
     //ON MOUSE EXIT
-    cube.actionManager.registerAction(
+    spinButton.actionManager.registerAction(
       new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
         function (ev) {
-          hl.removeMesh(cube);
+          hl.removeMesh(spinButton);
         }));
 
     // ON CLICK
-    cube.actionManager.registerAction(
+    spinButton.actionManager.registerAction(
       new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger,
         function (ev) {
           console.log('click', ev);
@@ -86,8 +75,7 @@ export const SpinButton = (props: SpinButtonProps) => {
     );
 
 
-
-    setMesh(cube);
+    setMesh(spinButton);
   }, [name, scene]);
 
   return (
@@ -96,6 +84,7 @@ export const SpinButton = (props: SpinButtonProps) => {
         <mesh
           name={name}
           fromInstance={mesh}
+          // ref={spinButtonRef}
           rotation={rotation}
           position={position}
           disposeInstanceOnUnmount

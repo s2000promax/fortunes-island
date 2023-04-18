@@ -18,7 +18,7 @@ export const Chips = (props: ChipsProps) => {
     position,
   } = props;
   const [mesh, setMesh] = useState<BABYLON.Nullable<BABYLON.Mesh>>(null);
-  const scene = useScene();
+  const scene = useScene() as BABYLON.Scene;
   useMemo(() => {
     if (scene) {
       const light1 = new BABYLON.HemisphericLight(`${nominal}-hemiLight-1`, new BABYLON.Vector3(-10, 10, -5), scene);
@@ -57,6 +57,38 @@ export const Chips = (props: ChipsProps) => {
     );
     cylinder.material = chipMaterial;
     cylinder.rotation.y = Math.PI;
+
+    cylinder.actionManager = new BABYLON.ActionManager(scene);
+
+    const hl = new BABYLON.HighlightLayer('hl1', scene, {
+      // isStroke: true,
+      // blurHorizontalSize: 4,
+      // blurVerticalSize: 2,
+    });
+
+    //ON MOUSE ENTER
+    cylinder.actionManager.registerAction(
+      new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
+        function (ev) {
+          scene.hoverCursor = 'pointer';
+          hl.addMesh(cylinder, BABYLON.Color3.White());
+        }));
+
+    //ON MOUSE EXIT
+    cylinder.actionManager.registerAction(
+      new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
+        function (ev) {
+          hl.removeMesh(cylinder);
+        }));
+
+    // ON CLICK
+    cylinder.actionManager.registerAction(
+      new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger,
+        function (ev) {
+          console.log('click', ev);
+        },
+      ),
+    );
 
     setMesh(cylinder);
   }, [nominal, scene]);

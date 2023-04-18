@@ -15,14 +15,14 @@ const RoulettePage = (): ReactElement => {
       <Canvas>
         <arcRotateCamera
           name="camera1"
-          target={new Vector3(0, 12, 0)}
+          target={new Vector3(-5, 12, 0)}
           alpha={Math.PI / 2}
           beta={Math.PI / 6}
           radius={40}
         />
         <hemisphericLight
           name="light1"
-          intensity={0.8}
+          intensity={0.1}
           direction={Vector3.Up()}
         />
 

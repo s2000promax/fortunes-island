@@ -5,6 +5,7 @@ import { Scene, Vector3 } from '@babylonjs/core';
 import { InteractiveButton, InteractiveButtonSize } from 'shared/uiKit/3D/InteractiveButton';
 import { TableCoordinates } from '../utils/utils';
 import { Chips, ChipSizes } from 'shared/uiKit/3D/Chips';
+import { SpinButton } from 'shared/uiKit/3D/SpinButton';
 
 interface InteractiveTableProps {
   name?: string;
@@ -93,6 +94,9 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
             />
           ))
         }
+        <SpinButton
+          position={new Vector3(-24, 0.61, 5)}
+        />
       </mesh>
     </>
   );

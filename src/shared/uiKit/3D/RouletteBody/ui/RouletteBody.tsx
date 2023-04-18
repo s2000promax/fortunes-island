@@ -31,7 +31,7 @@ export const RouletteBody = (props: RouletteBodyProps) => {
       const axes = new AxesViewer(scene, 2);
     }
     // const light1 = new HemisphericLight(`${name}-hemiLight-1`, new Vector3(-10, 10, -5), scene);
-    const light2 = new HemisphericLight(`${name}-hemiLight-2`, new Vector3(-10, -10, -5), scene);
+    // const light2 = new HemisphericLight(`${name}-hemiLight-2`, new Vector3(-10, -10, -5), scene);
 
     const meshesArray = [];
 
@@ -95,7 +95,7 @@ export const RouletteBody = (props: RouletteBodyProps) => {
       );
 
     setMesh(resultMesh);
-  }, [name, scene]);
+  }, [scene]);
 
   return (
     <>

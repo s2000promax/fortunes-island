@@ -119,8 +119,8 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
 
     const hl = new BABYLON.HighlightLayer('hl1', scene, {
       // isStroke: true,
-      blurHorizontalSize: 4,
-      blurVerticalSize: 2,
+      // blurHorizontalSize: 4,
+      // blurVerticalSize: 2,
     });
 
     //ON MOUSE ENTER
