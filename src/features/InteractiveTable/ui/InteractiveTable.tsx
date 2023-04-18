@@ -1,8 +1,11 @@
 import React from 'react';
 import { Table } from 'shared/uiKit/3D/Table';
-import { GUI3DManager, HolographicButton, PlanePanel } from '@babylonjs/gui';
 import { useScene } from 'react-babylonjs';
-import { ArcRotateCamera, Scene, TransformNode, Vector3 } from '@babylonjs/core';
+import { Scene, Vector3 } from '@babylonjs/core';
+import { InteractiveButton, InteractiveButtonSize } from 'shared/uiKit/3D/InteractiveButton';
+import { TableCoordinates } from '../utils/utils';
+import { Chips, ChipSizes } from 'shared/uiKit/3D/Chips';
+import { SpinButton } from 'shared/uiKit/3D/SpinButton';
 
 interface InteractiveTableProps {
   name?: string;
@@ -15,38 +18,7 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
     position,
   } = props;
   const scene = useScene() as Scene;
-  const camera = new ArcRotateCamera(
-    'cam', -Math.PI / 2, Math.PI / 2, 10, Vector3.Zero());
-  const anchor = new TransformNode('', scene);
-  anchor.rotation = new Vector3(1.58,0,0);
 
-  // Create the 3D UI manager
-  const manager = new GUI3DManager(scene);
-
-  const panel = new PlanePanel();
-  panel.margin = 0.015;
-
-  manager.addControl(panel);
-  panel.linkToTransformNode(anchor);
-  // panel.position.z = -0.6;
-  panel.position = new Vector3(0, -5, -0.6);
-  panel.columns = 12;
-  panel.scaling = new Vector3(2.9, 1.9, 1);
-  // Let's add some buttons!
-  const addButton = function() {
-    const button = new HolographicButton('orientation');
-    // button.scaling = new Vector3(3, 0, 2);
-    panel.addControl(button);
-
-    button.text = 'Button #' + panel.children.length;
-  };
-
-  panel.blockLayout = true;
-   for (let index = 0; index < 36; index++) {
-     addButton();
-
-   }
-  panel.blockLayout = false;
 
   return (
     <>
@@ -55,6 +27,76 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
         position={position}
       >
         <Table />
+        {
+          TableCoordinates.map((el, index) =>
+            (
+              <InteractiveButton
+                key={`oneSizeButton-${index}`}
+                name={`oneSizeButton-${index}`}
+                size={InteractiveButtonSize.SIZE1}
+                row={el.row}
+                col={el.column}
+                position={new Vector3(16.5 - el.dx, 0.61, -3 - el.dz)}
+              />
+            ))
+        }
+        {
+          Array(3).fill(0).map((el, index) => (
+            <InteractiveButton
+              key={`fourSizeButton-${index}`}
+              name={`fourSizeButton-${index}`}
+              size={InteractiveButtonSize.SIZE4}
+              col={index}
+              position={new Vector3(12 - (index * 12), 0.61, -1)}
+            />
+          ))
+        }
+        {
+          Array(6).fill(0).map((el, index) => (
+            <InteractiveButton
+              key={`twoSizeButton-${index}`}
+              name={`twoSizeButton-${index}`}
+              size={InteractiveButtonSize.SIZE2}
+              col={index}
+              position={new Vector3(15 - (index * 6), 0.61, 1)}
+            />
+          ))
+        }
+        {
+          Array(2).fill(0).map((el, index) => (
+            <InteractiveButton
+              key={`ZeroSizeButton-${index}`}
+              name={`ZeroSizeButton-${index}`}
+              size={InteractiveButtonSize.SIZE0}
+              row={2}
+              col={index}
+              position={new Vector3(19.5, 0.61, -6 + (index * 3))}
+            />
+          ))
+        }
+        {
+          Array(3).fill(0).map((el, index) => (
+            <InteractiveButton
+              key={`Two-oneSizeButton-${index}`}
+              name={`Two-oneSizeButton-${index}`}
+              size={InteractiveButtonSize.SIZE21}
+              col={6}
+              position={new Vector3(-20, 0.61, -7 + (index * 2))}
+            />
+          ))
+        }
+        {
+          ChipSizes.map((chip, index) => (
+            <Chips
+              key={`ZeroSizeButton-${chip.nominal}`}
+              nominal={chip.nominal}
+              position={new Vector3(16.5 - (index * 3), 0.61, 6)}
+            />
+          ))
+        }
+        <SpinButton
+          position={new Vector3(-24, 0.61, 5)}
+        />
       </mesh>
     </>
   );

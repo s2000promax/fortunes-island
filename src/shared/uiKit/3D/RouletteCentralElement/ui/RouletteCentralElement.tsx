@@ -9,16 +9,11 @@ import {
 } from '@babylonjs/core';
 import { useScene } from 'react-babylonjs';
 import {
-  CreateBarrierElement,
   CreateCentralConeElement,
   CreateCentralElement,
-  CreateMainConeElement,
 } from './utils/RouletteElements';
-import { CannonJSPlugin } from '@babylonjs/core/Physics/Plugins/cannonJSPlugin';
-import * as CANNON from 'cannon';
 import { CreateCellBase } from 'shared/uiKit/3D/RouletteCell/ui/utils/Cell';
 import { RouletteCellsBuilder } from 'shared/uiKit/3D/RouletteCell/model/CellsTypes';
-import { getX, getY } from 'shared/lib/utils/utils';
 
 interface RouletteProps {
   name?: string;
@@ -43,6 +38,8 @@ export const RouletteCentralElement = (props: RouletteProps) => {
     const light = new HemisphericLight(`${name}-hemiLight-1`, new Vector3(-20, 20, -20), scene);
     light.intensity = 0.2;
 
+    const meshesArray = [];
+
     const centralElement = CreateCentralElement(scene, 'centralElement') as Mesh;
     centralElement.position.y = 1.1;
 
@@ -54,48 +51,25 @@ export const RouletteCentralElement = (props: RouletteProps) => {
       height: 0.2,
     }, scene) as Mesh;
 
-    /*
-    const hidden = MeshBuilder.CreateCylinder(`${name}-hidden`, {
-      diameter: 15.2,
-      height: 0.1,
-    }, scene) as Mesh;
-    hidden.position.y = -0.06;
-
-     */
-
-    const mainCone = CreateMainConeElement(scene, 'mainConeElement') as Mesh;
-
-    const meshesArray = [];
     meshesArray.push(centralElement);
     meshesArray.push(centralCone);
     meshesArray.push(nextCone);
-    meshesArray.push(mainCone);
 
-    let yRotationAngle = -9.5;
+    let yRotationAngle = 9.5;
     const k = 0.165;
 
     RouletteCellsBuilder.map((cell, index) => {
-      yRotationAngle += 9.5;
+      yRotationAngle -= 9.5;
       const y = (yRotationAngle * Math.PI) / 180;
       const r = 5.1;
       const x = r * Math.cos(y);
       const z = r * Math.sin(y);
 
       const cellPosition = new Vector3(x, 0, z);
-      const cellRotation = new Vector3(0, 1.56 - (k * index), 0);
+      const cellRotation = new Vector3(0, 1.56 + (k * index), 0);
 
       const rouletteCell = CreateCellBase(scene, `${index}-cell`, cell, cellPosition, cellRotation) as Mesh;
       meshesArray.push(rouletteCell);
-    });
-
-    const xAngel = [0, -0.35, 0, 0.35];
-    const zAngel = [0.2, 0, -0.2, 0];
-    [0, 1.57, 3.14, 4.71].forEach((angel, index) => {
-      const barrier = CreateBarrierElement(scene,`${index}-barrier`) as Mesh;
-      barrier.position = new Vector3(getX(angel, 8.5), 1.4, getY(angel, 8.5));
-      barrier.rotation = new Vector3(xAngel[index], 0, zAngel[index]);
-
-      meshesArray.push(barrier);
     });
 
     const resultMesh = Mesh.MergeMeshes(
