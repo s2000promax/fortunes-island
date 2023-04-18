@@ -1,5 +1,6 @@
 import { Color3, Mesh, MeshBuilder, Nullable, Scene, StandardMaterial, Vector3 } from '@babylonjs/core';
 import { getX, getY } from 'shared/lib/utils/utils';
+import * as earcut from 'earcut';
 
 function CreateDecorateElement1(scene: Scene, name: string): Nullable<Mesh> {
   const cyl7 = MeshBuilder.CreateCylinder(`${name}-cyl7`, {
@@ -120,6 +121,33 @@ export function CreateMainConeElement(scene: Scene, name: string): Nullable<Mesh
   mainConeMaterial.diffuseColor = new Color3(0.2, 0.2, 0.2);
   mainCone.material = mainConeMaterial;
 
-
   return mainCone;
+}
+
+export function CreateBarrierElement(scene: Scene, name: string): Nullable<Mesh> {
+  const barrierShape = [
+    new Vector3(0.2, 0, 0.3),
+    new Vector3(0.05, 0, 0.6),
+    new Vector3(-0.05, 0, 0.6),
+    new Vector3(-0.2, 0, 0.3),
+    new Vector3(-0.2, 0, -0.3),
+    new Vector3(-0.05, 0, -0.6),
+    new Vector3(0.05, 0, -0.6),
+    new Vector3(0.2, 0, -0.3),
+  ];
+  // barrierShape.push(barrierShape[0]);  //close profile
+
+  const barrier = MeshBuilder.ExtrudePolygon(
+    `${name}-extrudeBarrier`,
+    {
+      shape: barrierShape,
+      depth: 0.5,
+      sideOrientation: Mesh.DOUBLESIDE,
+    }, scene, earcut);
+
+  const barrierMaterial = new StandardMaterial(`${name}-mainConeMaterial`, scene);
+  barrierMaterial.diffuseColor = Color3.Red();
+  barrier.material = barrierMaterial;
+
+  return barrier;
 }

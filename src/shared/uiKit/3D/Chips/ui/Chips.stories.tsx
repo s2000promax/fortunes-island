@@ -1,6 +1,7 @@
 import React from 'react';
 import { type ComponentMeta, type ComponentStory } from '@storybook/react';
-import { Chips, ChipsNominals } from './Chips';
+import { Chips } from './Chips';
+import { ChipsNominals } from '../model/types/types';
 import { Canvas } from 'widgets/Canvas';
 import { Vector3 } from '@babylonjs/core';
 

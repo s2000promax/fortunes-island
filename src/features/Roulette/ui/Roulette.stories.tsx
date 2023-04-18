@@ -1,5 +1,6 @@
 import React from 'react';
 import { type ComponentMeta, type ComponentStory } from '@storybook/react';
+import '@babylonjs/core/Physics/physicsEngineComponent';
 import { Roulette } from './Roulette';
 import { Canvas } from 'widgets/Canvas';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector';
