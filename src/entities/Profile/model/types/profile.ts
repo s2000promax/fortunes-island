@@ -18,6 +18,7 @@ export interface Profile {
     city?: string;
     username?: string;
     avatar?: string;
+    balance?: number;
 }
 
 export interface ProfileSchema {

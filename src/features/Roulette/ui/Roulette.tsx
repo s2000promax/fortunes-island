@@ -8,6 +8,8 @@ import { useBeforeRender, useScene } from 'react-babylonjs';
 import { AmmoJSPlugin } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin';
 import Ammo from 'ammojs-typed';
 import { getX, getY } from 'shared/lib/utils/utils';
+import { useSelector } from 'react-redux';
+import { getUserBalance } from 'entities/User';
 
 
 interface RouletteProps {
@@ -24,7 +26,8 @@ export const Roulette = (props: RouletteProps) => {
     rotation,
     position,
   } = props;
-  console.log();
+  // const userBalance = useSelector(getUserBalance);
+  // console.log(userBalance);
   const scene = useScene() as Scene;
   const ballRef = useRef<Nullable<Mesh>>(null);
 
