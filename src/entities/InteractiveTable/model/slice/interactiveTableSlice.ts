@@ -1,43 +1,127 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  BitsIdTypes, DoubleBitsButtons,
-  HoverIdTypes,
+  BetsIdTypes, ChipsNominals,
+  DoubleBetsButtons,
   InteractiveTableSchema,
+  SectionBetsButtons,
+  SpecialBetsButtons,
 } from '../types/interactiveTable';
 import {
   TableCoordinatesArray,
-  DoubleButsButtonsArray,
-  SectionBitsButtonsArray,
-  SpecialBitsButtonsArray,
-  ZeroBitsButtonsArray,
+  DoubleBetsButtonsArray,
+  SectionBetsButtonsArray,
+  SpecialBetsButtonsArray,
+  ZeroBetsButtonsArray, RedBets, BlackBets,
 } from '../../utils/utils';
 
 const initialState: InteractiveTableSchema = {
-  currentClicked: undefined,
+  currentBetClicked: undefined,
+  currentBets: [],
   currentHover: undefined,
+  currentChipClicked: undefined,
   tableCoordinates: TableCoordinatesArray,
-  sectionBitsButtons: SectionBitsButtonsArray,
-  specialBitsButtons: SpecialBitsButtonsArray,
-  doubleBitsButtons: DoubleButsButtonsArray,
-  zeroBitsButtons: ZeroBitsButtonsArray,
+  sectionBetsButtons: SectionBetsButtonsArray,
+  specialBetsButtons: SpecialBetsButtonsArray,
+  doubleBetsButtons: DoubleBetsButtonsArray,
+  zeroBetsButtons: ZeroBetsButtonsArray,
 };
 
 export const interactiveTableSlice = createSlice({
   name: 'interactiveTable',
   initialState,
   reducers: {
-    setHovers: (state) => {
+    setCurrentClicked: (state, action: PayloadAction<BetsIdTypes | ChipsNominals>) => {
+      state.currentBetClicked = action.payload;
 
+      if (state.currentChipClicked) {
+        state.currentBets.push(
+          {
+            bet: action.payload,
+            chip: state.currentChipClicked,
+          });
+      }
     },
-    setCurrentClicked: (state, action: PayloadAction<BitsIdTypes>) => {
-      state.currentClicked = action.payload;
+    setChipsChoosed: (state, action: PayloadAction<ChipsNominals>) => {
+      state.currentChipClicked = action.payload;
     },
-    setCurrentHovered: (state, action: PayloadAction<BitsIdTypes>) => {
+    setCurrentHovered: (state, action: PayloadAction<BetsIdTypes>) => {
       state.currentHover = action.payload;
     },
     setHighlightBits: (state) => {
-      if (state.currentHover === DoubleBitsButtons['Bit2-1_1']) {
-        state.tableCoordinates[2].isHover = true;
+      if (state.currentHover === DoubleBetsButtons['Bet2-1_1']) {
+        for (let i = 2; i <= 35; i += 3) {
+          state.tableCoordinates[i].isHover = true;
+        }
+      }
+
+      if (state.currentHover === DoubleBetsButtons['Bet2-1_2']) {
+        for (let i = 1; i <= 34; i += 3) {
+          state.tableCoordinates[i].isHover = true;
+        }
+      }
+
+      if (state.currentHover === DoubleBetsButtons['Bet2-1_3']) {
+        for (let i = 0; i <= 33; i += 3) {
+          state.tableCoordinates[i].isHover = true;
+        }
+      }
+
+      if (state.currentHover === SectionBetsButtons['Bets_Section_1']) {
+        for (let i = 0; i <= 11; i += 1) {
+          state.tableCoordinates[i].isHover = true;
+        }
+      }
+
+      if (state.currentHover === SectionBetsButtons['Bets_Section_2']) {
+        for (let i = 12; i <= 23; i += 1) {
+          state.tableCoordinates[i].isHover = true;
+        }
+      }
+
+      if (state.currentHover === SectionBetsButtons['Bets_Section_3']) {
+        for (let i = 24; i <= 35; i += 1) {
+          state.tableCoordinates[i].isHover = true;
+        }
+      }
+
+      if (state.currentHover === SpecialBetsButtons['Bets_1-18']) {
+        for (let i = 0; i <= 17; i += 1) {
+          state.tableCoordinates[i].isHover = true;
+        }
+      }
+
+      if (state.currentHover === SpecialBetsButtons['Bets_Even']) {
+        for (let i = 0; i <= 35; i += 1) {
+          if (i % 2 !== 0) {
+            state.tableCoordinates[i].isHover = true;
+          }
+        }
+      }
+
+      if (state.currentHover === SpecialBetsButtons['Bets_Red']) {
+        RedBets.forEach(bet => {
+          state.tableCoordinates[bet - 1].isHover = true;
+        });
+      }
+
+      if (state.currentHover === SpecialBetsButtons['Bets_Black']) {
+        BlackBets.forEach(bet => {
+          state.tableCoordinates[bet - 1].isHover = true;
+        });
+      }
+
+      if (state.currentHover === SpecialBetsButtons['Bets_Odd']) {
+        for (let i = 0; i <= 35; i += 1) {
+          if (i % 2 === 0) {
+            state.tableCoordinates[i].isHover = true;
+          }
+        }
+      }
+
+      if (state.currentHover === SpecialBetsButtons['Bets_19-36']) {
+        for (let i = 18; i <= 35; i += 1) {
+          state.tableCoordinates[i].isHover = true;
+        }
       }
     },
     removeCurrentHovered: (state) => {

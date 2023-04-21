@@ -1,9 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RouletteSchema } from '../types/roulette';
+import { MovingDirection, RouletteSchema } from '../types/roulette';
 
 const initialState: RouletteSchema = {
   isMoving: false,
   isSceneReady: false,
+  movingDirection: MovingDirection.Сlockwise,
+  previousNumber: undefined,
+  currentNumber: undefined,
+  allDrawnNumbers: [],
 };
 
 export const rouletteSlice = createSlice({

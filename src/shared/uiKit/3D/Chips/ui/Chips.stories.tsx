@@ -1,9 +1,9 @@
 import React from 'react';
 import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { Chips } from './Chips';
-import { ChipsNominals } from '../model/types/types';
 import { Canvas } from 'widgets/Canvas';
 import { Vector3 } from '@babylonjs/core';
+import { ChipsNominals } from 'entities/InteractiveTable';
 
 export default {
   title: 'shared/3D/Chips',

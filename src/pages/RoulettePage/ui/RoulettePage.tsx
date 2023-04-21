@@ -7,13 +7,13 @@ import { InteractiveTable } from 'features/InteractiveTable';
 import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import { rouletteReducer } from 'entities/Roulette';
 import {
-  BitsIdTypes,
-  DoubleBitsButtons,
-  getDoubleBitsButtons,
-  getSectionBitsButtons,
-  getSpecialBitsButtons,
+  BetsIdTypes,
+  ChipsNominals,
+  getDoubleBetsButtons,
+  getSectionBetsButtons,
+  getSpecialBetsButtons,
   getTableCoordinates,
-  getZeroBitsButtons,
+  getZeroBetsButtons,
   interactiveTableActions,
   interactiveTableReducer,
 } from 'entities/InteractiveTable';
@@ -31,24 +31,26 @@ const RoulettePage = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   const TableBitsButtonsArray = useSelector(getTableCoordinates);
-  const SectionBitsButtonsArray = useSelector(getSectionBitsButtons);
-  const SpecialBitsButtonsArray = useSelector(getSpecialBitsButtons);
-  const ZeroBitsButtonsArray = useSelector(getZeroBitsButtons);
-  const DoubleBitsButtonsArray = useSelector(getDoubleBitsButtons);
+  const SectionBitsButtonsArray = useSelector(getSectionBetsButtons);
+  const SpecialBitsButtonsArray = useSelector(getSpecialBetsButtons);
+  const ZeroBitsButtonsArray = useSelector(getZeroBetsButtons);
+  const DoubleBitsButtonsArray = useSelector(getDoubleBetsButtons);
 
   const currentHover = useSelector(getCurrentHover);
 
   console.log('currentHover', currentHover);
 
-  const onClickHandler = useCallback((id: BitsIdTypes) => {
+  const onClickHandler = useCallback((id: BetsIdTypes) => {
     dispatch(interactiveTableActions.setCurrentClicked(id));
   }, [dispatch]);
 
-  const onHoverHandler = useCallback((id: BitsIdTypes) => {
+  const onChooseChipHandler = useCallback((id: ChipsNominals) => {
+    dispatch(interactiveTableActions.setChipsChoosed(id));
+  }, [dispatch]);
+
+  const onHoverHandler = useCallback((id: BetsIdTypes) => {
     dispatch(interactiveTableActions.setCurrentHovered(id));
-    if (id === DoubleBitsButtons['Bit2-1_1']){
-      dispatch(interactiveTableActions.setHighlightBits());
-    }
+    dispatch(interactiveTableActions.setHighlightBits());
   }, [dispatch]);
 
   const onRemoveHoverHandler = useCallback(() => {
@@ -73,7 +75,9 @@ const RoulettePage = (): ReactElement => {
             intensity={0.1}
             direction={Vector3.Up()}
           />
-
+          <Roulette
+            position={new Vector3(0, 0, -23)}
+          />
           {
             TableBitsButtonsArray?.length
             && SectionBitsButtonsArray?.length
@@ -82,10 +86,6 @@ const RoulettePage = (): ReactElement => {
             && DoubleBitsButtonsArray?.length
             && (
               <>
-                <Roulette
-                  position={new Vector3(0, 0, -23)}
-                />
-
                 <InteractiveTable
                   TableBitsButtonsArray={TableBitsButtonsArray}
                   SectionBitsButtonsArray={SectionBitsButtonsArray}
@@ -93,6 +93,7 @@ const RoulettePage = (): ReactElement => {
                   ZeroBitsButtonsArray={ZeroBitsButtonsArray}
                   DoubleBitsButtonsArray={DoubleBitsButtonsArray}
                   onClickHandler={onClickHandler}
+                  onChooseChipHandler={onChooseChipHandler}
                   onHoverHandler={onHoverHandler}
                   onRemoveHoverHandler={onRemoveHoverHandler}
                 />

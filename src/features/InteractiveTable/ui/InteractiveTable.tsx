@@ -5,11 +5,11 @@ import { Scene, Vector3 } from '@babylonjs/core';
 import { InteractiveButton, InteractiveButtonSize } from 'shared/uiKit/3D/InteractiveButton';
 import {
   TableCoordinates,
-  SectionBitsButtons,
-  SpecialBitsButtons,
-  ZeroBitsButtons,
-  DoubleBitsButtons,
-  BitsIdTypes,
+  SectionBetsButtons,
+  SpecialBetsButtons,
+  ZeroBetsButtons,
+  DoubleBetsButtons,
+  BetsIdTypes, ChipsNominals,
 } from 'entities/InteractiveTable';
 import { Chips, ChipSizes } from 'shared/uiKit/3D/Chips';
 import { SpinButton } from 'shared/uiKit/3D/SpinButton';
@@ -18,14 +18,15 @@ import { HoverIdTypes } from 'entities/InteractiveTable/model/types/interactiveT
 interface InteractiveTableProps {
   name?: string;
   position?: Vector3;
-  onClickHandler: (id: BitsIdTypes) => void;
-  onHoverHandler: (id: BitsIdTypes) => void;
+  onClickHandler: (id: BetsIdTypes) => void;
+  onChooseChipHandler: (id: ChipsNominals) => void;
+  onHoverHandler: (id: BetsIdTypes) => void;
   onRemoveHoverHandler: () => void;
   TableBitsButtonsArray: Array<TableCoordinates>;
-  SectionBitsButtonsArray: Array<SectionBitsButtons>;
-  SpecialBitsButtonsArray: Array<SpecialBitsButtons>;
-  ZeroBitsButtonsArray: Array<ZeroBitsButtons>;
-  DoubleBitsButtonsArray: Array<DoubleBitsButtons>;
+  SectionBitsButtonsArray: Array<SectionBetsButtons>;
+  SpecialBitsButtonsArray: Array<SpecialBetsButtons>;
+  ZeroBitsButtonsArray: Array<ZeroBetsButtons>;
+  DoubleBitsButtonsArray: Array<DoubleBetsButtons>;
 }
 
 export const InteractiveTable = (props: InteractiveTableProps) => {
@@ -38,6 +39,7 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
     ZeroBitsButtonsArray,
     DoubleBitsButtonsArray,
     onClickHandler,
+    onChooseChipHandler,
     onHoverHandler,
     onRemoveHoverHandler,
   } = props;
@@ -138,6 +140,7 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
             key={`ZeroSizeButton-${chip.nominal}`}
             nominal={chip.nominal}
             position={new Vector3(16.5 - (index * 3), 0.61, 6)}
+            onChooseChipHandler={onChooseChipHandler}
           />
         ))
       }
