@@ -1,7 +1,12 @@
 {
   "About": "About",
   "About page": "About page",
+  "Age": "Age",
   "Auth form": "Auth form",
+  "Avatar": "Avatar",
+  "City": "City",
+  "First name": "First name",
+  "Last name": "Last name",
   "Links": "Links",
   "Login": "Login",
   "Login or password incorrect": "Login or password incorrect",
@@ -14,9 +19,13 @@
   "Refresh page": "Refresh page",
   "Roulette": "Roulette",
   "Roulette page": "Roulette page",
+  "Somesing went wrong": "Somesing went wrong",
   "Something went wrong": "Something went wrong",
+  "Specify country": "Specify country",
+  "Specify currency": "Specify currency",
   "Throw error": "Throw error",
   "Toggle Language": "Toggle Language",
   "Toggle Theme": "Toggle Theme",
+  "Try to refresh page": "Try to refresh page",
   "Username": "Username"
 }

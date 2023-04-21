@@ -5,14 +5,16 @@
       "username": "admin",
       "password": "123",
       "role": "ADMIN",
-      "avatar": "https://faces-img.xcdn.link/thumb-lorem-face-3827_thumb.jpg"
+      "avatar": "https://faces-img.xcdn.link/thumb-lorem-face-3827_thumb.jpg",
+      "balance": 100
     },
     {
       "id": "2",
       "username": "user",
       "password": "123",
       "role": "USER",
-      "avatar": "https://faces-img.xcdn.link/thumb-lorem-face-3827_thumb.jpg"
+      "avatar": "https://faces-img.xcdn.link/thumb-lorem-face-3827_thumb.jpg",
+      "balance": 100
     }
   ],
   "profile": {

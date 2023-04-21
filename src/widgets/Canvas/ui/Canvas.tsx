@@ -3,6 +3,7 @@ import { Engine, Scene } from 'react-babylonjs';
 import '@babylonjs/core/Physics/physicsEngineComponent';
 import { classNames } from 'shared/lib/classNames/classNames';
 import cls from './Canvas.module.scss';
+import { StoreProvider } from 'app/providers/StoreProvider';
 
 interface CanvasProps {
   className?: string;
