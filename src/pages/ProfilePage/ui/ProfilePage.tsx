@@ -9,7 +9,7 @@ interface ProfilePageProps {
 const ProfilePage = (props: ProfilePageProps) => {
   const { className } = props;
   const { t } = useTranslation('profile');
-
+  
 
   return (
     <div className={classNames(cls.profilePage, {}, [className])}>

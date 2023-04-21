@@ -5,6 +5,8 @@ import {
 } from '@reduxjs/toolkit';
 import { ProfileSchema } from 'entities/Profile';
 import { AxiosInstance } from 'axios';
+import { RouletteSchema } from 'entities/Roulette';
+import { InteractiveTableSchema } from 'entities/InteractiveTable';
 
 export interface StateSchema {
   user: UserSchema;
@@ -12,6 +14,8 @@ export interface StateSchema {
   // Async reducers
   loginForm?: LoginSchema;
   profile?: ProfileSchema;
+  roulette?: RouletteSchema;
+  interactiveTable?: InteractiveTableSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

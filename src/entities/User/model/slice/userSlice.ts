@@ -24,6 +24,9 @@ export const userSlice = createSlice({
       state.authData = undefined;
       localStorage.removeItem(USER_LOCALSTORAGE_KEY);
     },
+    setBalance: (state, action: PayloadAction<number>) => {
+      state.authData!.balance = action.payload;
+    },
   },
 });
 
