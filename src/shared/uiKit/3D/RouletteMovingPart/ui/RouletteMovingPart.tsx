@@ -29,7 +29,6 @@ export const RouletteMovingPart = (props: RouletteProps) => {
         rouletteMoveRef.current.rotation.y +=
           (rpm / 60) * Math.PI * 2 * (deltaTimeInMillis / 1000);
         count += 1;
-        console.log(count);
       }
 
     });

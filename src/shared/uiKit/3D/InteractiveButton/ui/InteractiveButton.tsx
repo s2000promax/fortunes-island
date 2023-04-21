@@ -7,6 +7,14 @@ import numberSprite_x2 from '../../../../assets/extraNumbersSprite_x2.png';
 import numberSprite_x4 from '../../../../assets/extraNumbersSprite_x4.png';
 
 import { InteractiveButtonSize } from '../model/types';
+import {
+  BitsIdTypes,
+  DoubleBitsButtons,
+  SectionBitsButtons,
+  SpecialBitsButtons,
+  ZeroBitsButtons,
+} from 'entities/InteractiveTable';
+import { HoverIdTypes } from 'entities/InteractiveTable/model/types/interactiveTable';
 
 interface InteractiveButtonProps {
   name: string;
@@ -15,6 +23,11 @@ interface InteractiveButtonProps {
   col: number;
   rotation?: BABYLON.Vector3;
   position?: BABYLON.Vector3;
+  isHover?: boolean;
+  id: BitsIdTypes;
+  onClickHandler: (id: BitsIdTypes) => void;
+  onHoverHandler: (id: BitsIdTypes) => void;
+  onRemoveHoverHandler: () => void;
 }
 
 export const InteractiveButton = (props: InteractiveButtonProps) => {
@@ -25,6 +38,11 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
     col,
     rotation,
     position,
+    isHover,
+    id,
+    onClickHandler,
+    onHoverHandler,
+    onRemoveHoverHandler,
   } = props;
 
   const [mesh, setMesh] = useState<BABYLON.Nullable<BABYLON.Mesh>>(null);
@@ -123,12 +141,18 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
       // blurVerticalSize: 2,
     });
 
+    if (isHover) {
+      console.log('###-', isHover);
+      hl.addMesh(button, BABYLON.Color3.White());
+    }
+
     //ON MOUSE ENTER
     button.actionManager.registerAction(
       new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
         function (ev) {
           scene.hoverCursor = 'pointer';
           hl.addMesh(button, BABYLON.Color3.White());
+          onHoverHandler(id);
         }));
 
     //ON MOUSE EXIT
@@ -136,20 +160,27 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
       new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
         function (ev) {
           hl.removeMesh(button);
+          onRemoveHoverHandler();
         }));
 
     // ON CLICK
     button.actionManager.registerAction(
       new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger,
         function (ev) {
-          console.log('click', ev);
+          console.log('click' + id, ev);
+          onClickHandler(id);
         },
       ),
     );
 
-
     setMesh(button);
-  }, [col, name, row, scene, size]);
+  }, [
+    col, id, isHover, name,
+    onClickHandler,
+    onHoverHandler,
+    onRemoveHoverHandler,
+    row, scene, size,
+  ]);
 
   return (
     <>

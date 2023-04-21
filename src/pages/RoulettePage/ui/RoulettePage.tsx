@@ -1,22 +1,60 @@
-import { type ReactElement } from 'react';
+import { type ReactElement, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Canvas } from 'widgets/Canvas';
 import { Vector3 } from '@babylonjs/core';
 import { Roulette } from 'features/Roulette';
 import { InteractiveTable } from 'features/InteractiveTable';
 import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { getUserBalance, userReducer } from 'entities/User';
-import { useSelector } from 'react-redux';
 import { rouletteReducer } from 'entities/Roulette';
+import {
+  BitsIdTypes,
+  DoubleBitsButtons,
+  getDoubleBitsButtons,
+  getSectionBitsButtons,
+  getSpecialBitsButtons,
+  getTableCoordinates,
+  getZeroBitsButtons,
+  interactiveTableActions,
+  interactiveTableReducer,
+} from 'entities/InteractiveTable';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { getCurrentHover } from 'entities/InteractiveTable/model/selectors/getCurrentHover/getCurrentHover';
 
 const reducers: ReducersList = {
   roulette: rouletteReducer,
+  interactiveTable: interactiveTableReducer,
 };
 
 const RoulettePage = (): ReactElement => {
   const { t } = useTranslation('RoulettePage');
-  // const user = useSelector(getUserBalance);
-  // console.log('Balance', user);
+  const dispatch = useAppDispatch();
+
+  const TableBitsButtonsArray = useSelector(getTableCoordinates);
+  const SectionBitsButtonsArray = useSelector(getSectionBitsButtons);
+  const SpecialBitsButtonsArray = useSelector(getSpecialBitsButtons);
+  const ZeroBitsButtonsArray = useSelector(getZeroBitsButtons);
+  const DoubleBitsButtonsArray = useSelector(getDoubleBitsButtons);
+
+  const currentHover = useSelector(getCurrentHover);
+
+  console.log('currentHover', currentHover);
+
+  const onClickHandler = useCallback((id: BitsIdTypes) => {
+    dispatch(interactiveTableActions.setCurrentClicked(id));
+  }, [dispatch]);
+
+  const onHoverHandler = useCallback((id: BitsIdTypes) => {
+    dispatch(interactiveTableActions.setCurrentHovered(id));
+    if (id === DoubleBitsButtons['Bit2-1_1']){
+      dispatch(interactiveTableActions.setHighlightBits());
+    }
+  }, [dispatch]);
+
+  const onRemoveHoverHandler = useCallback(() => {
+    dispatch(interactiveTableActions.removeCurrentHovered());
+  }, [dispatch]);
+
   // @ts-ignore
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
@@ -36,29 +74,31 @@ const RoulettePage = (): ReactElement => {
             direction={Vector3.Up()}
           />
 
-          {/*<ground name="ground" width={6} height={6} />*/}
-          {/*<SpinningBox*/}
-          {/*  name={'left'}*/}
-          {/*  size={2}*/}
-          {/*  position={new Vector3(-2, 0, 0)}*/}
-          {/*  hoveredColor={Color3.FromHexString('#C26DBC')}*/}
-          {/*  color={Color3.FromHexString('#EEB5EB')}*/}
-          {/*/>*/}
-          {/*<SpinningBox*/}
-          {/*  name={'right'}*/}
-          {/*  size={2}*/}
-          {/*  position={new Vector3(2, 0, 0)}*/}
-          {/*  color={Color3.FromHexString('#C8F4F9')}*/}
-          {/*  hoveredColor={Color3.FromHexString('#3CACAE')}*/}
-          {/*/>*/}
+          {
+            TableBitsButtonsArray?.length
+            && SectionBitsButtonsArray?.length
+            && SpecialBitsButtonsArray?.length
+            && ZeroBitsButtonsArray?.length
+            && DoubleBitsButtonsArray?.length
+            && (
+              <>
+                <Roulette
+                  position={new Vector3(0, 0, -23)}
+                />
 
-
-          <Roulette
-            position={new Vector3(0, 0, -23)}
-          />
-
-          <InteractiveTable/>
-
+                <InteractiveTable
+                  TableBitsButtonsArray={TableBitsButtonsArray}
+                  SectionBitsButtonsArray={SectionBitsButtonsArray}
+                  SpecialBitsButtonsArray={SpecialBitsButtonsArray}
+                  ZeroBitsButtonsArray={ZeroBitsButtonsArray}
+                  DoubleBitsButtonsArray={DoubleBitsButtonsArray}
+                  onClickHandler={onClickHandler}
+                  onHoverHandler={onHoverHandler}
+                  onRemoveHoverHandler={onRemoveHoverHandler}
+                />
+              </>
+            )
+          }
         </Canvas>
       </div>
     </DynamicModuleLoader>
