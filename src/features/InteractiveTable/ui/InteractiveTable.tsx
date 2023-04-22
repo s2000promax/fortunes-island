@@ -22,6 +22,7 @@ interface InteractiveTableProps {
   onChooseChipHandler: (id: ChipsNominals) => void;
   onHoverHandler: (id: BetsIdTypes) => void;
   onRemoveHoverHandler: () => void;
+  onRouletteStartHandler: () => void;
   TableBitsButtonsArray: Array<TableCoordinates>;
   SectionBitsButtonsArray: Array<SectionBetsButtons>;
   SpecialBitsButtonsArray: Array<SpecialBetsButtons>;
@@ -42,6 +43,7 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
     onChooseChipHandler,
     onHoverHandler,
     onRemoveHoverHandler,
+    onRouletteStartHandler,
   } = props;
   const scene = useScene() as Scene;
   // const isHover = useSelector(getIsHover);
@@ -146,6 +148,7 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
       }
       <SpinButton
         position={new Vector3(-24, 0.61, 5)}
+        onRouletteStartHandler={onRouletteStartHandler}
       />
     </mesh>
   );

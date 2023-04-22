@@ -28,7 +28,7 @@ const AboutPage = (): ReactElement => {
         />
         {/*<InteractiveButton size={InteractiveButtonSize.SIZE1} name='Button1' />*/}
         {/*<InteractiveTable />*/}
-        <SpinButton />
+        {/*<SpinButton />*/}
       </Canvas>
     </div>
   );

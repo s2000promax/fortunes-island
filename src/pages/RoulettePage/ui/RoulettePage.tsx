@@ -5,7 +5,7 @@ import { Vector3 } from '@babylonjs/core';
 import { Roulette } from 'features/Roulette';
 import { InteractiveTable } from 'features/InteractiveTable';
 import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { rouletteReducer } from 'entities/Roulette';
+import { getIsRotating, rouletteActions, rouletteReducer } from 'entities/Roulette';
 import {
   BetsIdTypes,
   ChipsNominals,
@@ -20,11 +20,15 @@ import {
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { getCurrentHover } from 'entities/InteractiveTable/model/selectors/getCurrentHover/getCurrentHover';
+import Ammo from 'ammojs-typed';
 
 const reducers: ReducersList = {
   roulette: rouletteReducer,
   interactiveTable: interactiveTableReducer,
 };
+
+// @ts-ignore
+const ammo = await Ammo();
 
 const RoulettePage = (): ReactElement => {
   const { t } = useTranslation('RoulettePage');
@@ -36,9 +40,7 @@ const RoulettePage = (): ReactElement => {
   const ZeroBitsButtonsArray = useSelector(getZeroBetsButtons);
   const DoubleBitsButtonsArray = useSelector(getDoubleBetsButtons);
 
-  const currentHover = useSelector(getCurrentHover);
-
-  console.log('currentHover', currentHover);
+  const isRouletteRotating = useSelector(getIsRotating) || false;
 
   const onClickHandler = useCallback((id: BetsIdTypes) => {
     dispatch(interactiveTableActions.setCurrentClicked(id));
@@ -55,6 +57,10 @@ const RoulettePage = (): ReactElement => {
 
   const onRemoveHoverHandler = useCallback(() => {
     dispatch(interactiveTableActions.removeCurrentHovered());
+  }, [dispatch]);
+
+  const onRouletteStartHandler = useCallback(() => {
+    dispatch(rouletteActions.startRoulette());
   }, [dispatch]);
 
   // @ts-ignore
@@ -75,9 +81,15 @@ const RoulettePage = (): ReactElement => {
             intensity={0.1}
             direction={Vector3.Up()}
           />
-          <Roulette
-            position={new Vector3(0, 0, -23)}
-          />
+          {
+            ammo && (
+              <Roulette
+                position={new Vector3(0, 0, -23)}
+                ammo={ammo}
+                isRouletteRotating={isRouletteRotating}
+              />
+            )
+          }
           {
             TableBitsButtonsArray?.length
             && SectionBitsButtonsArray?.length
@@ -96,6 +108,7 @@ const RoulettePage = (): ReactElement => {
                   onChooseChipHandler={onChooseChipHandler}
                   onHoverHandler={onHoverHandler}
                   onRemoveHoverHandler={onRemoveHoverHandler}
+                  onRouletteStartHandler={onRouletteStartHandler}
                 />
               </>
             )
