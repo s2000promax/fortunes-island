@@ -5,7 +5,7 @@ import { Vector3 } from '@babylonjs/core';
 import { Roulette } from 'features/Roulette';
 import { InteractiveTable } from 'features/InteractiveTable';
 import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { getIsRotating, rouletteActions, rouletteReducer } from 'entities/Roulette';
+import { getIsRotating, getRotatingDirection, rouletteActions, rouletteReducer } from 'entities/Roulette';
 import {
   BetsIdTypes,
   ChipsNominals,
@@ -19,8 +19,8 @@ import {
 } from 'entities/InteractiveTable';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { getCurrentHover } from 'entities/InteractiveTable/model/selectors/getCurrentHover/getCurrentHover';
 import Ammo from 'ammojs-typed';
+import { RotatingDirection } from 'entities/Roulette/model/types/roulette';
 
 const reducers: ReducersList = {
   roulette: rouletteReducer,
@@ -40,7 +40,9 @@ const RoulettePage = (): ReactElement => {
   const ZeroBitsButtonsArray = useSelector(getZeroBetsButtons);
   const DoubleBitsButtonsArray = useSelector(getDoubleBetsButtons);
 
+  const rotatingDirection = useSelector(getRotatingDirection) || RotatingDirection.Сlockwise;
   const isRouletteRotating = useSelector(getIsRotating) || false;
+  console.log('Roulette page, isRotating', isRouletteRotating);
 
   const onClickHandler = useCallback((id: BetsIdTypes) => {
     dispatch(interactiveTableActions.setCurrentClicked(id));
@@ -60,6 +62,7 @@ const RoulettePage = (): ReactElement => {
   }, [dispatch]);
 
   const onRouletteStartHandler = useCallback(() => {
+    dispatch(rouletteActions.changeRotation());
     dispatch(rouletteActions.startRoulette());
   }, [dispatch]);
 
@@ -87,6 +90,7 @@ const RoulettePage = (): ReactElement => {
                 position={new Vector3(0, 0, -23)}
                 ammo={ammo}
                 isRouletteRotating={isRouletteRotating}
+                rotateDirection={rotatingDirection}
               />
             )
           }

@@ -31,6 +31,11 @@ export const rouletteSlice = createSlice({
     addDrawnNumber: (state, action: PayloadAction<BetsNumbers>) => {
       state.allDrawnNumbers.push(action.payload);
     },
+    changeRotation: (state) => {
+      state.rotatingDirection = state.rotatingDirection === RotatingDirection.Сlockwise
+        ? RotatingDirection.СounterСlockwise
+        : RotatingDirection.Сlockwise;
+    },
   },
 });
 

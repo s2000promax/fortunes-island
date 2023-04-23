@@ -80,7 +80,7 @@ export const RouletteCentralElement = (props: RouletteProps) => {
     resultMesh.physicsImpostor = new PhysicsImpostor(
       resultMesh,
       PhysicsImpostor.MeshImpostor,
-      { mass: 0 },
+      { mass: 0, damping: 2 },
       scene,
     );
 

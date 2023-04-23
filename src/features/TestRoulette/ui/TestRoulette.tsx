@@ -8,12 +8,14 @@ import { Ball } from 'shared/uiKit/3D/Ball';
 import { RouletteCell } from 'shared/uiKit/3D/RouletteCell';
 import { CellNumber } from 'shared/uiKit/3D/RouletteCell/model/CellsTypes';
 import { RouletteMovingPart } from 'shared/uiKit/3D/RouletteMovingPart';
+import { RotatingDirection } from 'entities/Roulette/model/types/roulette';
 
 interface TestRouletteProps {
   className?: string;
   name?: string;
   rotation?: Vector3;
   position?: Vector3;
+  rotatingDirection?: RotatingDirection;
 }
 
 // @ts-ignore
@@ -25,6 +27,7 @@ export const TestRoulette = (props: TestRouletteProps) => {
     name = 'TestCell',
     position,
     rotation,
+    rotatingDirection = RotatingDirection.Сlockwise,
   } = props;
 
   const scene = useScene() as Scene;
@@ -39,7 +42,9 @@ export const TestRoulette = (props: TestRouletteProps) => {
         name={name}
         position={position}
       >
-        <RouletteMovingPart />
+        <RouletteMovingPart
+        rotateDirection={rotatingDirection}
+        />
         <Ball position={new Vector3(0,20,0)} />
       </mesh>
     </>
