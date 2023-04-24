@@ -9,7 +9,7 @@ interface ChipsProps {
   nominal: ChipsNominals;
   rotation?: BABYLON.Vector3;
   position?: BABYLON.Vector3;
-  onChooseChipHandler: (id: ChipsNominals) => void;
+  onChooseChipHandler?: (id: ChipsNominals) => void;
 }
 
 export const Chips = (props: ChipsProps) => {
@@ -87,7 +87,9 @@ export const Chips = (props: ChipsProps) => {
     cylinder.actionManager.registerAction(
       new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger,
         function (ev) {
+        if (onChooseChipHandler) {
           onChooseChipHandler(nominal);
+        }
         },
       ),
     );

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { RouletteBody } from 'shared/uiKit/3D/RouletteBody';
 import { RouletteMovingPart } from 'shared/uiKit/3D/RouletteMovingPart';
-import { Mesh, Nullable, Scene, Vector3 } from '@babylonjs/core';
+import { Mesh, Nullable, PhysicsImpostor, Scene, Vector3 } from '@babylonjs/core';
 import { Ball } from 'shared/uiKit/3D/Ball';
 import '@babylonjs/core/Physics/physicsEngineComponent';
 import { useBeforeRender, useScene } from 'react-babylonjs';
@@ -38,8 +38,8 @@ export const Roulette = (props: RouletteProps) => {
   scene.enablePhysics(gravityVector, physicsPlugin);
 
   useEffect(() => {
-    if (ballRef.current && scene) {
-      playAnimation(ballRef, scene, rotateDirection, -10, Vector3.Zero());
+    if (ballRef.current) {
+      // playAnimation(ballRef, scene, rotateDirection, -10, Vector3.Zero());
     }
 
   }, [rotateDirection, scene]);
@@ -52,6 +52,7 @@ export const Roulette = (props: RouletteProps) => {
       >
         <RouletteBody/>
         <RouletteMovingPart
+          ball={ballRef}
           rotation={rotation}
           rotateDirection={rotateDirection}
         />
@@ -60,7 +61,7 @@ export const Roulette = (props: RouletteProps) => {
           ref={ballRef}
         >
           <Ball
-            position={new Vector3(0,3,-10.5)}
+            position={new Vector3(0.6,3,-10.5)}
           />
         </mesh>
       </mesh>

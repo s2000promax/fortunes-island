@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  BetsIdTypes, ChipsNominals,
+  BetsIdTypes, ChipsNominals, CurrentBet,
   DoubleBetsButtons,
   InteractiveTableSchema,
   SectionBetsButtons,
@@ -30,7 +30,7 @@ export const interactiveTableSlice = createSlice({
   name: 'interactiveTable',
   initialState,
   reducers: {
-    setCurrentClicked: (state, action: PayloadAction<BetsIdTypes | ChipsNominals>) => {
+    setCurrentClicked: (state, action: PayloadAction<BetsIdTypes>) => {
       state.currentBetClicked = action.payload;
 
       if (state.currentChipClicked) {

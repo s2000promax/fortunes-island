@@ -1,3 +1,4 @@
+import { Vector3 } from '@babylonjs/core';
 
 export type TableCoordinates = {
   id: BetsNumbers;
@@ -91,7 +92,7 @@ export enum ChipsNominals {
 }
 
 export type CurrentBet = {
-  bet: BetsIdTypes | ChipsNominals;
+  bet: BetsIdTypes;
   chip: ChipsNominals;
 }
 
@@ -100,6 +101,11 @@ export type BetsIdTypes =
 
 export type HoverIdTypes =
   | SectionBetsButtons | SpecialBetsButtons | DoubleBetsButtons | undefined;
+
+export type CurrentBetsPositions = {
+  bet: BetsIdTypes;
+  pos: Vector3;
+}
 
 export interface InteractiveTableSchema {
   tableCoordinates: Array<TableCoordinates>;

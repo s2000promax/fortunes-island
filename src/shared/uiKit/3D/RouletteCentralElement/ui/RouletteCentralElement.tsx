@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { MutableRefObject, useMemo, useState } from 'react';
 import * as cannon from "cannon";
 import {
   AxesViewer, HemisphericLight, HingeJoint,
@@ -19,6 +19,7 @@ interface RouletteProps {
   name?: string;
   rotation?: Vector3;
   position?: Vector3;
+  ball: MutableRefObject<Nullable<Mesh>>;
 }
 
 export const RouletteCentralElement = (props: RouletteProps) => {
@@ -26,6 +27,7 @@ export const RouletteCentralElement = (props: RouletteProps) => {
     name = 'rouletteCentralElement',
     rotation,
     position,
+    ball,
   } = props;
   const [mesh, setMesh] = useState<Nullable<Mesh>>(null);
   const scene = useScene() as Scene;
@@ -58,6 +60,11 @@ export const RouletteCentralElement = (props: RouletteProps) => {
     let yRotationAngle = 9.5;
     const k = 0.165;
 
+    // const ball = scene.getMeshByName('Ball');
+    // const cell = scene.getMeshByName('rouletteCell');
+    // console.log('cell', cell);
+
+
     RouletteCellsBuilder.map((cell, index) => {
       yRotationAngle -= 9.5;
       const y = (yRotationAngle * Math.PI) / 180;
@@ -69,6 +76,19 @@ export const RouletteCentralElement = (props: RouletteProps) => {
       const cellRotation = new Vector3(0, 1.56 + (k * index), 0);
 
       const rouletteCell = CreateCellBase(scene, `${index}-cell`, cell, cellPosition, cellRotation) as Mesh;
+
+      const cellImpostor = rouletteCell._physicsImpostor as PhysicsImpostor;
+      let isTrue = false;
+      if (ball.current) {
+        ball.current._physicsImpostor?.registerOnPhysicsCollide(cellImpostor, (main, collided) => {
+          if (!isTrue) {
+            const { id } = collided.object as Mesh;
+            console.log('id-cell: ', id);
+          }
+          isTrue = true;
+        });
+      }
+
       meshesArray.push(rouletteCell);
     });
 
@@ -85,7 +105,7 @@ export const RouletteCentralElement = (props: RouletteProps) => {
     );
 
     setMesh(resultMesh);
-  }, [name, scene]);
+  }, [ball, name, scene]);
 
   return (
     <>

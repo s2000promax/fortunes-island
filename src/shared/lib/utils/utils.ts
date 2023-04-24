@@ -1,6 +1,7 @@
 import { Animation, Mesh, Nullable, Scene, Vector3 } from '@babylonjs/core';
 import { MutableRefObject } from 'react';
 import { RotatingDirection } from 'entities/Roulette/model/types/roulette';
+import { BetsIdTypes, ChipsNominals, CurrentBetsPositions } from 'entities/InteractiveTable';
 
 export function getX(angel: number = 1, radius: number = 1) {
   return radius * Math.cos(angel);
@@ -47,5 +48,9 @@ export function playAnimation(
       true,
     );
   }
+};
+
+export const getCoordinates = (currentBets: Array<CurrentBetsPositions>, bet: BetsIdTypes): Vector3 => {
+  return currentBets[currentBets.findIndex(tableBet => tableBet.bet === bet)].pos;
 };
 

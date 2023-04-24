@@ -9,6 +9,7 @@ interface RouletteProps {
   className?: string;
   rotation?: Vector3;
   rotateDirection: RotatingDirection;
+  ball: MutableRefObject<Nullable<Mesh>>;
 }
 
 export const RouletteMovingPart = (props: RouletteProps) => {
@@ -16,6 +17,7 @@ export const RouletteMovingPart = (props: RouletteProps) => {
     className,
     rotation,
     rotateDirection,
+    ball,
   } = props;
   const scene = useScene() as Scene;
   const rouletteMoveRef = useRef<Nullable<Mesh>>(null);
@@ -35,7 +37,9 @@ export const RouletteMovingPart = (props: RouletteProps) => {
         rotation={rotation}
         disposeInstanceOnUnmount
       >
-        <RouletteCentralElement/>
+        <RouletteCentralElement
+          ball={ball}
+        />
       </transformNode>
     </>
   );

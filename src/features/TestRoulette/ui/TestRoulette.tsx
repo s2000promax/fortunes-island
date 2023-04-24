@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { MutableRefObject, useRef } from 'react';
 import '@babylonjs/core/Physics/physicsEngineComponent';
 import { AmmoJSPlugin } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin';
 import Ammo from 'ammojs-typed';
 import { useScene } from 'react-babylonjs';
-import { Scene, Vector3 } from '@babylonjs/core';
+import { Mesh, Nullable, Scene, Vector3 } from '@babylonjs/core';
 import { Ball } from 'shared/uiKit/3D/Ball';
 import { RouletteCell } from 'shared/uiKit/3D/RouletteCell';
 import { CellNumber } from 'shared/uiKit/3D/RouletteCell/model/CellsTypes';
@@ -16,6 +16,7 @@ interface TestRouletteProps {
   rotation?: Vector3;
   position?: Vector3;
   rotatingDirection?: RotatingDirection;
+  ball?: MutableRefObject<Nullable<Mesh>>;
 }
 
 // @ts-ignore
@@ -31,8 +32,9 @@ export const TestRoulette = (props: TestRouletteProps) => {
   } = props;
 
   const scene = useScene() as Scene;
+  const ballRef = useRef<Nullable<Mesh>>(null);
 
-  const gravityVector = new Vector3(0, -9.81,0);
+  const gravityVector = new Vector3(0, -9.81, 0);
   const physicsPlugin = new AmmoJSPlugin(true, ammo);
   scene.enablePhysics(gravityVector, physicsPlugin);
 
@@ -43,9 +45,15 @@ export const TestRoulette = (props: TestRouletteProps) => {
         position={position}
       >
         <RouletteMovingPart
-        rotateDirection={rotatingDirection}
+          rotateDirection={rotatingDirection}
+          ball={ballRef}
         />
-        <Ball position={new Vector3(0,20,0)} />
+        <mesh
+          name={'ballRef'}
+          ref={ballRef}
+        >
+          <Ball position={new Vector3(0, 20, 0)}/>
+        </mesh>
       </mesh>
     </>
   );
