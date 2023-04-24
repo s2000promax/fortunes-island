@@ -5,7 +5,6 @@ import { userReducer } from 'entities/User';
 import { $api } from 'shared/api/api';
 import { createReducerManager } from './reducerManager';
 import { StateSchema, ThunkExtraArg } from './StateSchema';
-import { rouletteReducer } from 'entities/Roulette';
 
 export function createReduxStore(
   initialState?: StateSchema,

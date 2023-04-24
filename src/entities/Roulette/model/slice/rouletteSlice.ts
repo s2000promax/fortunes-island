@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RouletteSchema } from '../types/roulette';
+import { RotatingDirection, RouletteSchema } from '../types/roulette';
+import { BetsNumbers } from 'entities/InteractiveTable';
 
 const initialState: RouletteSchema = {
-  isMoving: false,
+  isRotating: false,
   isSceneReady: false,
+  rotatingDirection: RotatingDirection.Сlockwise,
+  previousNumber: undefined,
+  currentNumber: undefined,
+  allDrawnNumbers: [],
 };
 
 export const rouletteSlice = createSlice({
@@ -13,11 +18,23 @@ export const rouletteSlice = createSlice({
     setSceneReady: (state) => {
       state.isSceneReady = true;
     },
-    startMoving: (state, action: PayloadAction<any>) => {
-      state.isMoving = true;
+    startRoulette: (state) => {
+      state.isRotating = true;
     },
-    stopMoving: (state) => {
-      state.isMoving = false;
+    stopRoulette: (state) => {
+      state.isRotating = false;
+    },
+
+    addPreviousNumber: (state, action: PayloadAction<BetsNumbers>) => {
+      state.previousNumber = action.payload;
+    },
+    addDrawnNumber: (state, action: PayloadAction<BetsNumbers>) => {
+      state.allDrawnNumbers.push(action.payload);
+    },
+    changeRotation: (state) => {
+      state.rotatingDirection = state.rotatingDirection === RotatingDirection.Сlockwise
+        ? RotatingDirection.СounterСlockwise
+        : RotatingDirection.Сlockwise;
     },
   },
 });
