@@ -2,8 +2,7 @@ import React from 'react';
 import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { Ball } from './Ball';
 import { Canvas } from 'widgets/Canvas';
-import { Vector3 } from '@babylonjs/core/Maths/math.vector';
-import { Color3 } from '@babylonjs/core';
+import { Color3, Vector3 } from '@babylonjs/core';
 
 export default {
   title: 'shared/3D/Ball',

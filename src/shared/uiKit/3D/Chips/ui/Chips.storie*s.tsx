@@ -3,8 +3,8 @@ import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { Chips } from './Chips';
 import { Canvas } from 'widgets/Canvas';
 import { Vector3 } from '@babylonjs/core';
-import { ChipsNominals } from 'entities/InteractiveTable';
-
+// import { ChipsNominals } from 'entities/InteractiveTable';
+import { ChipsNominals } from '../../../../../entities/InteractiveTable';
 export default {
   title: 'shared/3D/Chips',
   component: Chips,
