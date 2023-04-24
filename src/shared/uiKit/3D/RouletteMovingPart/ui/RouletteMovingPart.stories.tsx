@@ -2,7 +2,7 @@ import React from 'react';
 import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { RouletteMovingPart } from './RouletteMovingPart';
 import { Canvas } from 'widgets/Canvas';
-import { Vector3 } from '@babylonjs/core/Maths/math.vector';
+import { Vector3 } from '@babylonjs/core';
 
 export default {
   title: 'shared/3D/RouletteMovingPart',
