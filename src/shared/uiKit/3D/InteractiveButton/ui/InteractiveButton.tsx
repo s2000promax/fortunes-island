@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import * as BABYLON from '@babylonjs/core';
 import * as earcut from 'earcut';
 import { useScene } from 'react-babylonjs';
@@ -8,11 +8,11 @@ import numberSprite_x4 from '../../../../assets/extraNumbersSprite_x4.png';
 
 import { InteractiveButtonSize } from '../model/types';
 import {
-  BitsIdTypes,
-  DoubleBitsButtons,
-  SectionBitsButtons,
-  SpecialBitsButtons,
-  ZeroBitsButtons,
+  BetsIdTypes,
+  DoubleBetsButtons,
+  SectionBetsButtons,
+  SpecialBetsButtons,
+  ZeroBetsButtons,
 } from 'entities/InteractiveTable';
 import { HoverIdTypes } from 'entities/InteractiveTable/model/types/interactiveTable';
 
@@ -24,9 +24,9 @@ interface InteractiveButtonProps {
   rotation?: BABYLON.Vector3;
   position?: BABYLON.Vector3;
   isHover?: boolean;
-  id: BitsIdTypes;
-  onClickHandler: (id: BitsIdTypes) => void;
-  onHoverHandler: (id: BitsIdTypes) => void;
+  id: BetsIdTypes;
+  onClickHandler: (id: BetsIdTypes) => void;
+  onHoverHandler: (id: BetsIdTypes) => void;
   onRemoveHoverHandler: () => void;
 }
 
@@ -62,19 +62,19 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
 
     if (size === InteractiveButtonSize.SIZE0) {
       buttonMaterial.diffuseTexture = new BABYLON.Texture(numberSprite, scene);
-      shapeButton.push(new BABYLON.Vector3(-1.45,0,-0.95));
-      shapeButton.push(new BABYLON.Vector3(1.45,0,-0.95));
-      shapeButton.push(new BABYLON.Vector3(1.45,0,1.95));
-      shapeButton.push(new BABYLON.Vector3(-1.45,0,1.95));
-      shapeButton.push(new BABYLON.Vector3(-2.4,0,0.5));
+      shapeButton.push(new BABYLON.Vector3(-1.45, 0, -0.95));
+      shapeButton.push(new BABYLON.Vector3(1.45, 0, -0.95));
+      shapeButton.push(new BABYLON.Vector3(1.45, 0, 1.95));
+      shapeButton.push(new BABYLON.Vector3(-1.45, 0, 1.95));
+      shapeButton.push(new BABYLON.Vector3(-2.4, 0, 0.5));
     }
 
     if (size === InteractiveButtonSize.SIZE1) {
       buttonMaterial.diffuseTexture = new BABYLON.Texture(numberSprite, scene);
-      shapeButton.push(new BABYLON.Vector3(1.45,0,-0.95));
-      shapeButton.push(new BABYLON.Vector3(-1.45,0,-0.95));
-      shapeButton.push(new BABYLON.Vector3(-1.45,0,0.95));
-      shapeButton.push(new BABYLON.Vector3(1.45,0,0.95));
+      shapeButton.push(new BABYLON.Vector3(1.45, 0, -0.95));
+      shapeButton.push(new BABYLON.Vector3(-1.45, 0, -0.95));
+      shapeButton.push(new BABYLON.Vector3(-1.45, 0, 0.95));
+      shapeButton.push(new BABYLON.Vector3(1.45, 0, 0.95));
     }
 
     if (size === InteractiveButtonSize.SIZE2) {
@@ -82,10 +82,10 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
       buttonMaterial.diffuseTexture.hasAlpha = true;
       rows = 1;
       columns = 9;
-      shapeButton.push(new BABYLON.Vector3(2.95,0,-0.95));
-      shapeButton.push(new BABYLON.Vector3(-2.95,0,-0.95));
-      shapeButton.push(new BABYLON.Vector3(-2.95,0,0.95));
-      shapeButton.push(new BABYLON.Vector3(2.95,0,0.95));
+      shapeButton.push(new BABYLON.Vector3(2.95, 0, -0.95));
+      shapeButton.push(new BABYLON.Vector3(-2.95, 0, -0.95));
+      shapeButton.push(new BABYLON.Vector3(-2.95, 0, 0.95));
+      shapeButton.push(new BABYLON.Vector3(2.95, 0, 0.95));
     }
 
     if (size === InteractiveButtonSize.SIZE21) {
@@ -93,10 +93,10 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
       buttonMaterial.diffuseTexture.hasAlpha = true;
       rows = 1;
       columns = 9;
-      shapeButton.push(new BABYLON.Vector3(1.95,0,-0.95));
-      shapeButton.push(new BABYLON.Vector3(-1.95,0,-0.95));
-      shapeButton.push(new BABYLON.Vector3(-1.95,0,0.95));
-      shapeButton.push(new BABYLON.Vector3(1.95,0,0.95));
+      shapeButton.push(new BABYLON.Vector3(1.95, 0, -0.95));
+      shapeButton.push(new BABYLON.Vector3(-1.95, 0, -0.95));
+      shapeButton.push(new BABYLON.Vector3(-1.95, 0, 0.95));
+      shapeButton.push(new BABYLON.Vector3(1.95, 0, 0.95));
     }
 
     if (size === InteractiveButtonSize.SIZE4) {
@@ -104,10 +104,10 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
       buttonMaterial.diffuseTexture.hasAlpha = true;
       rows = 1;
       columns = 3;
-      shapeButton.push(new BABYLON.Vector3(5.95,0,-0.95));
-      shapeButton.push(new BABYLON.Vector3(-5.95,0,-0.95));
-      shapeButton.push(new BABYLON.Vector3(-5.95,0,0.95));
-      shapeButton.push(new BABYLON.Vector3(5.95,0,0.95));
+      shapeButton.push(new BABYLON.Vector3(5.95, 0, -0.95));
+      shapeButton.push(new BABYLON.Vector3(-5.95, 0, -0.95));
+      shapeButton.push(new BABYLON.Vector3(-5.95, 0, 0.95));
+      shapeButton.push(new BABYLON.Vector3(5.95, 0, 0.95));
     }
 
     const r = row;
@@ -135,16 +135,7 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
 
     button.actionManager = new BABYLON.ActionManager(scene);
 
-    const hl = new BABYLON.HighlightLayer('hl1', scene, {
-      // isStroke: true,
-      // blurHorizontalSize: 4,
-      // blurVerticalSize: 2,
-    });
-
-    if (isHover) {
-      console.log('###-', isHover);
-      hl.addMesh(button, BABYLON.Color3.White());
-    }
+    const hl = new BABYLON.HighlightLayer('hl1', scene, {});
 
     //ON MOUSE ENTER
     button.actionManager.registerAction(
@@ -174,13 +165,21 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
     );
 
     setMesh(button);
-  }, [
-    col, id, isHover, name,
-    onClickHandler,
-    onHoverHandler,
-    onRemoveHoverHandler,
-    row, scene, size,
-  ]);
+  }, [col, id, name, onClickHandler, onHoverHandler, onRemoveHoverHandler, row, scene, size]);
+
+  useEffect(() => {
+    const hl = new BABYLON.HighlightLayer('hl1', scene, {});
+
+    if (isHover && mesh) {
+      hl.addMesh(mesh, BABYLON.Color3.White());
+    }
+
+    return () => {
+      if (mesh) {
+        hl.removeMesh(mesh);
+      }
+    };
+  }, [isHover, mesh, scene]);
 
   return (
     <>

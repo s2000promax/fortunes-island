@@ -1,13 +1,15 @@
-export enum MovingDirection {
-  Сlockwise,
-  СounterСlockwise
+import { BetsNumbers } from 'entities/InteractiveTable';
+
+export enum RotatingDirection {
+  Сlockwise= 1,
+  СounterСlockwise = -1,
 
 }
 export interface RouletteSchema {
   isSceneReady: boolean;
-  isMoving: boolean;
-  movingDirection?: MovingDirection;
-  previousNumber?: number;
-  currentNumber?: number;
-  allDrawnNumbers?: Array<[number]>;
+  isRotating: boolean;
+  rotatingDirection: RotatingDirection;
+  previousNumber: BetsNumbers | undefined;
+  currentNumber: BetsNumbers | undefined;
+  allDrawnNumbers: Array<BetsNumbers>;
 }

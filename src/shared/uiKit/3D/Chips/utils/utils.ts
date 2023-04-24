@@ -1,5 +1,5 @@
 import { Color4 } from '@babylonjs/core';
-import { ChipsNominals } from '../model/types/types';
+import { ChipsNominals } from 'entities/InteractiveTable';
 
 export const ChipSizes = [
   { nominal: ChipsNominals.CHIP_25_CENTS, row: 2, column: 0, color: new Color4(0.65, 0.45, 0.24, 1) },

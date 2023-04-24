@@ -9,6 +9,7 @@ interface SpinButtonProps {
   name?: string;
   rotation?: BABYLON.Vector3;
   position?: BABYLON.Vector3;
+  onRouletteStartHandler: () => void;
 }
 
 export const SpinButton = (props: SpinButtonProps) => {
@@ -16,6 +17,7 @@ export const SpinButton = (props: SpinButtonProps) => {
     name = 'SpinButton',
     rotation,
     position,
+    onRouletteStartHandler,
   } = props;
 
   const [mesh, setMesh] = useState<BABYLON.Nullable<BABYLON.Mesh>>(null);
@@ -70,13 +72,14 @@ export const SpinButton = (props: SpinButtonProps) => {
       new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger,
         function (ev) {
           console.log('click', ev);
+          onRouletteStartHandler();
         },
       ),
     );
 
 
     setMesh(spinButton);
-  }, [name, scene]);
+  }, [name, onRouletteStartHandler, scene]);
 
   return (
     <>

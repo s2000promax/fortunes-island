@@ -2,13 +2,14 @@ import React, { useMemo, useState } from 'react';
 import { useScene } from 'react-babylonjs';
 import * as BABYLON from '@babylonjs/core';
 import chipsSprite from '../../../../assets/chipsSprite.png';
-import { ChipsNominals } from '../model/types/types';
 import { ChipSizes } from '../utils/utils';
+import { ChipsNominals } from 'entities/InteractiveTable';
 
 interface ChipsProps {
   nominal: ChipsNominals;
   rotation?: BABYLON.Vector3;
   position?: BABYLON.Vector3;
+  onChooseChipHandler?: (id: ChipsNominals) => void;
 }
 
 export const Chips = (props: ChipsProps) => {
@@ -16,6 +17,7 @@ export const Chips = (props: ChipsProps) => {
     nominal,
     rotation,
     position,
+    onChooseChipHandler,
   } = props;
   const [mesh, setMesh] = useState<BABYLON.Nullable<BABYLON.Mesh>>(null);
   const scene = useScene() as BABYLON.Scene;
@@ -85,19 +87,21 @@ export const Chips = (props: ChipsProps) => {
     cylinder.actionManager.registerAction(
       new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger,
         function (ev) {
-          console.log('click', ev);
+        if (onChooseChipHandler) {
+          onChooseChipHandler(nominal);
+        }
         },
       ),
     );
 
     setMesh(cylinder);
-  }, [nominal, scene]);
+  }, [nominal, onChooseChipHandler, scene]);
 
   return (
     <>
       {mesh && (
         <mesh
-          name={nominal}
+          name={`${nominal}_dollars`}
           fromInstance={mesh}
           rotation={rotation}
           position={position}
