@@ -55,7 +55,7 @@ export const Ball = (props: BallProps) => {
     ball.physicsImpostor = new PhysicsImpostor(
       ball,
       PhysicsImpostor.SphereImpostor,
-      { mass: 1 },
+      { mass: 1, damping: 2 },
       scene,
     );
 
