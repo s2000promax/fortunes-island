@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import {
   AxesViewer, Color3, HemisphericLight,
   Mesh,
@@ -10,6 +10,7 @@ import { useScene } from 'react-babylonjs';
 import { getX, getY } from 'shared/lib/utils/utils';
 import { CreateMainConeElement } from './utils/RouletteBodyElements';
 import { CreateBarrierElement } from 'shared/uiKit/3D/RouletteCentralElement/ui/utils/RouletteElements';
+import { InvisibleImpostor } from 'shared/uiKit/3D/InvisibleImpostor';
 
 interface RouletteBodyProps {
   name?: string;
@@ -17,7 +18,7 @@ interface RouletteBodyProps {
   position?: Vector3;
 }
 
-export const RouletteBody = (props: RouletteBodyProps) => {
+export const RouletteBody = memo((props: RouletteBodyProps) => {
   const {
     name = 'TempConeCentral',
     rotation,
@@ -106,8 +107,9 @@ export const RouletteBody = (props: RouletteBodyProps) => {
           rotation={rotation}
           position={position}
           disposeInstanceOnUnmount
-        />
+        >
+        </mesh>
       )}
     </>
   );
-};
+});

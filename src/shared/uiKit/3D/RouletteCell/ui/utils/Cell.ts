@@ -1,25 +1,23 @@
 import {
   Color3,
-  Color4, Material,
   Mesh,
   MeshBuilder,
-  Nullable, PhysicsImpostor,
   Scene,
   StandardMaterial, Texture,
   Vector3,
   Vector4,
 } from '@babylonjs/core';
 import * as earcut from 'earcut';
-import { CellNumber, RouletteCells } from '../../model/CellsTypes';
 import cellsNumberSprite from '../../../../../assets/cellsNumberSprite.png';
+import { RouletteCells } from 'entities/Roulette';
 
 export function CreateCellBase(
   scene: Scene,
   name: string,
   cell: RouletteCells,
-  position: Vector3 = Vector3.Zero(),
-  rotation: Vector3 = Vector3.Zero(),
-): Nullable<Mesh> {
+  // position: Vector3 = Vector3.Zero(),
+  // rotation: Vector3 = Vector3.Zero(),
+): Mesh {
 
   const cellBaseMaterial = new StandardMaterial(`${name}-material`);
   cellBaseMaterial.diffuseTexture = new Texture(cellsNumberSprite, scene);
@@ -101,11 +99,18 @@ export function CreateCellBase(
   const resultMesh = Mesh.MergeMeshes([
     cellBase,
     resultCellBorder,
-  ], true, true, undefined, false, true);
+  ],
+    true,
+    true,
+    undefined,
+    false,
+    true,
+  ) as Mesh;
 
   if (resultMesh) {
-    resultMesh.position = position;
-    resultMesh.rotation = rotation;
+    resultMesh.visibility = 1;
+    // resultMesh.position = position;
+    // resultMesh.rotation = rotation;
   }
 
   return resultMesh;

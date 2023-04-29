@@ -10,11 +10,16 @@ import {
   StandardMaterial,
   MeshBuilder, PhysicsImpostor, Scene,
 } from '@babylonjs/core';
+import { formatDrawnNumber } from 'shared/lib/utils/utils';
+import { RotatingDirection } from 'entities/Roulette';
 
 interface BallProps {
   name?: string;
   position?: Vector3;
   rotation?: Vector3;
+  rotateDirection: RotatingDirection;
+  cellsImpostors: Array<PhysicsImpostor>;
+  onAddTemporaryDrawnNumberHandler: (num: string) => void;
 }
 
 export const Ball = (props: BallProps) => {
@@ -22,7 +27,10 @@ export const Ball = (props: BallProps) => {
     name = 'Ball',
     position,
     rotation,
-    } = props;
+    rotateDirection,
+    cellsImpostors,
+    onAddTemporaryDrawnNumberHandler,
+  } = props;
   const [mesh, setMesh] = useState<Nullable<Mesh>>(null);
   const scene = useScene() as Scene;
 
@@ -43,6 +51,7 @@ export const Ball = (props: BallProps) => {
       scene,
     ) as Mesh;
 
+
     ball.physicsImpostor = new PhysicsImpostor(
       ball,
       PhysicsImpostor.SphereImpostor,
@@ -50,8 +59,22 @@ export const Ball = (props: BallProps) => {
       scene,
     );
 
+    ball.physicsImpostor.applyImpulse(
+      new Vector3(rotateDirection * 20, 0, 0),
+      ball.getAbsolutePosition(),
+    );
+
+    ball.physicsImpostor.registerOnPhysicsCollide(cellsImpostors,
+      (main, collided) => {
+        const { id } = collided.object as Mesh;
+
+        console.log('id-cell: ', formatDrawnNumber(id));
+        onAddTemporaryDrawnNumberHandler(formatDrawnNumber(id));
+
+      });
+
     setMesh(ball);
-  }, [name, scene]);
+  }, [cellsImpostors, name, onAddTemporaryDrawnNumberHandler, rotateDirection, scene]);
 
   return (
     <>

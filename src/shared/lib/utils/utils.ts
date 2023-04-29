@@ -3,6 +3,12 @@ import { MutableRefObject } from 'react';
 import { RotatingDirection } from 'entities/Roulette/model/types/roulette';
 import { BetsIdTypes, ChipsNominals, CurrentBetsPositions } from 'entities/InteractiveTable';
 
+export function formatDrawnNumber(str: string) {
+
+  return str.split('').map(s => {
+    if (!isNaN(Number(s))) return s;
+  }).join('');
+}
 export function getX(angel: number = 1, radius: number = 1) {
   return radius * Math.cos(angel);
 }
@@ -25,7 +31,7 @@ export function getSlideUpAnimation(position: Vector3, offsetY: number) {
     },
   ];
 
-  const animation = new Animation('animation', 'rotation.y', 30, 0, 0);
+  const animation = new Animation('animation', 'rotation.y', 60, 0, 0);
   animation.setKeys(keys);
 
   return [animation];
@@ -47,6 +53,7 @@ export function playAnimation(
       360,
       true,
     );
+
   }
 };
 
