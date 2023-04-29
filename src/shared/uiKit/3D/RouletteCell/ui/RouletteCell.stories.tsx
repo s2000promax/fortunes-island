@@ -3,7 +3,7 @@ import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { RouletteCell } from './RouletteCell';
 import { Canvas } from 'widgets/Canvas';
 import { Vector3 } from '@babylonjs/core';
-import { CellNumber } from '../model/CellsTypes';
+import { CellNumber } from 'entities/Roulette';
 
 export default {
   title: 'shared/3D/RouletteCell',

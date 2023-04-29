@@ -91,11 +91,6 @@ export enum ChipsNominals {
   CHIP_10000_DOLLARS = 10000,
 }
 
-export type CurrentBet = {
-  bet: BetsIdTypes;
-  chip: ChipsNominals;
-}
-
 export type BetsIdTypes =
   | BetsNumbers | SectionBetsButtons | SpecialBetsButtons | ZeroBetsButtons | DoubleBetsButtons | undefined;
 
@@ -115,6 +110,5 @@ export interface InteractiveTableSchema {
   doubleBetsButtons: Array<DoubleBetsButtons>;
   currentBetClicked: BetsIdTypes | ChipsNominals | undefined;
   currentChipClicked: ChipsNominals | undefined;
-  currentBets: Array<CurrentBet>;
   currentHover: BetsIdTypes;
 }

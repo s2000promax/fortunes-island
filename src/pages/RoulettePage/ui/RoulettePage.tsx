@@ -1,13 +1,14 @@
-import { type ReactElement, useCallback } from 'react';
+import React, { memo, type ReactElement, useCallback, useEffect, useState } from 'react';
 import cls from './RoulettePage.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Canvas } from 'widgets/Canvas';
-import { Vector3 } from '@babylonjs/core';
+import { PhysicsImpostor, Vector3 } from '@babylonjs/core';
 import { Roulette } from 'features/Roulette';
 import { InteractiveTable } from 'features/InteractiveTable';
 import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import {
   getAllDrawnNumbers,
+  getCurrentBets,
   getIsRotating,
   getRotatingDirection,
   rouletteActions,
@@ -16,8 +17,7 @@ import {
 import {
   BetsIdTypes,
   ChipsNominals,
-  getCurrentBets,
-  getBetCoordinates,
+  getBetCoordinates, getCurrentBetClicked, getCurrentChipClicked,
   getDoubleBetsButtons,
   getSectionBetsButtons,
   getSpecialBetsButtons,
@@ -28,7 +28,6 @@ import {
 } from 'entities/InteractiveTable';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import Ammo from 'ammojs-typed';
 import { RotatingDirection } from 'entities/Roulette/model/types/roulette';
 import { Chips } from 'shared/uiKit/3D/Chips';
 import { getCoordinates } from 'shared/lib/utils/utils';
@@ -41,9 +40,6 @@ const reducers: ReducersList = {
   interactiveTable: interactiveTableReducer,
 };
 
-// @ts-ignore
-const ammo = await Ammo();
-
 interface RoulettePageProps {
   className?: string;
 }
@@ -53,17 +49,29 @@ const RoulettePage = (props: RoulettePageProps): ReactElement => {
   const { t } = useTranslation('RoulettePage');
   const dispatch = useAppDispatch();
 
-  const TableBitsButtonsArray = useSelector(getTableCoordinates);
-  const SectionBitsButtonsArray = useSelector(getSectionBetsButtons);
-  const SpecialBitsButtonsArray = useSelector(getSpecialBetsButtons);
-  const ZeroBitsButtonsArray = useSelector(getZeroBetsButtons);
-  const DoubleBitsButtonsArray = useSelector(getDoubleBetsButtons);
+  const TableBetsButtonsArray = useSelector(getTableCoordinates);
+  const SectionBetsButtonsArray = useSelector(getSectionBetsButtons);
+  const SpecialBetsButtonsArray = useSelector(getSpecialBetsButtons);
+  const ZeroBetsButtonsArray = useSelector(getZeroBetsButtons);
+  const DoubleBetsButtonsArray = useSelector(getDoubleBetsButtons);
 
   const rotatingDirection = useSelector(getRotatingDirection) || RotatingDirection.Сlockwise;
   const isRouletteRotating = useSelector(getIsRotating) || false;
 
-  const currentBets = useSelector(getCurrentBets);
-  const allDrawnNumbers = useSelector(getAllDrawnNumbers) || [];
+  const currentBets = useSelector(getCurrentBets) || [];
+  const choosedBet = useSelector(getCurrentBetClicked);
+  const choosedChip = useSelector(getCurrentChipClicked);
+
+  useEffect(() => {
+    if (choosedChip && choosedBet) {
+      dispatch(rouletteActions.addCurrentBet(
+        {
+          bet: choosedBet as BetsIdTypes,
+          chip: choosedChip,
+        },
+      ));
+    }
+  }, [choosedChip, choosedBet, dispatch]);
 
   const onClickHandler = useCallback((id: BetsIdTypes) => {
     dispatch(interactiveTableActions.setCurrentClicked(id));
@@ -75,7 +83,7 @@ const RoulettePage = (props: RoulettePageProps): ReactElement => {
 
   const onHoverHandler = useCallback((id: BetsIdTypes) => {
     dispatch(interactiveTableActions.setCurrentHovered(id));
-    dispatch(interactiveTableActions.setHighlightBits());
+    dispatch(interactiveTableActions.setHighlightBets());
   }, [dispatch]);
 
   const onRemoveHoverHandler = useCallback(() => {
@@ -87,7 +95,10 @@ const RoulettePage = (props: RoulettePageProps): ReactElement => {
     dispatch(rouletteActions.startRoulette());
   }, [dispatch]);
 
-  // @ts-ignore
+  const onAddTemporaryDrawnNumberHandler = useCallback((num: string) => {
+    dispatch(rouletteActions.addTemporaryDrawnNumber(num));
+  }, [dispatch]);
+
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
       <div className={classNames(cls.roulettePage, {}, [className])}>
@@ -106,29 +117,29 @@ const RoulettePage = (props: RoulettePageProps): ReactElement => {
             direction={Vector3.Up()}
           />
           {
-            ammo && (
+            (
               <Roulette
                 position={new Vector3(0, 0, -23)}
-                ammo={ammo}
                 isRouletteRotating={isRouletteRotating}
                 rotateDirection={rotatingDirection}
+                onAddTemporaryDrawnNumberHandler={onAddTemporaryDrawnNumberHandler}
               />
             )
           }
           {
-            TableBitsButtonsArray?.length
-            && SectionBitsButtonsArray?.length
-            && SpecialBitsButtonsArray?.length
-            && ZeroBitsButtonsArray?.length
-            && DoubleBitsButtonsArray?.length
+            TableBetsButtonsArray?.length
+            && SectionBetsButtonsArray?.length
+            && SpecialBetsButtonsArray?.length
+            && ZeroBetsButtonsArray?.length
+            && DoubleBetsButtonsArray?.length
             && (
               <>
                 <InteractiveTable
-                  TableBitsButtonsArray={TableBitsButtonsArray}
-                  SectionBitsButtonsArray={SectionBitsButtonsArray}
-                  SpecialBitsButtonsArray={SpecialBitsButtonsArray}
-                  ZeroBitsButtonsArray={ZeroBitsButtonsArray}
-                  DoubleBitsButtonsArray={DoubleBitsButtonsArray}
+                  TableBetsButtonsArray={TableBetsButtonsArray}
+                  SectionBetsButtonsArray={SectionBetsButtonsArray}
+                  SpecialBetsButtonsArray={SpecialBetsButtonsArray}
+                  ZeroBetsButtonsArray={ZeroBetsButtonsArray}
+                  DoubleBetsButtonsArray={DoubleBetsButtonsArray}
                   onClickHandler={onClickHandler}
                   onChooseChipHandler={onChooseChipHandler}
                   onHoverHandler={onHoverHandler}
@@ -139,19 +150,17 @@ const RoulettePage = (props: RoulettePageProps): ReactElement => {
             )
           }
           {
-            currentBets?.map(bet => (
-              <>
+            currentBets?.map((bet, index) => (
+              <React.Fragment key={`betForTable-${bet.chip}-${index}`}>
                 <Chips nominal={bet.chip}
                 position={getCoordinates(getBetCoordinates, bet.bet)}
                 />
-              </>
+              </React.Fragment>
             ))
           }
         </Canvas>
-        <CurrentBetWindow
-        currentBets={currentBets}
-        />
-        <GameScoreWindow allDrawnNumbers={allDrawnNumbers} />
+        <CurrentBetWindow />
+        <GameScoreWindow />
       </div>
     </DynamicModuleLoader>
   );

@@ -5,19 +5,21 @@ import { useTranslation } from 'react-i18next';
 import { BetsNumbers } from 'entities/InteractiveTable';
 import { useSelector } from 'react-redux';
 import { getUserBalance } from 'entities/User';
+import { getAllDrawnNumbers } from 'entities/Roulette';
 
 interface GameScoreWindowProps {
   className?: string;
-  allDrawnNumbers: Array<BetsNumbers>;
+  // allDrawnNumbers: Array<string>;
 }
 
 export const GameScoreWindow = (props: GameScoreWindowProps) => {
   const {
     className,
-    allDrawnNumbers,
+    // allDrawnNumbers,
   } = props;
   const { t } = useTranslation('RoulettePage');
   const userBalance = useSelector(getUserBalance);
+  const allDrawnNumbers = useSelector(getAllDrawnNumbers) || [];
 
   return (
     <div className={classNames(cls.gameScoreWindow, {}, [className])}>

@@ -1,70 +1,90 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { RouletteBody } from 'shared/uiKit/3D/RouletteBody';
 import { RouletteMovingPart } from 'shared/uiKit/3D/RouletteMovingPart';
-import { Mesh, Nullable, PhysicsImpostor, Scene, Vector3 } from '@babylonjs/core';
+import { PhysicsImpostor, Scene, Vector3 } from '@babylonjs/core';
 import { Ball } from 'shared/uiKit/3D/Ball';
 import '@babylonjs/core/Physics/physicsEngineComponent';
-import { useBeforeRender, useScene } from 'react-babylonjs';
-import { AmmoJSPlugin } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin';
-import { getX, getY, playAnimation } from 'shared/lib/utils/utils';
-import type Ammo from 'ammojs-typed';
+import { useScene } from 'react-babylonjs';
+
 import { RotatingDirection } from 'entities/Roulette/model/types/roulette';
+import { AmmoJSPlugin } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin';
+
+// @ts-ignore
+import { default as Ammo } from 'ammo.js/builds/ammo';
+Ammo();
 
 interface RouletteProps {
   name?: string;
   rotation?: Vector3;
   position?: Vector3;
-  ammo: typeof Ammo;
+  // ammo: typeof Ammo;
   isRouletteRotating: boolean;
   rotateDirection: RotatingDirection;
+  onAddTemporaryDrawnNumberHandler: (num: string) => void;
 }
 
-export const Roulette = (props: RouletteProps) => {
+export const Roulette = memo((props: RouletteProps) => {
   const {
     name = 'Roulette',
     rotation,
     position,
-    ammo,
     isRouletteRotating,
     rotateDirection,
+    onAddTemporaryDrawnNumberHandler,
   } = props;
 
-  const scene = useScene() as Scene;
-  const [startRotate, setStartRotate] = useState<boolean>(true);
-  const ballRef = useRef<Nullable<Mesh>>(null);
+  useEffect(() => {
+  }, []);
 
-  const gravityVector = new Vector3(0, -9.81,0);
-  const physicsPlugin = new AmmoJSPlugin(true, ammo);
+
+  const scene = useScene() as Scene;
+
+  const gravityVector = new Vector3(0, -10, 0);
+  const physicsPlugin = new AmmoJSPlugin(true);
+
   scene.enablePhysics(gravityVector, physicsPlugin);
 
-  useEffect(() => {
-    if (ballRef.current) {
-      // playAnimation(ballRef, scene, rotateDirection, -10, Vector3.Zero());
-    }
+  const [isStart, setIsStart] = useState<boolean>(false);
 
-  }, [rotateDirection, scene]);
+  const [cellsPhysicsImpostors, setCellsPhysicsImpostors] = useState<Array<PhysicsImpostor>>([]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const cellsPhysics: Array<PhysicsImpostor> = [];
+  const cellImpostorHandler = useCallback((impostor: PhysicsImpostor) => {
+    cellsPhysics.push(impostor);
+    // setCellsPhysicsImpostors((prevState) => [...prevState, impostor]);
+  }, [cellsPhysics]);
+
+  useEffect(() => {
+
+    if (cellsPhysics.length === 38 && !isStart) {
+      setCellsPhysicsImpostors(cellsPhysics);
+      setIsStart(true);
+    }
+  }, [cellsPhysics, isStart, scene]);
 
   return (
-    <>
-      <mesh
-        name={name}
-        position={position}
-      >
-        <RouletteBody/>
-        <RouletteMovingPart
-          ball={ballRef}
-          rotation={rotation}
-          rotateDirection={rotateDirection}
-        />
-        <mesh
-          name={'superBall'}
-          ref={ballRef}
-        >
+    <mesh
+      name={name}
+      position={position}
+    >
+      {
+        isStart && isRouletteRotating && (
           <Ball
-            position={new Vector3(0.6,3,-10.5)}
+            position={new Vector3(-2, 2.5, -9)}
+            rotateDirection={rotateDirection}
+            cellsImpostors={cellsPhysicsImpostors}
+            onAddTemporaryDrawnNumberHandler={onAddTemporaryDrawnNumberHandler}
           />
-        </mesh>
-      </mesh>
-    </>
+        )
+      }
+      <RouletteBody/>
+      <RouletteMovingPart
+        rotation={rotation}
+        isRouletteRotating={isRouletteRotating}
+        rotateDirection={rotateDirection}
+        cellImpostorHandler={cellImpostorHandler}
+      />
+    </mesh>
   );
-};
+});

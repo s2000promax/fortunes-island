@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Table } from 'shared/uiKit/3D/Table';
 import { useScene } from 'react-babylonjs';
 import { Scene, Vector3 } from '@babylonjs/core';
@@ -23,22 +23,22 @@ interface InteractiveTableProps {
   onHoverHandler: (id: BetsIdTypes) => void;
   onRemoveHoverHandler: () => void;
   onRouletteStartHandler: () => void;
-  TableBitsButtonsArray: Array<TableCoordinates>;
-  SectionBitsButtonsArray: Array<SectionBetsButtons>;
-  SpecialBitsButtonsArray: Array<SpecialBetsButtons>;
-  ZeroBitsButtonsArray: Array<ZeroBetsButtons>;
-  DoubleBitsButtonsArray: Array<DoubleBetsButtons>;
+  TableBetsButtonsArray: Array<TableCoordinates>;
+  SectionBetsButtonsArray: Array<SectionBetsButtons>;
+  SpecialBetsButtonsArray: Array<SpecialBetsButtons>;
+  ZeroBetsButtonsArray: Array<ZeroBetsButtons>;
+  DoubleBetsButtonsArray: Array<DoubleBetsButtons>;
 }
 
-export const InteractiveTable = (props: InteractiveTableProps) => {
+export const InteractiveTable = memo((props: InteractiveTableProps) => {
   const {
     name = 'InteractiveTable',
     position,
-    TableBitsButtonsArray,
-    SectionBitsButtonsArray,
-    SpecialBitsButtonsArray,
-    ZeroBitsButtonsArray,
-    DoubleBitsButtonsArray,
+    TableBetsButtonsArray,
+    SectionBetsButtonsArray,
+    SpecialBetsButtonsArray,
+    ZeroBetsButtonsArray,
+    DoubleBetsButtonsArray,
     onClickHandler,
     onChooseChipHandler,
     onHoverHandler,
@@ -50,7 +50,8 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
   // console.log('isHover', isHover);
   useEffect(() => {
     // console.log(TableBitsButtonsArray[2].isHover);
-  }, [TableBitsButtonsArray]);
+  }, [TableBetsButtonsArray]);
+
   return (
     <mesh
       name={name}
@@ -58,7 +59,7 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
     >
       <Table/>
       {
-        TableBitsButtonsArray.map((el, index) =>
+        TableBetsButtonsArray.map((el, index) =>
           (
             <InteractiveButton
               key={`oneSizeButton-${index}`}
@@ -76,7 +77,7 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
           ))
       }
       {
-        SectionBitsButtonsArray.map((el, index) => (
+        SectionBetsButtonsArray.map((el, index) => (
           <InteractiveButton
             key={`fourSizeButton-${index}`}
             name={`fourSizeButton-${index}`}
@@ -91,7 +92,7 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
         ))
       }
       {
-        SpecialBitsButtonsArray.map((el, index) => (
+        SpecialBetsButtonsArray.map((el, index) => (
           <InteractiveButton
             key={`twoSizeButton-${index}`}
             name={`twoSizeButton-${index}`}
@@ -106,7 +107,7 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
         ))
       }
       {
-        ZeroBitsButtonsArray.map((el, index) => (
+        ZeroBetsButtonsArray.map((el, index) => (
           <InteractiveButton
             key={`ZeroSizeButton-${index}`}
             name={`ZeroSizeButton-${index}`}
@@ -122,7 +123,7 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
         ))
       }
       {
-        DoubleBitsButtonsArray.map((el, index) => (
+        DoubleBetsButtonsArray.map((el, index) => (
           <InteractiveButton
             key={`Two-oneSizeButton-${index}`}
             name={`Two-oneSizeButton-${index}`}
@@ -152,4 +153,4 @@ export const InteractiveTable = (props: InteractiveTableProps) => {
       />
     </mesh>
   );
-};
+});

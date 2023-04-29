@@ -25,7 +25,7 @@ const Template: ComponentStory<typeof Ball> = (args) => {
         intensity={0.7}
         direction={Vector3.Up()}
       />
-      <Ball />
+      {/*<Ball />*/}
     </Canvas>
   );
 };

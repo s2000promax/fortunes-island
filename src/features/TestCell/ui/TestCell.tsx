@@ -5,8 +5,6 @@ import Ammo from 'ammojs-typed';
 import { useScene } from 'react-babylonjs';
 import { Mesh, PhysicsImpostor, Scene, Vector3 } from '@babylonjs/core';
 import { Ball } from 'shared/uiKit/3D/Ball';
-import { RouletteCell } from 'shared/uiKit/3D/RouletteCell';
-import { CellNumber } from 'shared/uiKit/3D/RouletteCell/model/CellsTypes';
 
 interface TestCellProps {
   className?: string;
@@ -16,7 +14,7 @@ interface TestCellProps {
 }
 
 // @ts-ignore
-const ammo = await Ammo();
+// const ammo = await Ammo();
 
 export const TestCell = (props: TestCellProps) => {
   const {
@@ -28,9 +26,10 @@ export const TestCell = (props: TestCellProps) => {
 
   const scene = useScene() as Scene;
 
-  const gravityVector = new Vector3(0.1, -2,0.1);
-  const physicsPlugin = new AmmoJSPlugin(true, ammo);
-  scene.enablePhysics(gravityVector, physicsPlugin);
+  // const gravityVector = new Vector3(0.1, -2,0.1);
+  // const physicsPlugin = new AmmoJSPlugin(true);
+  // scene.enablePhysics(gravityVector, physicsPlugin);
+
 
   const ball = scene.getMeshByName('Ball');
   const cell = scene.getMeshByName('rouletteCell');
@@ -56,12 +55,12 @@ export const TestCell = (props: TestCellProps) => {
         name={name}
         position={position}
       >
-        <RouletteCell
-          number={CellNumber.DoubleZero}
-          rotation={new Vector3(2,0,0)}
-          // position={new Vector3(0,0,-1)}
-        />
-        <Ball position={new Vector3(0,5,1)} />
+        {/*<RouletteCell*/}
+        {/*  number={CellNumber.DoubleZero}*/}
+        {/*  rotation={new Vector3(2,0,0)}*/}
+        {/*  // position={new Vector3(0,0,-1)}*/}
+        {/*/>*/}
+        {/*<Ball position={new Vector3(0,5,1)} />*/}
       </mesh>
     </>
   );
