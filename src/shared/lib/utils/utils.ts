@@ -1,4 +1,4 @@
-import { Animation, Mesh, Nullable, Scene, Vector3 } from '@babylonjs/core';
+import { Animation, EasingFunction, Mesh, Nullable, Scene, Vector3 } from '@babylonjs/core';
 import { MutableRefObject } from 'react';
 import { RotatingDirection } from 'entities/Roulette/model/types/roulette';
 import { BetsIdTypes, ChipsNominals, CurrentBetsPositions } from 'entities/InteractiveTable';
@@ -18,6 +18,7 @@ export function getY(angel: number = 1, radius: number = 1) {
 }
 
 export function getSlideUpAnimation(position: Vector3, offsetY: number) {
+  const frameRate = 60;
   const { y } = position;
 
   const keys = [
@@ -26,12 +27,19 @@ export function getSlideUpAnimation(position: Vector3, offsetY: number) {
       value: y,
     },
     {
-      frame: 120,
-      value: y + (offsetY),
+      frame: frameRate * 50,
+      value: y + (offsetY * 50),
     },
   ];
 
-  const animation = new Animation('animation', 'rotation.y', 120, 0, 0);
+  const animation = new Animation(
+    'animation',
+    'rotation.y',
+    frameRate,
+    Animation.ANIMATIONTYPE_FLOAT,
+    Animation.ANIMATIONLOOPMODE_CONSTANT,
+  );
+  animation.blendingSpeed = 10;
   animation.setKeys(keys);
 
   return [animation];
@@ -51,8 +59,8 @@ export function playAnimation(
       refMesh.current,
       animations,
       0,
-      120,
-      true,
+      3000,
+
     );
   }
 };

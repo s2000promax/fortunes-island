@@ -60,7 +60,7 @@ export const Ball = (props: BallProps) => {
     );
 
     ball.physicsImpostor.setLinearVelocity(
-      new Vector3(rotateDirection * (Math.random() * 10 + 50), 0, 0),
+      new Vector3(rotateDirection * (Math.random() * 10 + 30), 0, 0),
     );
 
     ball.physicsImpostor.setAngularVelocity(
