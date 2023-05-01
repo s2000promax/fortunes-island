@@ -55,20 +55,25 @@ export const Ball = (props: BallProps) => {
     ball.physicsImpostor = new PhysicsImpostor(
       ball,
       PhysicsImpostor.SphereImpostor,
-      { mass: 1, damping: 2 },
+      { mass: 1 },
       scene,
     );
 
-    ball.physicsImpostor.applyImpulse(
-      new Vector3(rotateDirection * 20, 0, 0),
-      ball.getAbsolutePosition(),
+    ball.physicsImpostor.setLinearVelocity(
+      new Vector3(rotateDirection * (Math.random() * 10 + 50), 0, 0),
+    );
+
+    ball.physicsImpostor.setAngularVelocity(
+      new Vector3( 0, Math.random() * 10, rotateDirection * Math.random() * 10),
     );
 
     ball.physicsImpostor.registerOnPhysicsCollide(cellsImpostors,
       (main, collided) => {
         const { id } = collided.object as Mesh;
 
-        console.log('id-cell: ', formatDrawnNumber(id));
+        if (_IS_DEV_) {
+          console.log('id-cell: ', formatDrawnNumber(id));
+        }
         onAddTemporaryDrawnNumberHandler(formatDrawnNumber(id));
 
       });

@@ -2,7 +2,7 @@ import React, { memo, type ReactElement, useCallback, useEffect, useState } from
 import cls from './RoulettePage.module.scss';
 import { useTranslation } from 'react-i18next';
 import { Canvas } from 'widgets/Canvas';
-import { PhysicsImpostor, Vector3 } from '@babylonjs/core';
+import { PhysicsImpostor, Scene, Vector3 } from '@babylonjs/core';
 import { Roulette } from 'features/Roulette';
 import { InteractiveTable } from 'features/InteractiveTable';
 import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
@@ -34,6 +34,7 @@ import { getCoordinates } from 'shared/lib/utils/utils';
 import { CurrentBetWindow } from 'shared/uiKit/CurrentBetWindow';
 import { classNames } from 'shared/lib/classNames/classNames';
 import { GameScoreWindow } from 'shared/uiKit/GameScoreWindow';
+import { useScene } from 'react-babylonjs';
 
 const reducers: ReducersList = {
   roulette: rouletteReducer,
@@ -46,7 +47,6 @@ interface RoulettePageProps {
 
 const RoulettePage = (props: RoulettePageProps): ReactElement => {
   const { className } = props;
-  const { t } = useTranslation('RoulettePage');
   const dispatch = useAppDispatch();
 
   const TableBetsButtonsArray = useSelector(getTableCoordinates);
@@ -70,6 +70,7 @@ const RoulettePage = (props: RoulettePageProps): ReactElement => {
           chip: choosedChip,
         },
       ));
+      dispatch(interactiveTableActions.clearCurrentBetClicked());
     }
   }, [choosedChip, choosedBet, dispatch]);
 
@@ -102,7 +103,6 @@ const RoulettePage = (props: RoulettePageProps): ReactElement => {
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
       <div className={classNames(cls.roulettePage, {}, [className])}>
-        {t('Roulette page')}
         <Canvas>
           <arcRotateCamera
             name="camera1"

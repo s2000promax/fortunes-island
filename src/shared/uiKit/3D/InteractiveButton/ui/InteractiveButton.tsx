@@ -158,7 +158,9 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
     button.actionManager.registerAction(
       new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger,
         function (ev) {
-          console.log('click' + id, ev);
+          if (_IS_DEV_) {
+            console.log('click' + id, ev);
+          }
           onClickHandler(id);
         },
       ),

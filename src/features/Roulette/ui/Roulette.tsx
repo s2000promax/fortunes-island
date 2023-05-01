@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { RouletteBody } from 'shared/uiKit/3D/RouletteBody';
 import { RouletteMovingPart } from 'shared/uiKit/3D/RouletteMovingPart';
 import { PhysicsImpostor, Scene, Vector3 } from '@babylonjs/core';
@@ -11,7 +11,8 @@ import { AmmoJSPlugin } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin';
 
 // @ts-ignore
 import { default as Ammo } from 'ammo.js/builds/ammo';
-Ammo();
+
+// Ammo();
 
 interface RouletteProps {
   name?: string;
@@ -33,30 +34,33 @@ export const Roulette = memo((props: RouletteProps) => {
     onAddTemporaryDrawnNumberHandler,
   } = props;
 
-  useEffect(() => {
-  }, []);
-
-
   const scene = useScene() as Scene;
-
-  const gravityVector = new Vector3(0, -10, 0);
-  const physicsPlugin = new AmmoJSPlugin(true);
-
-  scene.enablePhysics(gravityVector, physicsPlugin);
-
+  const [isSceneReady, setIsSceneReady] = useState<boolean>(false);
   const [isStart, setIsStart] = useState<boolean>(false);
-
   const [cellsPhysicsImpostors, setCellsPhysicsImpostors] = useState<Array<PhysicsImpostor>>([]);
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const cellsPhysics: Array<PhysicsImpostor> = [];
+
+  useEffect(() => {
+    if (!isSceneReady) {
+      Ammo().then(() => {
+        const gravityVector = new Vector3(0, -10, 0);
+        const physicsPlugin = new AmmoJSPlugin(true);
+        physicsPlugin.setTimeStep(1/120);
+        // physicsPlugin.setFixedTimeStep(0.01);
+        physicsPlugin.setMaxSteps(50);
+        console.log(physicsPlugin.getTimeStep());
+        scene.enablePhysics(gravityVector, physicsPlugin);
+        setIsSceneReady(true);
+      });
+    }
+  }, [isSceneReady, scene]);
+
   const cellImpostorHandler = useCallback((impostor: PhysicsImpostor) => {
     cellsPhysics.push(impostor);
-    // setCellsPhysicsImpostors((prevState) => [...prevState, impostor]);
   }, [cellsPhysics]);
 
   useEffect(() => {
-
     if (cellsPhysics.length === 38 && !isStart) {
       setCellsPhysicsImpostors(cellsPhysics);
       setIsStart(true);
@@ -64,27 +68,33 @@ export const Roulette = memo((props: RouletteProps) => {
   }, [cellsPhysics, isStart, scene]);
 
   return (
-    <mesh
-      name={name}
-      position={position}
-    >
+    <>
       {
-        isStart && isRouletteRotating && (
-          <Ball
-            position={new Vector3(-2, 2.5, -9)}
-            rotateDirection={rotateDirection}
-            cellsImpostors={cellsPhysicsImpostors}
-            onAddTemporaryDrawnNumberHandler={onAddTemporaryDrawnNumberHandler}
-          />
+        isSceneReady && (
+          <mesh
+            name={name}
+            position={position}
+          >
+            {
+              isStart && isRouletteRotating && (
+                <Ball
+                  position={new Vector3(-2, 2.5, -9)}
+                  rotateDirection={rotateDirection}
+                  cellsImpostors={cellsPhysicsImpostors}
+                  onAddTemporaryDrawnNumberHandler={onAddTemporaryDrawnNumberHandler}
+                />
+              )
+            }
+            <RouletteBody/>
+            <RouletteMovingPart
+              rotation={rotation}
+              isRouletteRotating={isRouletteRotating}
+              rotateDirection={rotateDirection}
+              cellImpostorHandler={cellImpostorHandler}
+            />
+          </mesh>
         )
       }
-      <RouletteBody/>
-      <RouletteMovingPart
-        rotation={rotation}
-        isRouletteRotating={isRouletteRotating}
-        rotateDirection={rotateDirection}
-        cellImpostorHandler={cellImpostorHandler}
-      />
-    </mesh>
+    </>
   );
 });

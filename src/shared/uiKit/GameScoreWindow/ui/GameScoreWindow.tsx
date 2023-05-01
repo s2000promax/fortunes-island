@@ -28,7 +28,7 @@ export const GameScoreWindow = (props: GameScoreWindowProps) => {
         <div>{t('You balance:')}</div>
         <div>{`$${userBalance}`}</div>
       </div>
-      <p>----------------------------------------------</p>
+      <p>----------------------------</p>
 
       <div className={cls.header}>{t('All the drawn numbers:')}</div>
       {

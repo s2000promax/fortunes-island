@@ -6,13 +6,17 @@ import { LoginModal } from 'features/AuthByUsername';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserAuthData, userActions } from 'entities/User';
 import cls from './Navbar.module.scss';
+import { useTheme } from 'app/providers/ThemeProvider';
+import { AppLink, AppLinkTheme } from 'shared/uiKit/AppLink';
+import ThemeToggle from 'shared/assets/ui/ThemeToggle.svg';
 
 interface NavbarProps {
   className?: string;
 }
 
 export const Navbar = memo(({ className }: NavbarProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
   const [isAuthModal, setIsAuthModal] = useState(false);
   const authData = useSelector(getUserAuthData);
   const dispatch = useDispatch();
@@ -29,35 +33,62 @@ export const Navbar = memo(({ className }: NavbarProps) => {
     dispatch(userActions.logout());
   }, [dispatch]);
 
-  if (authData) {
-    return (
-      <div className={classNames(cls.navbar, {}, [className])}>
-        <Button
-          variant={VariantButton.CLEAR_INVERTED}
-          className={cls.links}
-          onClick={onLogout}
-        >
-          {t('Logout')}
-        </Button>
-      </div>
-    );
-  }
-
   return (
     <div className={classNames(cls.navbar, {}, [className])}>
+      <div className={classNames(cls.links, {}, [className])}>
+        <AppLink theme={AppLinkTheme.SECONDARY} to={'/'}>
+          <span>{t('Main')}</span>
+        </AppLink>
+        <AppLink theme={AppLinkTheme.SECONDARY} to={'/about'}>
+          <span>{t('About')}</span>
+        </AppLink>
+        {
+          authData &&
+            <AppLink theme={AppLinkTheme.SECONDARY} to={'/roulette'}>
+              <span>{t('Roulette')}</span>
+            </AppLink>
+        }
+      </div>
       <Button
         variant={VariantButton.CLEAR_INVERTED}
-        className={cls.links}
-        onClick={onShowModal}
+        onClick={toggleTheme}
       >
-        {t('Login')}
+        <ThemeToggle />
       </Button>
-      {isAuthModal && (
-        <LoginModal
-          isOpen={isAuthModal}
-          onClose={onCloseModal}
-        />
-      )}
+      <Button
+        variant={VariantButton.CLEAR_INVERTED}
+        onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'de' : 'en')}
+      >
+        {i18n.language}
+      </Button>
+      {
+        authData ? (
+          <Button
+            variant={VariantButton.CLEAR_INVERTED}
+            className={cls.links}
+            onClick={onLogout}
+          >
+            {t('Logout')}
+          </Button>
+        ) : (
+          <>
+            <Button
+              variant={VariantButton.CLEAR_INVERTED}
+              className={cls.links}
+              onClick={onShowModal}
+            >
+              {t('Login')}
+            </Button>
+            {isAuthModal && (
+              <LoginModal
+                isOpen={isAuthModal}
+                onClose={onCloseModal}
+              />
+            )}
+          </>
+        )
+      }
     </div>
-  );
+  )
+    ;
 });

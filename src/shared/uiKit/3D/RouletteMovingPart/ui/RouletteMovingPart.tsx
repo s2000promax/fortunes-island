@@ -27,7 +27,7 @@ export const RouletteMovingPart = memo((props: RouletteProps) => {
   useEffect(() => {
     if (rouletteMoveRef.current && scene) {
       if (isRouletteRotating) {
-        // playAnimation(rouletteMoveRef, scene, rotateDirection, 0.1, Vector3.Zero());
+        playAnimation(rouletteMoveRef, scene, rotateDirection, 0.01, Vector3.Zero());
       };
     }
 

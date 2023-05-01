@@ -45,12 +45,6 @@ export const InteractiveTable = memo((props: InteractiveTableProps) => {
     onRemoveHoverHandler,
     onRouletteStartHandler,
   } = props;
-  const scene = useScene() as Scene;
-  // const isHover = useSelector(getIsHover);
-  // console.log('isHover', isHover);
-  useEffect(() => {
-    // console.log(TableBitsButtonsArray[2].isHover);
-  }, [TableBetsButtonsArray]);
 
   return (
     <mesh

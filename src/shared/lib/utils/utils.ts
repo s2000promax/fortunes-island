@@ -27,11 +27,11 @@ export function getSlideUpAnimation(position: Vector3, offsetY: number) {
     },
     {
       frame: 120,
-      value: y + offsetY,
+      value: y + (offsetY),
     },
   ];
 
-  const animation = new Animation('animation', 'rotation.y', 60, 0, 0);
+  const animation = new Animation('animation', 'rotation.y', 120, 0, 0);
   animation.setKeys(keys);
 
   return [animation];
@@ -46,14 +46,14 @@ export function playAnimation(
 ) {
   if (refMesh.current) {
     const animations = getSlideUpAnimation(position, offsetY * direction);
+
     const animatable = scene!.beginDirectAnimation(
       refMesh.current,
       animations,
       0,
-      360,
+      120,
       true,
     );
-
   }
 };
 
