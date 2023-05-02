@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Button } from 'shared/uiKit/Button';
+import { Button } from '@/shared/uiKit/Button';
 import { VariantButton } from './Button';
 
 describe('Buttons', () => {

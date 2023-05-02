@@ -1,4 +1,4 @@
-import { BetsIdTypes, ChipsNominals } from 'entities/InteractiveTable';
+import { BetsIdTypes, ChipsNominals } from '@/entities/InteractiveTable';
 import { Vector3 } from '@babylonjs/core';
 
 export enum RotatingDirection {

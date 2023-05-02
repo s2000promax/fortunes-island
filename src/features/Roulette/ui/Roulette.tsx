@@ -1,18 +1,16 @@
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { RouletteBody } from 'shared/uiKit/3D/RouletteBody';
-import { RouletteMovingPart } from 'shared/uiKit/3D/RouletteMovingPart';
+import { RouletteBody } from '@/shared/uiKit/3D/RouletteBody';
+import { RouletteMovingPart } from '@/shared/uiKit/3D/RouletteMovingPart';
 import { PhysicsImpostor, Scene, Vector3 } from '@babylonjs/core';
-import { Ball } from 'shared/uiKit/3D/Ball';
+import { Ball } from '@/shared/uiKit/3D/Ball';
 import '@babylonjs/core/Physics/physicsEngineComponent';
 import { useScene } from 'react-babylonjs';
 
-import { RotatingDirection } from 'entities/Roulette/model/types/roulette';
+import { RotatingDirection } from '@/entities/Roulette/model/types/roulette';
 import { AmmoJSPlugin } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin';
 
 // @ts-ignore
 import { default as Ammo } from 'ammo.js/builds/ammo';
-
-// Ammo();
 
 interface RouletteProps {
   name?: string;
@@ -46,10 +44,6 @@ export const Roulette = memo((props: RouletteProps) => {
       Ammo().then(() => {
         const gravityVector = new Vector3(0, -10, 0);
         const physicsPlugin = new AmmoJSPlugin(true);
-        physicsPlugin.setTimeStep(1/120);
-        // physicsPlugin.setFixedTimeStep(0.01);
-        physicsPlugin.setMaxSteps(50);
-        console.log(physicsPlugin.getTimeStep());
         scene.enablePhysics(gravityVector, physicsPlugin);
         setIsSceneReady(true);
       });

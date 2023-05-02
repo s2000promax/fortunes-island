@@ -2,9 +2,9 @@ import React, {
   MutableRefObject,
   useCallback, useEffect, useRef, useState,
 } from 'react';
-import { classNames, Mods } from 'shared/lib/classNames/classNames';
-import Portal from 'shared/uiKit/Portal/Portal';
-import { useTheme } from 'app/providers/ThemeProvider';
+import { classNames, Mods } from '@/shared/lib/classNames/classNames';
+import Portal from '@/shared/uiKit/Portal/Portal';
+import { useTheme } from '@/app/providers/ThemeProvider';
 import cls from './ModalWindow.module.scss';
 
 interface ModalWindowProps {

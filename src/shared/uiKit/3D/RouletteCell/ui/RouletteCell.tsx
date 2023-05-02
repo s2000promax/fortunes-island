@@ -1,14 +1,17 @@
 import React, { memo, useMemo, useState } from 'react';
 import '@babylonjs/core/Physics/physicsEngineComponent';
 import {
-  AxesViewer, Mesh, Nullable, PhysicsImpostor,
+  AxesViewer,
+  Mesh,
+  Nullable,
+  PhysicsImpostor,
   Scene,
   Vector3,
 } from '@babylonjs/core';
 import { useScene } from 'react-babylonjs';
 import { CreateCellBase } from './utils/Cell';
-import { CellNumber, RouletteCells, RouletteCellsBuilder } from 'entities/Roulette';
-// import { CellNumber, RouletteCells, RouletteCellsBuilder } from '../model/CellsTypes';
+import { CellNumber, RouletteCells, RouletteCellsBuilder } from '@/entities/Roulette';
+
 
 interface RouletteProps {
   name?: string;
@@ -33,8 +36,6 @@ export const RouletteCell = memo((props: RouletteProps) => {
     if (_IS_DEV_) {
       const axes = new AxesViewer(scene, 2);
     }
-    // const light1 = new HemisphericLight(`${name}-hemiLight-1`, new Vector3(-10, 10, -5), scene);
-    // const light2 = new HemisphericLight(`${name}-hemiLight-2`, new Vector3(-10, -10, -5), scene);
 
     const cellIndex: number = RouletteCellsBuilder
       .findIndex((item) => item.number === number);

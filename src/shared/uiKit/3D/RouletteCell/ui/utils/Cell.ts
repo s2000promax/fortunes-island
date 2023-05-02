@@ -9,7 +9,7 @@ import {
 } from '@babylonjs/core';
 import * as earcut from 'earcut';
 import cellsNumberSprite from '../../../../../assets/cellsNumberSprite.png';
-import { RouletteCells } from 'entities/Roulette';
+import { RouletteCells } from '@/entities/Roulette';
 
 export function CreateCellBase(
   scene: Scene,

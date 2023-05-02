@@ -1,11 +1,11 @@
 import React, { memo, type ReactElement, useCallback, useEffect, useState } from 'react';
 import cls from './RoulettePage.module.scss';
 import { useTranslation } from 'react-i18next';
-import { Canvas } from 'widgets/Canvas';
+import { Canvas } from '@/widgets/Canvas';
 import { PhysicsImpostor, Scene, Vector3 } from '@babylonjs/core';
-import { Roulette } from 'features/Roulette';
-import { InteractiveTable } from 'features/InteractiveTable';
-import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
+import { Roulette } from '@/features/Roulette';
+import { InteractiveTable } from '@/features/InteractiveTable';
+import { DynamicModuleLoader, ReducersList } from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
 import {
   getAllDrawnNumbers,
   getCurrentBets,
@@ -13,7 +13,7 @@ import {
   getRotatingDirection,
   rouletteActions,
   rouletteReducer,
-} from 'entities/Roulette';
+} from '@/entities/Roulette';
 import {
   BetsIdTypes,
   ChipsNominals,
@@ -25,15 +25,15 @@ import {
   getZeroBetsButtons,
   interactiveTableActions,
   interactiveTableReducer,
-} from 'entities/InteractiveTable';
+} from '@/entities/InteractiveTable';
 import { useSelector } from 'react-redux';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
-import { RotatingDirection } from 'entities/Roulette/model/types/roulette';
-import { Chips } from 'shared/uiKit/3D/Chips';
-import { getCoordinates } from 'shared/lib/utils/utils';
-import { CurrentBetWindow } from 'shared/uiKit/CurrentBetWindow';
-import { classNames } from 'shared/lib/classNames/classNames';
-import { GameScoreWindow } from 'shared/uiKit/GameScoreWindow';
+import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { RotatingDirection } from '@/entities/Roulette/model/types/roulette';
+import { Chips } from '@/shared/uiKit/3D/Chips';
+import { getCoordinates } from '@/shared/lib/utils/utils';
+import { CurrentBetWindow } from '@/shared/uiKit/CurrentBetWindow';
+import { classNames } from '@/shared/lib/classNames/classNames';
+import { GameScoreWindow } from '@/shared/uiKit/GameScoreWindow';
 import { useScene } from 'react-babylonjs';
 
 const reducers: ReducersList = {
@@ -113,8 +113,18 @@ const RoulettePage = (props: RoulettePageProps): ReactElement => {
           />
           <hemisphericLight
             name="light1"
-            intensity={0.1}
-            direction={Vector3.Up()}
+            intensity={0.3}
+            direction={new Vector3(0, 20, -20)}
+          />
+          <hemisphericLight
+            name="light2"
+            intensity={0.6}
+            direction={new Vector3(30, 20, 0)}
+          />
+          <hemisphericLight
+            name="light3"
+            intensity={0.6}
+            direction={new Vector3(-30, 20, 0)}
           />
           {
             (

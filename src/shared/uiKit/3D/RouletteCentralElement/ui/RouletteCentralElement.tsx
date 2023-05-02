@@ -33,9 +33,6 @@ export const RouletteCentralElement = memo((props: RouletteProps) => {
       const axes = new AxesViewer(scene, 2);
     }
 
-    const light = new HemisphericLight(`${name}-hemiLight-1`, new Vector3(-20, 20, -20), scene);
-    light.intensity = 0.2;
-
     const meshesArray = [];
 
     const centralElement = CreateCentralElement(scene, 'centralElement') as Mesh;

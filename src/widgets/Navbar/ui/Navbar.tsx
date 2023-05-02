@@ -1,14 +1,14 @@
 import React, { memo, useCallback, useState } from 'react';
-import { classNames } from 'shared/lib/classNames/classNames';
+import { classNames } from '@/shared/lib/classNames/classNames';
 import { useTranslation } from 'react-i18next';
-import { Button, VariantButton } from 'shared/uiKit/Button';
-import { LoginModal } from 'features/AuthByUsername';
+import { Button, VariantButton } from '@/shared/uiKit/Button';
+import { LoginModal } from '@/features/AuthByUsername';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserAuthData, userActions } from 'entities/User';
+import { getUserAuthData, userActions } from '@/entities/User';
 import cls from './Navbar.module.scss';
-import { useTheme } from 'app/providers/ThemeProvider';
-import { AppLink, AppLinkTheme } from 'shared/uiKit/AppLink';
-import ThemeToggle from 'shared/assets/ui/ThemeToggle.svg';
+import { useTheme } from '@/app/providers/ThemeProvider';
+import { AppLink, AppLinkTheme } from '@/shared/uiKit/AppLink';
+import ThemeToggle from '@/shared/assets/ui/ThemeToggle.svg';
 
 interface NavbarProps {
   className?: string;

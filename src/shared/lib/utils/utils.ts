@@ -1,7 +1,7 @@
-import { Animation, EasingFunction, Mesh, Nullable, Scene, Vector3 } from '@babylonjs/core';
+import { Animation, Mesh, Nullable, Scene, Vector3 } from '@babylonjs/core';
 import { MutableRefObject } from 'react';
-import { RotatingDirection } from 'entities/Roulette/model/types/roulette';
-import { BetsIdTypes, ChipsNominals, CurrentBetsPositions } from 'entities/InteractiveTable';
+import { RotatingDirection } from '@/entities/Roulette/model/types/roulette';
+import { BetsIdTypes, CurrentBetsPositions } from '@/entities/InteractiveTable';
 
 export function formatDrawnNumber(str: string) {
 
@@ -68,4 +68,3 @@ export function playAnimation(
 export const getCoordinates = (currentBets: Array<CurrentBetsPositions>, bet: BetsIdTypes): Vector3 => {
   return currentBets[currentBets.findIndex(tableBet => tableBet.bet === bet)].pos;
 };
-

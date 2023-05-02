@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CurrentBet, RotatingDirection, RouletteSchema } from '../types/roulette';
-import { BetsNumbers } from 'entities/InteractiveTable';
+import { BetsNumbers } from '@/entities/InteractiveTable';
 import { PhysicsImpostor } from '@babylonjs/core';
 
 const initialState: RouletteSchema = {

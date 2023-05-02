@@ -1,10 +1,10 @@
 import React from 'react';
 import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { Chips } from './Chips';
-import { Canvas } from 'widgets/Canvas';
+import { Canvas } from '@/widgets/Canvas';
 import { Vector3 } from '@babylonjs/core';
-// import { ChipsNominals } from 'entities/InteractiveTable';
-import { ChipsNominals } from '../../../../../entities/InteractiveTable';
+import { ChipsNominals } from '@/entities/InteractiveTable';
+
 export default {
   title: 'shared/3D/Chips',
   component: Chips,
@@ -24,7 +24,7 @@ const Template: ComponentStory<typeof Chips> = (args) => {
       <hemisphericLight
         name="light1"
         intensity={0.7}
-        direction={Vector3.Up()}
+        direction={new Vector3(0, 3, -2)}
       />
       <Chips
         {...args}

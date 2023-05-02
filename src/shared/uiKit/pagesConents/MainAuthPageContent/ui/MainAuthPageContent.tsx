@@ -1,10 +1,9 @@
 import React from 'react';
-import { classNames } from 'shared/lib/classNames/classNames';
+import { classNames } from '@/shared/lib/classNames/classNames';
 import cls from './MainAuthPage.module.scss';
 import { useSelector } from 'react-redux';
-import { getUserBalance } from 'entities/User';
+import { getUserBalance } from '@/entities/User';
 import { useTranslation } from 'react-i18next';
-import { AppLink, AppLinkTheme } from 'shared/uiKit/AppLink';
 import { Link } from 'react-router-dom';
 
 interface MainAuthPageProps {

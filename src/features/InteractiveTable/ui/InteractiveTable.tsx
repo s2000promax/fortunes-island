@@ -1,8 +1,8 @@
-import React, { memo, useEffect } from 'react';
-import { Table } from 'shared/uiKit/3D/Table';
+import React, { memo, useEffect, useMemo, useState } from 'react';
+import { Table } from '@/shared/uiKit/3D/Table';
 import { useScene } from 'react-babylonjs';
-import { Scene, Vector3 } from '@babylonjs/core';
-import { InteractiveButton, InteractiveButtonSize } from 'shared/uiKit/3D/InteractiveButton';
+import { HemisphericLight, Mesh, Nullable, Scene, Vector3 } from '@babylonjs/core';
+import { InteractiveButton, InteractiveButtonSize } from '@/shared/uiKit/3D/InteractiveButton';
 import {
   TableCoordinates,
   SectionBetsButtons,
@@ -10,10 +10,10 @@ import {
   ZeroBetsButtons,
   DoubleBetsButtons,
   BetsIdTypes, ChipsNominals,
-} from 'entities/InteractiveTable';
-import { Chips, ChipSizes } from 'shared/uiKit/3D/Chips';
-import { SpinButton } from 'shared/uiKit/3D/SpinButton';
-import { HoverIdTypes } from 'entities/InteractiveTable/model/types/interactiveTable';
+} from '@/entities/InteractiveTable';
+import { Chips, ChipSizes } from '@/shared/uiKit/3D/Chips';
+import { SpinButton } from '@/shared/uiKit/3D/SpinButton';
+import { HoverIdTypes } from '@/entities/InteractiveTable/model/types/interactiveTable';
 
 interface InteractiveTableProps {
   name?: string;
@@ -45,7 +45,17 @@ export const InteractiveTable = memo((props: InteractiveTableProps) => {
     onRemoveHoverHandler,
     onRouletteStartHandler,
   } = props;
+  const [mesh, setMesh] = useState<Nullable<Mesh>>(null);
+  const scene = useScene() as Scene;
+  useMemo(() => {
+    if (scene) {
+      console.log(scene.lights);
+      // const light1 = new HemisphericLight(`${name}-hemiLight-1`, new Vector3(0, 10, -10), scene);
+      // const light2 = new HemisphericLight(`${name}-hemiLight-2`, new Vector3(-10, -10, -5), scene);
+    }
+    // setMesh(ball);
 
+  }, [scene]);
   return (
     <mesh
       name={name}

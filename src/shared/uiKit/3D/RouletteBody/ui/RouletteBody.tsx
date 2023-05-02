@@ -1,16 +1,19 @@
 import React, { memo, useMemo, useState } from 'react';
 import {
-  AxesViewer, Color3, HemisphericLight,
+  AxesViewer,
+  Color3,
   Mesh,
-  MeshBuilder, Nullable, PhysicsImpostor,
-  Scene, StandardMaterial,
+  MeshBuilder,
+  Nullable,
+  PhysicsImpostor,
+  Scene,
+  StandardMaterial,
   Vector3,
 } from '@babylonjs/core';
 import { useScene } from 'react-babylonjs';
-import { getX, getY } from 'shared/lib/utils/utils';
+import { getX, getY } from '@/shared/lib/utils/utils';
 import { CreateMainConeElement } from './utils/RouletteBodyElements';
-import { CreateBarrierElement } from 'shared/uiKit/3D/RouletteCentralElement/ui/utils/RouletteElements';
-import { InvisibleImpostor } from 'shared/uiKit/3D/InvisibleImpostor';
+import { CreateBarrierElement } from '../../RouletteCentralElement/ui/utils/RouletteElements';
 
 interface RouletteBodyProps {
   name?: string;
@@ -20,7 +23,7 @@ interface RouletteBodyProps {
 
 export const RouletteBody = memo((props: RouletteBodyProps) => {
   const {
-    name = 'TempConeCentral',
+    name = 'RouletteBody',
     rotation,
     position,
   } = props;
@@ -31,8 +34,6 @@ export const RouletteBody = memo((props: RouletteBodyProps) => {
     if (_IS_DEV_) {
       const axes = new AxesViewer(scene, 2);
     }
-    // const light1 = new HemisphericLight(`${name}-hemiLight-1`, new Vector3(-10, 10, -5), scene);
-    // const light2 = new HemisphericLight(`${name}-hemiLight-2`, new Vector3(-10, -10, -5), scene);
 
     const meshesArray = [];
 

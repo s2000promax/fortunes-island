@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { classNames } from 'shared/lib/classNames/classNames';
+import { classNames } from '@/shared/lib/classNames/classNames';
 import cls from './WelcomePage.module.scss';
 import { useTranslation } from 'react-i18next';
-import { LoginModal } from 'features/AuthByUsername';
+import { LoginModal } from '@/features/AuthByUsername';
 
 interface WelcomePageProps {
   className?: string;

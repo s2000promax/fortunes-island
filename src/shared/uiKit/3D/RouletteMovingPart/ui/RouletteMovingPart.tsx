@@ -2,9 +2,9 @@ import React, { memo, useEffect, useRef } from 'react';
 import { RouletteCentralElement } from '../../RouletteCentralElement';
 import { Mesh, Nullable, PhysicsImpostor, Scene, Vector3 } from '@babylonjs/core';
 import { useScene } from 'react-babylonjs';
-import { playAnimation } from 'shared/lib/utils/utils';
-import { CellNumber, RotatingDirection, RouletteCells, RouletteCellsBuilder } from 'entities/Roulette';
-import { RouletteCell } from 'shared/uiKit/3D/RouletteCell';
+import { playAnimation } from '@/shared/lib/utils/utils';
+import { CellNumber, RotatingDirection, RouletteCells, RouletteCellsBuilder } from '@/entities/Roulette';
+import { RouletteCell } from '@/shared/uiKit/3D/RouletteCell';
 
 interface RouletteProps {
   className?: string;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { Ball } from './Ball';
-import { Canvas } from 'widgets/Canvas';
-import { Color3, Vector3 } from '@babylonjs/core';
+import { Canvas } from '@/widgets/Canvas';
+import { Vector3 } from '@babylonjs/core';
 
 export default {
   title: 'shared/3D/Ball',
@@ -15,7 +15,7 @@ const Template: ComponentStory<typeof Ball> = (args) => {
     <Canvas>
       <arcRotateCamera
         name="camera1"
-        target={Vector3.Zero()}
+        target={new Vector3(0, 0, 2)}
         alpha={Math.PI / 2}
         beta={Math.PI / 4}
         radius={8}
@@ -23,9 +23,9 @@ const Template: ComponentStory<typeof Ball> = (args) => {
       <hemisphericLight
         name="light1"
         intensity={0.7}
-        direction={Vector3.Up()}
+        direction={new Vector3(0, 3, -2)}
       />
-      {/*<Ball />*/}
+      <Ball {...args} />
     </Canvas>
   );
 };
