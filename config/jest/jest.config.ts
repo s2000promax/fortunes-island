@@ -37,4 +37,12 @@ export default {
     '\\.svg': path.resolve(__dirname, 'jestEmptyComponent.tsx'),
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  reporters: [
+    'default',
+    ['./node_modules/jest-html-reporter', {
+      outputPath: '<rootDir>/reports/unit/report.html',
+      pageTitle: 'Test Report',
+      includeFailureMsg: true,
+    }],
+  ],
 };
