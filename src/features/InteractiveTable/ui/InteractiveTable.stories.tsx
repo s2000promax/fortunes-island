@@ -28,9 +28,14 @@ const Template: ComponentStory<typeof InteractiveTable> = (args) => {
         radius={40}
       />
       <hemisphericLight
-        name="light1"
-        intensity={0.8}
-        direction={Vector3.Down()}
+        name="light2"
+        intensity={0.6}
+        direction={new Vector3(30, 20, -15)}
+      />
+      <hemisphericLight
+        name="light3"
+        intensity={0.6}
+        direction={new Vector3(-30, 20, -15)}
       />
       <InteractiveTable
         {...args}
