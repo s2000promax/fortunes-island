@@ -1,3 +1,10 @@
 {
-  "Main page": "Main page"
+  "Main": "Main",
+  "About": "About",
+  "Roulette": "Roulette",
+  "Login": "Login",
+  "Logout": "Logout",
+  "Join Now": "Join Now",
+  "Learn More": "Learn More",
+  "Play": "Play"
 }

@@ -1,8 +1,8 @@
-import React, { useEffect, useTransition } from 'react';
+import React, { useEffect } from 'react';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import cls from './CurrentBetWindow.module.scss';
 import { useTranslation } from 'react-i18next';
-import { CurrentBet, getCurrentBets, getCurrentWinDelta, rouletteActions } from '@/entities/Roulette';
+import { getCurrentBets, getCurrentWinDelta, rouletteActions } from '@/entities/Roulette';
 import { useSelector } from 'react-redux';
 import { getUserBalance, userActions } from '@/entities/User';
 import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
@@ -15,7 +15,7 @@ export const CurrentBetWindow = (props: CurrentBetWindowProps) => {
   const {
     className,
   } = props;
-  const { t } = useTranslation('RoulettePage');
+  const { t } = useTranslation('roulettePage');
   const dispatch = useAppDispatch();
   const currentBets = useSelector(getCurrentBets) || [];
   const currentWinDelta = useSelector(getCurrentWinDelta);
@@ -23,7 +23,10 @@ export const CurrentBetWindow = (props: CurrentBetWindowProps) => {
 
   useEffect(() => {
     if (currentWinDelta && userBalance) {
-      dispatch(userActions.setBalance(userBalance + currentWinDelta));
+      const result = (userBalance + currentWinDelta) > 0
+        ? userBalance + currentWinDelta
+        : 0;
+      dispatch(userActions.setBalance(result));
       dispatch(rouletteActions.fixResult());
     }
   }, [currentWinDelta, dispatch, userBalance]);

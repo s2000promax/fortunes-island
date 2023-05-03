@@ -1,9 +1,8 @@
 import React, { ReactNode } from 'react';
-import { Engine, Scene } from 'react-babylonjs';
-import '@babylonjs/core/Physics/physicsEngineComponent';
+// import '@babylonjs/core/Physics/physicsEngineComponent';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import cls from './Canvas.module.scss';
-import { Vector3 } from '@babylonjs/core';
+import { Engine, Scene } from 'react-babylonjs';
 
 interface CanvasProps {
   className?: string;

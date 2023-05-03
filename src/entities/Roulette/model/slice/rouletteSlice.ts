@@ -31,14 +31,19 @@ export const rouletteSlice = createSlice({
       if (state.temporaryNumbers.length > 10) {
         state.isRotating = false;
         state.currentNumber = state.temporaryNumbers[state.temporaryNumbers.length - 1];
-        state.allDrawnNumbers.push(state.currentNumber);
+        let winStatus = false;
         if (state.currentBets.length) {
           state.currentBets.forEach(bet => {
             if (Number(bet.bet) === Number(state.currentNumber)) {
               state.currentWinDelta += Number(bet.chip) * 2;
+              winStatus = true;
             } else state.currentWinDelta -= Number(bet.chip);
           });
         }
+        state.allDrawnNumbers.push({
+          drawnNumber: state.currentNumber,
+          status: winStatus,
+        });
         state.temporaryNumbers = [];
         state.currentNumber = undefined;
         state.currentBets = [];

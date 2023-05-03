@@ -10,7 +10,7 @@ interface WelcomePageProps {
 
 export const WelcomePageContent = (props: WelcomePageProps) => {
   const { className } = props;
-  const { t } = useTranslation();
+  const { t } = useTranslation('main');
   const [isAuthModal, setIsAuthModal] = useState(false);
 
   const onCloseModal = useCallback(() => {
@@ -24,17 +24,17 @@ export const WelcomePageContent = (props: WelcomePageProps) => {
   return (
     <div className={classNames(cls.welcomePage, {}, [className])}>
       <header>
-        <h1>{t('Welcome to Fortune Island Casino')}</h1>
+        <h1>{'Welcome to Fortune Island Casino'}</h1>
       </header>
       <main>
         <div className={classNames(cls.img)}>
           <img src={'assets/MainImage.png'} alt={''}/>
         </div>
         <section className={classNames(cls.intro)}>
-          <h2>{t('Experience the thrill of the game!')}</h2>
+          <h2>{'Experience the thrill of the game!'}</h2>
           <p>
-            {t(`At Fortune Island Casino, we offer the best gaming experience, 
-            top-notch services, and luxurious amenities`)}
+            {`At Fortune Island Casino, we offer the best gaming experience, 
+            top-notch services, and luxurious amenities`}
           </p>
         </section>
         <section className={classNames(cls.cta)}>
@@ -53,7 +53,7 @@ export const WelcomePageContent = (props: WelcomePageProps) => {
         </section>
       </main>
       <footer>
-        <p>{t('2023 Fortune Island Casino. All rights reserved.')}</p>
+        <p>{'2023 Fortune Island Casino. All rights reserved.'}</p>
       </footer>
     </div>
   );

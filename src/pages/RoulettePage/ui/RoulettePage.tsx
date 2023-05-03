@@ -34,7 +34,6 @@ import { getCoordinates } from '@/shared/lib/utils/utils';
 import { CurrentBetWindow } from '@/shared/uiKit/CurrentBetWindow';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import { GameScoreWindow } from '@/shared/uiKit/GameScoreWindow';
-import { useScene } from 'react-babylonjs';
 
 const reducers: ReducersList = {
   roulette: rouletteReducer,
@@ -102,7 +101,9 @@ const RoulettePage = (props: RoulettePageProps): ReactElement => {
 
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
-      <div className={classNames(cls.roulettePage, {}, [className])}>
+      <div
+        className={classNames(cls.roulettePage, {}, [className])}
+      >
         <Canvas>
           <arcRotateCamera
             name="camera1"
