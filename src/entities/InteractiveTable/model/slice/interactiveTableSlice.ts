@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
-  BetsIdTypes, ChipsNominals, CurrentBet,
-  DoubleBetsButtons,
+  BetsIdTypes, ChipsNominals, DoubleBetsButtons,
   InteractiveTableSchema,
   SectionBetsButtons,
   SpecialBetsButtons,
@@ -11,12 +10,13 @@ import {
   DoubleBetsButtonsArray,
   SectionBetsButtonsArray,
   SpecialBetsButtonsArray,
-  ZeroBetsButtonsArray, RedBets, BlackBets,
+  ZeroBetsButtonsArray,
+  RedBets,
+  BlackBets,
 } from '../../utils/utils';
 
 const initialState: InteractiveTableSchema = {
   currentBetClicked: undefined,
-  currentBets: [],
   currentHover: undefined,
   currentChipClicked: undefined,
   tableCoordinates: TableCoordinatesArray,
@@ -32,14 +32,9 @@ export const interactiveTableSlice = createSlice({
   reducers: {
     setCurrentClicked: (state, action: PayloadAction<BetsIdTypes>) => {
       state.currentBetClicked = action.payload;
-
-      if (state.currentChipClicked) {
-        state.currentBets.push(
-          {
-            bet: action.payload,
-            chip: state.currentChipClicked,
-          });
-      }
+    },
+    clearCurrentBetClicked: (state) => {
+      state.currentBetClicked = undefined;
     },
     setChipsChoosed: (state, action: PayloadAction<ChipsNominals>) => {
       state.currentChipClicked = action.payload;
@@ -47,7 +42,7 @@ export const interactiveTableSlice = createSlice({
     setCurrentHovered: (state, action: PayloadAction<BetsIdTypes>) => {
       state.currentHover = action.payload;
     },
-    setHighlightBits: (state) => {
+    setHighlightBets: (state) => {
       if (state.currentHover === DoubleBetsButtons['Bet2-1_1']) {
         for (let i = 2; i <= 35; i += 3) {
           state.tableCoordinates[i].isHover = true;

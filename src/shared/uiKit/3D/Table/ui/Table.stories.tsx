@@ -1,7 +1,7 @@
 import React from 'react';
 import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { Table } from './Table';
-import { Canvas } from 'widgets/Canvas';
+import { Canvas } from '@/widgets/Canvas';
 import { Vector3 } from '@babylonjs/core';
 
 export default {
@@ -15,7 +15,7 @@ const Template: ComponentStory<typeof Table> = (args) => {
     <Canvas>
       <arcRotateCamera
         name="camera1"
-        target={new Vector3(0, 0, 10)}
+        target={new Vector3(0, 0, 8)}
         alpha={Math.PI / 2}
         beta={Math.PI / 6}
         radius={40}
@@ -23,7 +23,7 @@ const Template: ComponentStory<typeof Table> = (args) => {
       <hemisphericLight
         name="light1"
         intensity={0.7}
-        direction={Vector3.Up()}
+        direction={new Vector3(0, 15, -2)}
       />
       <Table
         {...args}

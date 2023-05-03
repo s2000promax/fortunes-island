@@ -1,6 +1,6 @@
-import { classNames } from 'shared/lib/classNames/classNames';
+import { classNames } from '@/shared/lib/classNames/classNames';
 import { useTranslation } from 'react-i18next';
-import { Select } from 'shared/uiKit/Select';
+import { Select } from '@/shared/uiKit/Select';
 import { memo, useCallback } from 'react';
 import { Currency } from '../../model/types/currency';
 

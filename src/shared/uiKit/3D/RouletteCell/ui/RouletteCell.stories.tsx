@@ -1,9 +1,10 @@
 import React from 'react';
 import { type ComponentMeta, type ComponentStory } from '@storybook/react';
+import '@babylonjs/core/Physics/physicsEngineComponent';
+import { Canvas } from '@/widgets/Canvas';
+import { PhysicsImpostor, Vector3 } from '@babylonjs/core';
 import { RouletteCell } from './RouletteCell';
-import { Canvas } from 'widgets/Canvas';
-import { Vector3 } from '@babylonjs/core';
-import { CellNumber } from '../model/CellsTypes';
+import { CellNumber } from '@/entities/Roulette';
 
 export default {
   title: 'shared/3D/RouletteCell',
@@ -18,9 +19,9 @@ const Template: ComponentStory<typeof RouletteCell> = (args) => {
     <Canvas>
       <arcRotateCamera
         name="camera1"
-        target={new Vector3(0, 0, 2)}
+        target={new Vector3(0, 0, 1)}
         alpha={Math.PI / 2}
-        beta={Math.PI / 8}
+        beta={Math.PI / 16}
         radius={8}
       />
       <hemisphericLight
@@ -37,23 +38,28 @@ const Template: ComponentStory<typeof RouletteCell> = (args) => {
 
 export const ZeroCell = Template.bind({});
 ZeroCell.args = {
-  number: CellNumber.Zero, // row: 2, column: 0,
+  number: CellNumber.Zero,
+  cellImpostorHandler: (impostor: PhysicsImpostor) => {},
+  position: new Vector3(0,0,0),
 };
 
 export const DoubleZeroCell = Template.bind({});
 DoubleZeroCell.args = {
   number: CellNumber.DoubleZero,
-  // row: 2, column: 1,
+  cellImpostorHandler: (impostor: PhysicsImpostor) => {},
+  position: new Vector3(0,0,0),
 };
 
 export const TwentyEightCell = Template.bind({});
 TwentyEightCell.args = {
   number: CellNumber.TwentyEight,
-  // row: 1, column: 13,
+  cellImpostorHandler: (impostor: PhysicsImpostor) => {},
+  position: new Vector3(0,0,0),
 };
 
 export const ThirtySixCell = Template.bind({});
 ThirtySixCell.args = {
   number: CellNumber.ThirtySix,
-  // row: 0, column: 17,
+  cellImpostorHandler: (impostor: PhysicsImpostor) => {},
+  position: new Vector3(0,0,0),
 };

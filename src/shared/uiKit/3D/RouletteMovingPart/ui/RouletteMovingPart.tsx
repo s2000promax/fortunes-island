@@ -1,33 +1,40 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { RouletteCentralElement } from '../../RouletteCentralElement';
-import { Mesh, Nullable, Vector3, Animation, Scene } from '@babylonjs/core';
-import { useBeforeRender, useScene } from 'react-babylonjs';
-import { RotatingDirection } from 'entities/Roulette/model/types/roulette';
-import { getSlideUpAnimation, playAnimation } from 'shared/lib/utils/utils';
+import { Mesh, Nullable, PhysicsImpostor, Scene, Vector3 } from '@babylonjs/core';
+import { useScene } from 'react-babylonjs';
+import { playAnimation } from '@/shared/lib/utils/utils';
+import { CellNumber, RotatingDirection, RouletteCells, RouletteCellsBuilder } from '@/entities/Roulette';
+import { RouletteCell } from '@/shared/uiKit/3D/RouletteCell';
 
 interface RouletteProps {
   className?: string;
   rotation?: Vector3;
+  isRouletteRotating: boolean;
   rotateDirection: RotatingDirection;
-  ball: MutableRefObject<Nullable<Mesh>>;
+  cellImpostorHandler: (impostor: PhysicsImpostor) => void;
 }
 
-export const RouletteMovingPart = (props: RouletteProps) => {
+export const RouletteMovingPart = memo((props: RouletteProps) => {
   const {
-    className,
     rotation,
     rotateDirection,
-    ball,
+    isRouletteRotating,
+    cellImpostorHandler,
   } = props;
   const scene = useScene() as Scene;
   const rouletteMoveRef = useRef<Nullable<Mesh>>(null);
 
   useEffect(() => {
     if (rouletteMoveRef.current && scene) {
-      playAnimation(rouletteMoveRef, scene, rotateDirection, 0.5, Vector3.Zero());
+      if (isRouletteRotating) {
+        playAnimation(rouletteMoveRef, scene, rotateDirection, 0.12, Vector3.Zero());
+      };
     }
 
-  }, [rotateDirection, scene]);
+  }, [isRouletteRotating, rotateDirection, scene]);
+
+  let yRotationAngle = 9.5;
+  const k = 0.165;
 
   return (
     <>
@@ -37,10 +44,30 @@ export const RouletteMovingPart = (props: RouletteProps) => {
         rotation={rotation}
         disposeInstanceOnUnmount
       >
-        <RouletteCentralElement
-          ball={ball}
-        />
+        <RouletteCentralElement />
+        {
+          RouletteCellsBuilder.map((cell, index) => {
+            yRotationAngle -= 9.5;
+            const y = (yRotationAngle * Math.PI) / 180;
+            const r = 5.1;
+            const x = r * Math.cos(y);
+            const z = r * Math.sin(y);
+
+            const cellPosition = new Vector3(x, 0, z);
+            // const cellRotation = new Vector3(0, 1.56 + (k * index), 0);
+
+            return (
+              <RouletteCell
+                  name={`${cell.number}-cell`}
+                  key={`uniqueKey-${cell.number}-${cell.rot}`}
+                  number={cell.number}
+                  position={cellPosition}
+                  cellImpostorHandler={cellImpostorHandler}
+                />
+            );
+          })
+        }
       </transformNode>
     </>
   );
-};
+});

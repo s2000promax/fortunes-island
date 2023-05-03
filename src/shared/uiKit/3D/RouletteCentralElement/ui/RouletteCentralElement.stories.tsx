@@ -1,8 +1,8 @@
 import React from 'react';
 import { type ComponentMeta, type ComponentStory } from '@storybook/react';
 import { RouletteCentralElement } from './RouletteCentralElement';
-import { Canvas } from 'widgets/Canvas';
-import { Color3, Vector3 } from '@babylonjs/core';
+import { Canvas } from '@/widgets/Canvas';
+import { Vector3 } from '@babylonjs/core';
 
 export default {
   title: 'shared/3D/RouletteCentralElement',
@@ -15,24 +15,20 @@ const Template: ComponentStory<typeof RouletteCentralElement> = (args) => {
     <Canvas>
       <arcRotateCamera
         name="camera1"
-        target={new Vector3(0, 12, 18)}
+        target={new Vector3(0,0,3)}
         alpha={Math.PI / 2}
         beta={Math.PI / 4}
-        radius={8}
+        radius={20}
       />
       <hemisphericLight
         name="light1"
         intensity={0.7}
-        direction={Vector3.Up()}
+        direction={new Vector3(0, 10, -2)}
       />
-      <RouletteCentralElement
-        {...args}
-      />
+      <RouletteCentralElement {...args} />
     </Canvas>
   );
 };
 
 export const Primary = Template.bind({});
-Primary.args = {
-  name: 'RouletteCentralElement',
-};
+Primary.args = {};

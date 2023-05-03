@@ -3,7 +3,7 @@ import { useScene } from 'react-babylonjs';
 import * as BABYLON from '@babylonjs/core';
 import chipsSprite from '../../../../assets/chipsSprite.png';
 import { ChipSizes } from '../utils/utils';
-import { ChipsNominals } from 'entities/InteractiveTable';
+import { ChipsNominals } from '@/entities/InteractiveTable';
 
 interface ChipsProps {
   nominal: ChipsNominals;
@@ -22,11 +22,6 @@ export const Chips = (props: ChipsProps) => {
   const [mesh, setMesh] = useState<BABYLON.Nullable<BABYLON.Mesh>>(null);
   const scene = useScene() as BABYLON.Scene;
   useMemo(() => {
-    if (scene) {
-      const light1 = new BABYLON.HemisphericLight(`${nominal}-hemiLight-1`, new BABYLON.Vector3(-10, 10, -5), scene);
-      const light2 = new BABYLON.HemisphericLight(`${nominal}-hemiLight-2`, new BABYLON.Vector3(-10, -10, -5), scene);
-    }
-
     const chipMaterial = new BABYLON.StandardMaterial(`${nominal}-material`);
     chipMaterial.diffuseTexture = new BABYLON.Texture(chipsSprite, scene);
 

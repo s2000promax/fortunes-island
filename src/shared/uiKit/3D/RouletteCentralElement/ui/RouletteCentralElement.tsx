@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useMemo, useState } from 'react';
+import React, { memo, MutableRefObject, useMemo, useState } from 'react';
 import * as cannon from "cannon";
 import {
   AxesViewer, HemisphericLight, HingeJoint,
@@ -12,22 +12,18 @@ import {
   CreateCentralConeElement,
   CreateCentralElement,
 } from './utils/RouletteElements';
-import { CreateCellBase } from 'shared/uiKit/3D/RouletteCell/ui/utils/Cell';
-import { RouletteCellsBuilder } from 'shared/uiKit/3D/RouletteCell/model/CellsTypes';
 
 interface RouletteProps {
   name?: string;
   rotation?: Vector3;
   position?: Vector3;
-  ball: MutableRefObject<Nullable<Mesh>>;
 }
 
-export const RouletteCentralElement = (props: RouletteProps) => {
+export const RouletteCentralElement = memo((props: RouletteProps) => {
   const {
     name = 'rouletteCentralElement',
     rotation,
     position,
-    ball,
   } = props;
   const [mesh, setMesh] = useState<Nullable<Mesh>>(null);
   const scene = useScene() as Scene;
@@ -36,9 +32,6 @@ export const RouletteCentralElement = (props: RouletteProps) => {
     if (_IS_DEV_) {
       const axes = new AxesViewer(scene, 2);
     }
-
-    const light = new HemisphericLight(`${name}-hemiLight-1`, new Vector3(-20, 20, -20), scene);
-    light.intensity = 0.2;
 
     const meshesArray = [];
 
@@ -57,55 +50,21 @@ export const RouletteCentralElement = (props: RouletteProps) => {
     meshesArray.push(centralCone);
     meshesArray.push(nextCone);
 
-    let yRotationAngle = 9.5;
-    const k = 0.165;
-
-    // const ball = scene.getMeshByName('Ball');
-    // const cell = scene.getMeshByName('rouletteCell');
-    // console.log('cell', cell);
-
-
-    RouletteCellsBuilder.map((cell, index) => {
-      yRotationAngle -= 9.5;
-      const y = (yRotationAngle * Math.PI) / 180;
-      const r = 5.1;
-      const x = r * Math.cos(y);
-      const z = r * Math.sin(y);
-
-      const cellPosition = new Vector3(x, 0, z);
-      const cellRotation = new Vector3(0, 1.56 + (k * index), 0);
-
-      const rouletteCell = CreateCellBase(scene, `${index}-cell`, cell, cellPosition, cellRotation) as Mesh;
-
-      const cellImpostor = rouletteCell._physicsImpostor as PhysicsImpostor;
-      let isTrue = false;
-      if (ball.current) {
-        ball.current._physicsImpostor?.registerOnPhysicsCollide(cellImpostor, (main, collided) => {
-          if (!isTrue) {
-            const { id } = collided.object as Mesh;
-            console.log('id-cell: ', id);
-          }
-          isTrue = true;
-        });
-      }
-
-      meshesArray.push(rouletteCell);
-    });
-
     const resultMesh = Mesh.MergeMeshes(
       meshesArray,
       true, true, undefined, false, true);
 
-    if (resultMesh)
-    resultMesh.physicsImpostor = new PhysicsImpostor(
-      resultMesh,
-      PhysicsImpostor.MeshImpostor,
-      { mass: 0, damping: 2 },
-      scene,
-    );
+    if (resultMesh) {
+      resultMesh.physicsImpostor = new PhysicsImpostor(
+        resultMesh,
+        PhysicsImpostor.MeshImpostor,
+        { mass: 0, damping: 2 },
+        scene,
+      );
+    }
 
     setMesh(resultMesh);
-  }, [ball, name, scene]);
+  }, [name, scene]);
 
   return (
     <>
@@ -120,4 +79,4 @@ export const RouletteCentralElement = (props: RouletteProps) => {
         )}
     </>
   );
-};
+});

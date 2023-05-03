@@ -6,7 +6,7 @@
       "password": "123",
       "role": "ADMIN",
       "avatar": "https://faces-img.xcdn.link/thumb-lorem-face-3827_thumb.jpg",
-      "balance": 100
+      "balance": 35800
     },
     {
       "id": "2",
@@ -14,13 +14,13 @@
       "password": "123",
       "role": "USER",
       "avatar": "https://faces-img.xcdn.link/thumb-lorem-face-3827_thumb.jpg",
-      "balance": 100
+      "balance": 15000
     }
   ],
   "profile": {
     "first": "Tomas",
     "lastname": "Sharp",
-    "age": 19,
+    "age": 29,
     "currency": "$",
     "country": "USA",
     "city": "Miami",

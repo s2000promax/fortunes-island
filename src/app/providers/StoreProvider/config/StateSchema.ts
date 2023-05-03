@@ -1,12 +1,12 @@
-import { UserSchema } from 'entities/User';
-import { LoginSchema } from 'features/AuthByUsername';
+import { UserSchema } from '@/entities/User';
+import { LoginSchema } from '@/features/AuthByUsername';
 import {
   AnyAction, CombinedState, EnhancedStore, Reducer, ReducersMapObject,
 } from '@reduxjs/toolkit';
-import { ProfileSchema } from 'entities/Profile';
+import { ProfileSchema } from '@/entities/Profile';
 import { AxiosInstance } from 'axios';
-import { RouletteSchema } from 'entities/Roulette';
-import { InteractiveTableSchema } from 'entities/InteractiveTable';
+import { RouletteSchema } from '@/entities/Roulette';
+import { InteractiveTableSchema } from '@/entities/InteractiveTable';
 
 export interface StateSchema {
   user: UserSchema;

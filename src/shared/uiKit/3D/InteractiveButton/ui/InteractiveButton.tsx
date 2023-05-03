@@ -5,16 +5,10 @@ import { useScene } from 'react-babylonjs';
 import numberSprite from '../../../../assets/cellsNumberSprite.png';
 import numberSprite_x2 from '../../../../assets/extraNumbersSprite_x2.png';
 import numberSprite_x4 from '../../../../assets/extraNumbersSprite_x4.png';
-
 import { InteractiveButtonSize } from '../model/types';
 import {
   BetsIdTypes,
-  DoubleBetsButtons,
-  SectionBetsButtons,
-  SpecialBetsButtons,
-  ZeroBetsButtons,
-} from 'entities/InteractiveTable';
-import { HoverIdTypes } from 'entities/InteractiveTable/model/types/interactiveTable';
+} from '@/entities/InteractiveTable';
 
 interface InteractiveButtonProps {
   name: string;
@@ -52,7 +46,6 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
     if (_IS_DEV_) {
       const axes = new BABYLON.AxesViewer(scene, 2);
     }
-    const light1 = new BABYLON.HemisphericLight(`${name}-hemiLight-1`, new BABYLON.Vector3(-10, 10, -5), scene);
 
     const buttonMaterial = new BABYLON.StandardMaterial(`${name}-material`);
 
@@ -158,7 +151,9 @@ export const InteractiveButton = (props: InteractiveButtonProps) => {
     button.actionManager.registerAction(
       new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger,
         function (ev) {
-          console.log('click' + id, ev);
+          if (_IS_DEV_) {
+            console.log('click' + id, ev);
+          }
           onClickHandler(id);
         },
       ),

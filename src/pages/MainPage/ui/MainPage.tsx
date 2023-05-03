@@ -1,12 +1,24 @@
 import { type ReactElement } from 'react';
-import { useTranslation } from 'react-i18next';
+import { WelcomePageContent } from '@/shared/uiKit/pagesConents/WelcomePageContent';
+import { useSelector } from 'react-redux';
+import { getUserAuthData } from '@/entities/User';
+import { MainAuthPageContent } from '@/shared/uiKit/pagesConents/MainAuthPageContent';
 
 const MainPage = (): ReactElement => {
-  const { t } = useTranslation('main');
+  const authData = useSelector(getUserAuthData);
+
   return (
-    <div>
-      {t('Main page')}
-    </div>
+    <>
+      {
+        authData
+          ? (
+            <MainAuthPageContent />
+          )
+          : (
+            <WelcomePageContent/>
+          )
+      }
+    </>
   );
 };
 
