@@ -1,4 +1,4 @@
-import { BetsIdTypes, ChipsNominals } from 'entities/InteractiveTable';
+import { BetsIdTypes, ChipsNominals } from '@/entities/InteractiveTable';
 import { Vector3 } from '@babylonjs/core';
 
 export enum RotatingDirection {
@@ -19,7 +19,7 @@ export interface RouletteSchema {
   currentBets: Array<CurrentBet>;
   currentNumber: string | undefined;
   temporaryNumbers: Array<string>;
-  allDrawnNumbers: Array<string>;
+  allDrawnNumbers: Array<{ drawnNumber: string; status: boolean }>;
   currentWinDelta: number;
 }
 

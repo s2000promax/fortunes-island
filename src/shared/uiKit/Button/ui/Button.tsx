@@ -1,4 +1,4 @@
-import { classNames, Mods } from 'shared/lib/classNames/classNames';
+import { classNames, Mods } from '@/shared/lib/classNames/classNames';
 import React, {
   type ButtonHTMLAttributes, memo, ReactNode,
 } from 'react';

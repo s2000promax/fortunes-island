@@ -2,9 +2,9 @@ import React, { memo, useEffect, useRef } from 'react';
 import { RouletteCentralElement } from '../../RouletteCentralElement';
 import { Mesh, Nullable, PhysicsImpostor, Scene, Vector3 } from '@babylonjs/core';
 import { useScene } from 'react-babylonjs';
-import { playAnimation } from 'shared/lib/utils/utils';
-import { CellNumber, RotatingDirection, RouletteCells, RouletteCellsBuilder } from 'entities/Roulette';
-import { RouletteCell } from 'shared/uiKit/3D/RouletteCell';
+import { playAnimation } from '@/shared/lib/utils/utils';
+import { CellNumber, RotatingDirection, RouletteCells, RouletteCellsBuilder } from '@/entities/Roulette';
+import { RouletteCell } from '@/shared/uiKit/3D/RouletteCell';
 
 interface RouletteProps {
   className?: string;
@@ -27,7 +27,7 @@ export const RouletteMovingPart = memo((props: RouletteProps) => {
   useEffect(() => {
     if (rouletteMoveRef.current && scene) {
       if (isRouletteRotating) {
-        // playAnimation(rouletteMoveRef, scene, rotateDirection, 0.1, Vector3.Zero());
+        playAnimation(rouletteMoveRef, scene, rotateDirection, 0.12, Vector3.Zero());
       };
     }
 

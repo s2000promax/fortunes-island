@@ -1,12 +1,11 @@
-import { type ReactElement } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { type ReactElement } from 'react';
+import { AboutPageContent } from '@/shared/uiKit/pagesConents/AboutPageContent';
 
 const AboutPage = (): ReactElement => {
-  const { t } = useTranslation('about');
 
   return (
-    <div>
-      {t('About page')}
+    <div data-testid={'AboutPage'}>
+      <AboutPageContent />
     </div>
   );
 };

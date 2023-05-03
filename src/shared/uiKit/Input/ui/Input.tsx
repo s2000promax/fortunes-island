@@ -1,7 +1,7 @@
 import React, {
   InputHTMLAttributes, memo, useEffect, useRef, useState,
 } from 'react';
-import { classNames, Mods } from 'shared/lib/classNames/classNames';
+import { classNames, Mods } from '@/shared/lib/classNames/classNames';
 import cls from './Input.module.scss';
 
 type HTMLInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'readOnly'>
@@ -81,7 +81,7 @@ export const Input = memo((props: InputProps) => {
         {isCaretVisible && (
           <span
             className={cls.caret}
-            style={{ left: `${caretPosition * 8}px` }}
+            style={{ left: `${caretPosition * 9}px` }}
           />
         )}
       </div>

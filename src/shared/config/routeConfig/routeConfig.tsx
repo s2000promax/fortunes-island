@@ -1,10 +1,10 @@
 import React from 'react';
 import { type RouteProps } from 'react-router-dom';
-import { MainPage } from 'pages/MainPage';
-import { AboutPage } from 'pages/AboutPage';
-import { NotFoundPage } from 'pages/NotFoundPage';
-import { ProfilePage } from 'pages/ProfilePage';
-import RoulettePage from 'pages/RoulettePage/ui/RoulettePage';
+import { MainPage } from '@/pages/MainPage';
+import { AboutPage } from '@/pages/AboutPage';
+import { NotFoundPage } from '@/pages/NotFoundPage';
+import { ProfilePage } from '@/pages/ProfilePage';
+import RoulettePage from '@/pages/RoulettePage/ui/RoulettePage';
 
 export type AppRoutesProps = RouteProps & {
   authOnly?: boolean;
@@ -41,6 +41,7 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
   [AppRoutes.ROULETTE]: {
     path: RoutePath.roulette,
     element: <RoulettePage />,
+    authOnly: true,
   },
   [AppRoutes.PROFILE]: {
     path: RoutePath.profile,

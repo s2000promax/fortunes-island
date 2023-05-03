@@ -1,0 +1,48 @@
+.welcomePage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+header,
+footer {
+  align-items: flex-end;
+  padding: 1rem;
+  text-align: center;
+}
+
+.img {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.intro {
+  padding: 2rem;
+  text-align: center;
+}
+
+.intro h2 {
+  margin-bottom: 1rem;
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #07c;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  margin: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #005fa3;
+}

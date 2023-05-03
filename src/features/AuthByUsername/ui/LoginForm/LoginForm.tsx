@@ -1,15 +1,15 @@
 import React, { memo, useCallback } from 'react';
-import { classNames } from 'shared/lib/classNames/classNames';
+import { classNames } from '@/shared/lib/classNames/classNames';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'shared/uiKit/Button';
-import { Input } from 'shared/uiKit/Input';
-import { Text } from 'shared/uiKit/Text';
-import { VariantButton } from 'shared/uiKit/Button';
+import { Button } from '@/shared/uiKit/Button';
+import { Input } from '@/shared/uiKit/Input';
+import { Text } from '@/shared/uiKit/Text';
+import { VariantButton } from '@/shared/uiKit/Button';
 import { useSelector } from 'react-redux';
-import { loginActions, loginReducer } from 'features/AuthByUsername/model/slice/loginSlice';
-import { TextVariant } from 'shared/uiKit/Text';
-import { DynamicModuleLoader, ReducersList } from 'shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
-import { useAppDispatch } from 'shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { loginActions, loginReducer } from '@/features/AuthByUsername/model/slice/loginSlice';
+import { TextVariant } from '@/shared/uiKit/Text';
+import { DynamicModuleLoader, ReducersList } from '@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader';
+import { useAppDispatch } from '@/shared/lib/hooks/useAppDispatch/useAppDispatch';
 import { getLoginUsername } from '../../model/selectors/getLoginUsername/getLoginUsername';
 import { getLoginPassword } from '../../model/selectors/getLoginPassword/getLoginPassword';
 import { getLoginIsLoading } from '../../model/selectors/getLoginIsLoading/getLoginIsLoading';
@@ -53,7 +53,7 @@ const LoginForm = memo(({ className, onSuccess }: LoginFormProps) => {
   return (
     <DynamicModuleLoader reducers={initialReducers}>
       <div className={classNames(cls.loginForm, {}, [className])}>
-        <Text title={t('Auth form')} />
+        <Text title={t(`Auth form`)} text={'use: admin 123'} />
         {error && <Text text={t('Login or password incorrect')} variant={TextVariant.ERROR} />}
         <Input
           autofocus

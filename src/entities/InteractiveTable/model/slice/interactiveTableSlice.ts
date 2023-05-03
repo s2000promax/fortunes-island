@@ -32,16 +32,9 @@ export const interactiveTableSlice = createSlice({
   reducers: {
     setCurrentClicked: (state, action: PayloadAction<BetsIdTypes>) => {
       state.currentBetClicked = action.payload;
-/*
-      if (state.currentChipClicked) {
-        state.currentBets.push(
-          {
-            bet: action.payload,
-            chip: state.currentChipClicked,
-          });
-      }
-
- */
+    },
+    clearCurrentBetClicked: (state) => {
+      state.currentBetClicked = undefined;
     },
     setChipsChoosed: (state, action: PayloadAction<ChipsNominals>) => {
       state.currentChipClicked = action.payload;

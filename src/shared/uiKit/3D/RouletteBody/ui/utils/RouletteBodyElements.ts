@@ -1,5 +1,5 @@
 import { Color3, Mesh, MeshBuilder, Nullable, Scene, StandardMaterial, Vector3 } from '@babylonjs/core';
-import { getX, getY } from 'shared/lib/utils/utils';
+import { getX, getY } from '@/shared/lib/utils/utils';
 import * as earcut from 'earcut';
 
 export function CreateMainConeElement(scene: Scene, name: string): Nullable<Mesh> {

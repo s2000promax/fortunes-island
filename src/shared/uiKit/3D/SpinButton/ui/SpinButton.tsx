@@ -28,7 +28,6 @@ export const SpinButton = (props: SpinButtonProps) => {
     if (_IS_DEV_) {
       const axes = new BABYLON.AxesViewer(scene, 2);
     }
-    const light1 = new BABYLON.HemisphericLight(`${name}-hemiLight-1`, new BABYLON.Vector3(-10, 10, -5), scene);
 
     const spinButtonMaterial = new BABYLON.StandardMaterial(`${name}-material`);
     spinButtonMaterial.diffuseTexture = new BABYLON.Texture(spinButtonTexture, scene);

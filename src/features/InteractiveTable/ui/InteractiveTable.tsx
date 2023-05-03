@@ -1,8 +1,7 @@
-import React, { memo, useEffect } from 'react';
-import { Table } from 'shared/uiKit/3D/Table';
-import { useScene } from 'react-babylonjs';
-import { Scene, Vector3 } from '@babylonjs/core';
-import { InteractiveButton, InteractiveButtonSize } from 'shared/uiKit/3D/InteractiveButton';
+import React, { memo } from 'react';
+import { Table } from '@/shared/uiKit/3D/Table';
+import { Vector3 } from '@babylonjs/core';
+import { InteractiveButton, InteractiveButtonSize } from '@/shared/uiKit/3D/InteractiveButton';
 import {
   TableCoordinates,
   SectionBetsButtons,
@@ -10,10 +9,9 @@ import {
   ZeroBetsButtons,
   DoubleBetsButtons,
   BetsIdTypes, ChipsNominals,
-} from 'entities/InteractiveTable';
-import { Chips, ChipSizes } from 'shared/uiKit/3D/Chips';
-import { SpinButton } from 'shared/uiKit/3D/SpinButton';
-import { HoverIdTypes } from 'entities/InteractiveTable/model/types/interactiveTable';
+} from '@/entities/InteractiveTable';
+import { Chips, ChipSizes } from '@/shared/uiKit/3D/Chips';
+import { SpinButton } from '@/shared/uiKit/3D/SpinButton';
 
 interface InteractiveTableProps {
   name?: string;
@@ -45,12 +43,6 @@ export const InteractiveTable = memo((props: InteractiveTableProps) => {
     onRemoveHoverHandler,
     onRouletteStartHandler,
   } = props;
-  const scene = useScene() as Scene;
-  // const isHover = useSelector(getIsHover);
-  // console.log('isHover', isHover);
-  useEffect(() => {
-    // console.log(TableBitsButtonsArray[2].isHover);
-  }, [TableBetsButtonsArray]);
 
   return (
     <mesh

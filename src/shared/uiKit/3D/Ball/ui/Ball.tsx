@@ -10,8 +10,8 @@ import {
   StandardMaterial,
   MeshBuilder, PhysicsImpostor, Scene,
 } from '@babylonjs/core';
-import { formatDrawnNumber } from 'shared/lib/utils/utils';
-import { RotatingDirection } from 'entities/Roulette';
+import { formatDrawnNumber } from '@/shared/lib/utils/utils';
+import { RotatingDirection } from '@/entities/Roulette';
 
 interface BallProps {
   name?: string;
@@ -35,14 +35,6 @@ export const Ball = (props: BallProps) => {
   const scene = useScene() as Scene;
 
   useMemo(() => {
-    if (scene) {
-      const light1 = new HemisphericLight(`${name}-hemiLight-1`, new Vector3(-10, 10, -5), scene);
-      const light2 = new HemisphericLight(`${name}-hemiLight-2`, new Vector3(-10, -10, -5), scene);
-    }
-
-    const chipMaterial = new StandardMaterial(`${name}-material`);
-    // chipMaterial.diffuseTexture = new Texture(chipsSprite, scene);
-
     const ball = MeshBuilder.CreateSphere(
       `${name}-cylinder`,
       {
@@ -51,24 +43,28 @@ export const Ball = (props: BallProps) => {
       scene,
     ) as Mesh;
 
-
     ball.physicsImpostor = new PhysicsImpostor(
       ball,
       PhysicsImpostor.SphereImpostor,
-      { mass: 1, damping: 2 },
+      { mass: 1 },
       scene,
     );
 
-    ball.physicsImpostor.applyImpulse(
-      new Vector3(rotateDirection * 20, 0, 0),
-      ball.getAbsolutePosition(),
+    ball.physicsImpostor.setLinearVelocity(
+      new Vector3(rotateDirection * (Math.random() * 10 + 30), 0, 0),
+    );
+
+    ball.physicsImpostor.setAngularVelocity(
+      new Vector3( 0, Math.random() * 10, rotateDirection * Math.random() * 10),
     );
 
     ball.physicsImpostor.registerOnPhysicsCollide(cellsImpostors,
       (main, collided) => {
         const { id } = collided.object as Mesh;
 
-        console.log('id-cell: ', formatDrawnNumber(id));
+        if (_IS_DEV_) {
+          console.log('id-cell: ', formatDrawnNumber(id));
+        }
         onAddTemporaryDrawnNumberHandler(formatDrawnNumber(id));
 
       });
